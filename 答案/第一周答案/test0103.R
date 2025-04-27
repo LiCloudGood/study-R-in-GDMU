@@ -1,6 +1,6 @@
 setwd("e:/test01")
 install.packages("vioplot_0.4.0.tar.gz",repos = NULL)
-library(viopolt)
+library(vioplot)
 vioplot(mtcars$wt[mtcars$cyl==4],
         mtcars$wt[mtcars$cyl==6],
         mtcars$wt[mtcars$cyl==8],
