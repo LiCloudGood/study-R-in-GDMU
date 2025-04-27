@@ -1,0 +1,173 @@
+---
+title: "第一周——软件及其软件包安装和脚本编写"
+format: html
+editor: visual
+---
+
+# 题目目的
+
+（一）掌握RGUI和RStudio的安装与配置。
+
+（二）掌握RStudio的使用、脚本文件的编写与运行。
+
+（三）掌握R软件包的安装与使用。
+
+（四）掌握R语言的赋值语句。
+
+（五）掌握运算符与R表达式的书写。
+
+------------------------------------------------------------------------
+
+# 题目
+
+## 题目一：RGUI和RStudio的安装与配置
+
+请课后在自己的电脑上安装R软件与RStudio。
+
+## 题目二：工作路径设置
+
+1.  检查是否在Github下载了完整的资料，并在E盘新建一个名为test01的文件夹。
+
+2.  运行RStudio，点击“Tools”-\>“Global Options”，设置默认工作目录（Default working directory）为“E\\test01”。
+
+3.  用getwd()观察当前工作目录。
+
+4.  重启RStudio，用getwd()观察当前工作目录。
+
+5.  在RStudio主界面中，点击“File”-\>“New File”-\>“R Script”，创建一个新的R脚本文件，并保存为test0102.R。
+
+6.  在脚本文件中，输入以下代码：
+
+    ```{r}
+    #| eval: false
+    # 检查R版本
+    version
+    ```
+
+7.  观察E:\\test01下是否有test0101.R文件？在命令窗口中运行：
+
+    ```{r}
+    #| eval: false
+    source("test0102.R")
+    ```
+
+8.  在命令窗口中，运行setwd("E:/")，再运行source("test0102.R")，观察是否有错误？想相为什么不能运行？
+
+9.  在命令窗口中，运行source('E:/test01/test0102.R')，想想为什么此时能运行？
+
+## 题目三：安装包
+
+1.  打开RStudio，用dir()查看当前工作目录下是否有文件“ISwR_2.0-8.tar.gz”和“vioplot_0.4.0.tar.gz”
+
+2.  单击“Tools”-\>“Install Packages”，然后从“ISwR_2.0-8.tar.gz”中安装ISwR包
+
+3.  先在命令窗口中运行setwd("e:/test01")，然后用安装函数install.packages从“vioplot_0.4.0.tar.gz”中安装vioplot包。
+
+4.  点击“File”-\>“New File”-\>“R Script”，创建一个新的R脚本文件test0103.R。请输入以下代码：
+
+    ```{r}
+    #| eval: false
+    install.packages('vioplot_0.4.0.tar.gz',
+                     repos = NULL)
+    library(vioplot)
+    vioplot(mtcars$wt[mtcars$cyl==4],
+            mtcars$wt[mtcars$cyl==6],
+            mtcars$wt[mtcars$cyl==8],
+            horizontal = TRUE,
+            col = 'red')
+    ```
+
+5.  运行上面脚本，观察运行结果。
+
+## 题目四：使用帮助
+
+1.  创建脚本文件test0104.R
+
+2.  输入下面代码：
+
+    ```{r}
+    #| eval: false
+    ?seq
+    help("rep")
+    ?matrix
+    ?read.csv
+    ```
+
+3.  逐行运行上面脚本，观察帮助窗口的变化，并仔细阅读帮助窗口中的内容。
+
+## 题目五：赋值语句
+
+1.  创建R脚本文件test0105.R。
+
+2.  输入以下代码：
+
+    ```{r}
+    #| eval: false
+    # 常量赋值
+    constant <- "Hello!"
+    constant
+    # 变量赋值
+    a <- 5
+    print(a)
+    b <- 10; print(b)
+    (c = TRUE)
+    d = FALSE; d
+    e = 1e-2
+    print(e)
+    (f = 1.4E+3)
+    ```
+
+## 题目六：R表达式的书写
+
+1.  在RStudio中，创建脚本文件test0106.R。
+
+2.  输入以下代码：
+
+    ```{r}
+    #| eval: false
+    # 算术运算符
+    c <- 5 + 3
+    print(c)
+    (d <- 10 - 2)
+    e <- 2 * 4; e
+    # 比较运算符
+    f <- 5 > 3
+    f
+    g <- 10 < 5
+    g
+    h <- 5 >= 5
+    h
+    'a' < 'A'
+    'ab' < 'A'
+    '李' < '张'
+    # 逻辑运算符
+    i <- TRUE && FALSE
+    print(i)
+    j <- TRUE || FALSE
+    print(j)
+    k <- !TRUE
+    print(k)
+    # 模与整数除
+    23/4
+    23 %/% 4
+    23 %% 4
+    -23%%4
+    23%%-4
+    -23%%-4
+    ```
+
+3.  逐行运行，观察运行结果。
+
+## 题目七：R表达式的书写
+
+1.  创建脚本文件test0107.R。
+
+2.  用赋值语句定义变量a、b、c，即给变量赋值，且值分别为2、5、-1。
+
+3.  计算表达式$\frac{-b+\sqrt{b^2-4ac} }{2a}$和$\frac{\sin (b-ac)}{3a+bc}$ 的值。
+
+    ::: callout-note
+    ## tip
+
+    算术根函数是sqrt，例如$\sqrt{2}$，其R表示为sqrt(2)
+    :::
