@@ -1,2 +1,2 @@
 *.R linguist-language=R
-*.qmd linguist-language=R Markdown
+*.qmd linguist-language=Markdown
