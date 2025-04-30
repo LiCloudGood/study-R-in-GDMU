@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.29">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>向量和矩阵</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="向量与矩阵_files/libs/clipboard/clipboard.min.js"></script>
+<script src="向量与矩阵_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="向量与矩阵_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="向量与矩阵_files/libs/quarto-html/popper.min.js"></script>
+<script src="向量与矩阵_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="向量与矩阵_files/libs/quarto-html/anchor.min.js"></script>
+<link href="向量与矩阵_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="向量与矩阵_files/libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="向量与矩阵_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="向量与矩阵_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="向量与矩阵_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">向量和矩阵</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="题目目的" class="level1">
+<h1>题目目的</h1>
+<p>（一）掌握向量的创建方法。</p>
+<p>（二）掌握向量的操作与运算。</p>
+<p>（三）掌握矩阵的创建方法。</p>
+<p>（四）掌握矩阵的操作与运算。</p>
+</section>
+<section id="题目" class="level1">
+<h1>题目</h1>
+<section id="题目一用冒号运算符c函数rep函数和seq函数创建向量创建脚本文件test0201.r完成下面操作" class="level2">
+<h2 class="anchored" data-anchor-id="题目一用冒号运算符c函数rep函数和seq函数创建向量创建脚本文件test0201.r完成下面操作">题目一：用冒号运算符、c函数、rep函数和seq函数创建向量。创建脚本文件test0201.R，完成下面操作。</h2>
+<ul>
+<li><p>使用冒号运算符创建一个包含1到10的向量，并赋值给vector1。</p></li>
+<li><p>使用c函数创建一个包含”apple”, “banana”, “cherry”的向量，并赋值给vector2。</p></li>
+<li><p>使用rep函数创建一个包含数值1到5重复2次的向量，并赋值给vector3。</p></li>
+<li><p>使用seq函数创建一个从10到50以10为间隔的向量，并赋值给vector4。</p></li>
+<li><p>打印出所有创建的向量。</p></li>
+<li><p>计算vector1和vector2的长度，并将结果打印出来。</p></li>
+<li><p>使用冒号运算符选择vector1中的第3个到第7个元素，并将结果打印出来。</p></li>
+<li><p>使用c函数将vector1和vector2合并，并将结果打印出来。</p></li>
+<li><p>使用rep函数将c(-5,3,7)中的元素分别重复3、4、2次，并将结果打印出来。</p></li>
+<li><p>使用seq函数创建一个从1到10的向量，其间隔设置为2，并将结果打印出来。</p></li>
+</ul>
+</section>
+<section id="题目二使用r语言执行向量的索引操作算术运算和排序操作创建脚本文件test0202.r完成下面操作" class="level2">
+<h2 class="anchored" data-anchor-id="题目二使用r语言执行向量的索引操作算术运算和排序操作创建脚本文件test0202.r完成下面操作">题目二：使用R语言执行向量的索引操作、算术运算和排序操作。创建脚本文件test0202.R，完成下面操作。</h2>
+<ul>
+<li><p>使用R语言创建一个包含以下数字的向量：1, 10, 3, 7, 2, 8。将其命名为numbers。</p></li>
+<li><p>使用索引操作选择numbers向量中的第3个到第5个元素，并将结果打印出来。</p></li>
+<li><p>计算numbers向量的平均值，并将结果打印出来。</p></li>
+<li><p>计算numbers向量的总和，并将结果打印出来。</p></li>
+<li><p>使用sort函数对numbers向量进行降序排序，并将排序后的结果打印出来。</p></li>
+<li><p>创建一个新的向量squares，其中元素值为numbers向量中每个元素的平方，并将结果打印出来。</p></li>
+<li><p>计算numbers的5次方除以向量c(3,7,-13,17,-5,11)的余数，并将结果打印出来。</p></li>
+</ul>
+</section>
+<section id="题目三使用r语言掌握向量元素的增加删除更新与命名新建脚本文件test0203.r完成下面的操作" class="level2">
+<h2 class="anchored" data-anchor-id="题目三使用r语言掌握向量元素的增加删除更新与命名新建脚本文件test0203.r完成下面的操作">题目三：使用R语言掌握向量元素的增加、删除、更新与命名。新建脚本文件test0203.R，完成下面的操作。</h2>
+<ul>
+<li><p>创建一个名为vect的数值向量，包含5个元素：10, 20, 30, 40, 50。</p></li>
+<li><p>用中括号运算符，在vect向量的末尾增加两个新元素60和70。</p></li>
+<li><p>用append函数，在vect向量的末尾增加两个新元素100和200。</p></li>
+<li><p>删除vect向量中的第3个和第7个元素。</p></li>
+<li><p>将vect向量中的第3个元素更新为300。</p></li>
+<li><p>把vect向量中的元素分别用”a”、“b”、“c”、“d”、“e”、“f”、“g”命名，并把结果打印出来。</p></li>
+<li><p>创建一个长度为100的向量x，其中x是首项为5间隔为3的等差序列构成，然后把x中的偶数位置的元素用向量c(-10,-20)更新，并把结果打印出来。</p></li>
+</ul>
+</section>
+<section id="题目四使用r语言掌握向量的条件筛选创建脚本文件test0204.r完成下面的操作" class="level2">
+<h2 class="anchored" data-anchor-id="题目四使用r语言掌握向量的条件筛选创建脚本文件test0204.r完成下面的操作">题目四：使用R语言掌握向量的条件筛选。创建脚本文件test0204.R，完成下面的操作。</h2>
+<ul>
+<li><p>创建一个名为numbers的数值向量，包含以下元素：2, 4, 5, 2, 2, 3。</p></li>
+<li><p>找出最大元素所在的位置。</p></li>
+<li><p>提取numbers向量中所有等于2和大于4的元素的位置。</p></li>
+<li><p>创建向量x=rpois(300,100)创建长度为300的向量x，然后把第3，6，… …，300号元素筛选出来，并将选择的结果打印出来。</p></li>
+</ul>
+</section>
+<section id="题目五使用matrix和diag函数创建矩阵新建脚本文件test0205.r完成下面的操作" class="level2">
+<h2 class="anchored" data-anchor-id="题目五使用matrix和diag函数创建矩阵新建脚本文件test0205.r完成下面的操作">题目五：使用matrix和diag函数创建矩阵。新建脚本文件test0205.R，完成下面的操作。</h2>
+<ul>
+<li><p>使用matrix函数创建一个4行3列的矩阵，元素从1到12，要求按行排列。</p></li>
+<li><p>创建如下形式的矩阵。</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    1    2    3
+[3,]    1    2    3</code></pre>
+</div>
+</div>
+<ul>
+<li><p>创建如下形式的矩阵，且行名称为”r1”, “r2”, “r3”，列名称为”c1”, “c2”, “c3”。</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   c1 c2 c3
+r1  1  1  1
+r2  2  2  2
+r3  3  3  3</code></pre>
+</div>
+</div></li>
+<li><p>创建如下形式的矩阵。</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    2    1    2
+[2,]    1    2    1    2</code></pre>
+</div>
+</div></li>
+<li><p>用diag创建如下矩阵（先用帮助文档查看diag函数的用法）。</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    3    0    0
+[2,]    0    4    0
+[3,]    0    0    5</code></pre>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="题目六矩阵的基本操作打开脚本文件test0206.r补充代码实现以下操作" class="level2">
+<h2 class="anchored" data-anchor-id="题目六矩阵的基本操作打开脚本文件test0206.r补充代码实现以下操作">题目六：矩阵的基本操作。打开脚本文件test0206.R，补充代码，实现以下操作。</h2>
+<ul>
+<li><p>给矩阵mat的行/列命名，行名称分别为“第1行”、“第2行”、“第3行”、“第4行”，列名称分别为“第1列”、“第2列”、“第3列”。</p></li>
+<li><p>修改矩阵mat中第2行第3列的元素值为-15。</p></li>
+<li><p>把矩阵mat除开第3行的子矩阵赋值给变量y。</p></li>
+<li><p>把矩阵mat第1行元素值改为-10、第3行元素值改为-20，要求只用一条语句。</p></li>
+<li><p>把矩阵mat第1列元素值改为-100、第2列元素值改为-200，要求只用一条语句。</p></li>
+</ul>
+</section>
+<section id="题目七矩阵的算术运算和代数积运算打开脚本文件test0207.r补充代码实现以下操作" class="level2">
+<h2 class="anchored" data-anchor-id="题目七矩阵的算术运算和代数积运算打开脚本文件test0207.r补充代码实现以下操作">题目七：矩阵的算术运算和代数积运算。打开脚本文件test0207.R，补充代码，实现以下操作。</h2>
+<ul>
+<li><p>计算矩阵x与矩阵u的和。</p></li>
+<li><p>计算矩阵x与矩阵y的和，观察返回结果。</p></li>
+<li><p>计算矩阵x与向量w的积。</p></li>
+<li><p>计算矩阵x与矩阵z的积，观察返回结果。</p></li>
+<li><p>计算矩阵x与矩阵y的代数积。</p></li>
+<li><p>计算矩阵y与矩阵x的代数积，观察返回结果。</p></li>
+<li><p>计算矩阵x与矩阵z的代数积。</p></li>
+<li><p>计算矩阵x与向量w的代数积。</p></li>
+<li><p>提取矩阵x对角线上的元素。</p></li>
+<li><p>对矩阵y进行转置。</p></li>
+<li><p>计算矩阵x对应的行列式的值。</p></li>
+<li><p>提到矩阵x的特征值。</p></li>
+<li><p>用eigen函数计算矩阵y的特征值与特征向量，观察返回结果。</p></li>
+</ul>
+</section>
+<section id="题目八矩阵相关函数包括dim函数apply函数ncol函数与nrow函数colsums函数rowsums函数colmeans函数rowmeans函数打开脚本文件test0208.r补充代码完成下面任务" class="level2">
+<h2 class="anchored" data-anchor-id="题目八矩阵相关函数包括dim函数apply函数ncol函数与nrow函数colsums函数rowsums函数colmeans函数rowmeans函数打开脚本文件test0208.r补充代码完成下面任务">题目八：矩阵相关函数，包括dim函数、apply函数、ncol函数与nrow函数、colSums函数、rowSums函数、colMeans函数、rowMeans函数。打开脚本文件test0208.R，补充代码，完成下面任务。</h2>
+<ul>
+<li><p>计算矩阵的行数与列数。</p></li>
+<li><p>计算矩阵x的维度。</p></li>
+<li><p>计算矩阵x每行的和。</p></li>
+<li><p>计算矩阵x每列的平均值。</p></li>
+<li><p>用apply函数计算矩阵x每行的方差。</p></li>
+<li><p>计算矩阵x所有元素的平方和。</p></li>
+</ul>
+</section>
+<section id="题目九综合题创建脚本文件test0209.r补充代码完成下面任务" class="level2">
+<h2 class="anchored" data-anchor-id="题目九综合题创建脚本文件test0209.r补充代码完成下面任务">题目九：综合题。创建脚本文件test0209.R，补充代码，完成下面任务。</h2>
+<p>空间三角形ABC的顶点坐标分别为A(3,4,5)、B(-3,2,4)、C(5,-3,4)，请计算三角形三边的长度以及三个夹角的余弦值。</p>
+<p>向量x=c(9, 8, 10, 7, 12, 11, 12, 6. 10, 3, 11, 13, 7, 10, 9)，请计算x中的元素两两相乘之积的和，例如<span class="math inline">\(x = c(x1,x2,x3)\)</span>则两两相乘之积的和为<span class="math inline">\(x1x2+x2x3+x1x3\)</span>。</p>
+</section>
+</section>
+<section id="答案及解析" class="level1">
+<h1>答案及解析</h1>
+<section id="题目一" class="level2">
+<h2 class="anchored" data-anchor-id="题目一">题目一：</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#为了方便理解，这里把需要一次性打印的向量分开打印</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>vector1 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(vector1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>vector2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cherry"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(vector2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "apple"  "banana" "cherry"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>vector3 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">times =</span> <span class="dv">2</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#将向量(1:5)重复两次</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(vector3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 2 3 4 5 1 2 3 4 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>vector4 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10</span>, <span class="at">to =</span> <span class="dv">50</span>, <span class="at">by =</span> <span class="dv">10</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#首项为10，尾项为50，步长为10组成的等差数列组成的向量</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(vector4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10 20 30 40 50</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#利用length(vector)来算向量内元素的个数</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(vector1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(vector2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(vector1[<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 4 5 6 7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#当两个向量需要组合在一起的时候，可以用c来连接</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(vector1, vector2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "1"      "2"      "3"      "4"      "5"      "6"      "7"      "8"     
+ [9] "9"      "10"     "apple"  "banana" "cherry"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#将-5重复3次，3重复4次，7重复2次</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">7</span>), <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -5 -5 -5  3  3  3  3  7  7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 3 5 7 9</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+归纳创建向量(Vector)方法：
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>用<span class="math inline">\(x:y\)</span>，创建一个<span class="math inline">\((x,x+1,...,y-1,y)\)</span>的向量。</p></li>
+<li><p>c(元素）</p></li>
+<li><p>当元素需要重复时:rep()</p></li>
+<li><p>当创建一个等差数列的向量时：seq()</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="题目二" class="level2">
+<h2 class="anchored" data-anchor-id="题目二">题目二：</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">8</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(numbers[<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 7 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">mean</span>(numbers))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.166667</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sum</span>(numbers))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 31</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#sort为排序，decreasing为排序顺序,T为升序，F为降序</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sort</span>(numbers, <span class="at">decreasing =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10  8  7  3  2  1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>squares <span class="ot">&lt;-</span> numbers<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">#对向量进行平方运算时，每个元素单独进行平方</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(squares)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]   1 100   9  49   4  64</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#对 numbers 中的每个元素进行 5次方，然后分别与后面向量的元素进行模运算</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(numbers<span class="sc">^</span><span class="dv">5</span> <span class="sc">%%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="sc">-</span><span class="dv">13</span>, <span class="dv">17</span>, <span class="sc">-</span><span class="dv">5</span>, <span class="dv">11</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1  5 -4 11 -3 10</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+我们利用vector[]来索引向量内的元素
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+不同于其他语言从0开始编号，R语言从1开始编号
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>向量运算示例</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>sum()</td>
+<td>向量内元素求和</td>
+</tr>
+<tr class="even">
+<td>mean()</td>
+<td>求平均数</td>
+</tr>
+<tr class="odd">
+<td>max(),min()</td>
+<td>求最大最小值</td>
+</tr>
+<tr class="even">
+<td>length()</td>
+<td>求向量内元素个数</td>
+</tr>
+<tr class="odd">
+<td>sort()</td>
+<td>向量内元素排序（默认升序，T升F降）</td>
+</tr>
+<tr class="even">
+<td>sd(),var()</td>
+<td>计算标准差，方差</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="题目三" class="level2">
+<h2 class="anchored" data-anchor-id="题目三">题目三：</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>vect <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>vect <span class="ot">&lt;-</span> <span class="fu">c</span>(vect, <span class="dv">60</span>, <span class="dv">70</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>vect <span class="ot">&lt;-</span> <span class="fu">append</span>(vect, <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">200</span>))</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>vect <span class="ot">&lt;-</span> vect[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>)]</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>vect[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">300</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(vect) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"f"</span>, <span class="st">"g"</span>)</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Named vect:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Named vect:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(vect)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  a   b   c   d   e   f   g 
+ 10  20 300  50  60 100 200 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">5</span>, <span class="at">by =</span> <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">seq</span>(<span class="dv">2</span>, <span class="fu">length</span>(x), <span class="at">by =</span> <span class="dv">2</span>)] <span class="ot">&lt;-</span> </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rep</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="sc">-</span><span class="dv">20</span>), <span class="at">length.out =</span> <span class="fu">length</span>(x) <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Updated x:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Updated x:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]   5 -10  11 -20  17 -10  23 -20  29 -10  35 -20  41 -10  47 -20  53 -10
+ [19]  59 -20  65 -10  71 -20  77 -10  83 -20  89 -10  95 -20 101 -10 107 -20
+ [37] 113 -10 119 -20 125 -10 131 -20 137 -10 143 -20 149 -10 155 -20 161 -10
+ [55] 167 -20 173 -10 179 -20 185 -10 191 -20 197 -10 203 -20 209 -10 215 -20
+ [73] 221 -10 227 -20 233 -10 239 -20 245 -10 251 -20 257 -10 263 -20 269 -10
+ [91] 275 -20 281 -10 287 -20 293 -10 299 -20</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+增加（删除）向量元素方法:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>可以直接创建一个新向量，把旧向量和新元素放入</p>
+<p>append()函数可以直接在尾部增加新元素</p>
+<p>如该向量所含元素为m，可以直接使用vector[m+1]来赋值</p>
+<p>当我们要删除元素的时候，可以用”-“删除</p>
+</div>
+</div>
+</section>
+<section id="题目四" class="level2">
+<h2 class="anchored" data-anchor-id="题目四">题目四：</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 找到最大值的索引</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">which.max</span>(numbers))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">which</span>(numbers <span class="sc">==</span> <span class="dv">2</span> <span class="sc">|</span> numbers <span class="sc">&gt;</span> <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 3 4 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Selected elements from x:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Selected elements from x:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x[<span class="fu">seq</span>(<span class="dv">3</span>, <span class="dv">300</span>, <span class="at">by =</span> <span class="dv">3</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]  11 -10  29 -20  47 -10  65 -20  83 -10 101 -20 119 -10 137 -20 155 -10
+ [19] 173 -20 191 -10 209 -20 227 -10 245 -20 263 -10 281 -20 299  NA  NA  NA
+ [37]  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA
+ [55]  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA
+ [73]  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA
+ [91]  NA  NA  NA  NA  NA  NA  NA  NA  NA  NA</code></pre>
+</div>
+</div>
+<table class="caption-top table">
+<caption>基本逻辑运算符</caption>
+<thead>
+<tr class="header">
+<th>运算符</th>
+<th>逻辑</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>！</td>
+<td>非（NOT）</td>
+<td>用于取反</td>
+</tr>
+<tr class="even">
+<td>&amp;</td>
+<td>与（AND）</td>
+<td>逐元素进行逻辑与运算</td>
+</tr>
+<tr class="odd">
+<td>|</td>
+<td>或（OR）</td>
+<td>逐元素进行逻辑或运算</td>
+</tr>
+<tr class="even">
+<td>&amp;&amp;</td>
+<td>与（AND）</td>
+<td>仅对第一个元素进行运算（常用于条件判断）</td>
+</tr>
+<tr class="odd">
+<td>||</td>
+<td>或（OR）</td>
+<td>仅对第一个元素进行运算（常用于条件判断）</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="题目五" class="level2">
+<h2 class="anchored" data-anchor-id="题目五">题目五：</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>mat1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co">#当byrow为TRUE时，按照行排列，FALSE时，按照列排列</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="co">#可以通过nrow和ncol来分别规定矩阵的行数和列数</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    4    5    6
+[3,]    7    8    9
+[4,]   10   11   12</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>mat2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">3</span>)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mat2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    1    1
+[2,]    2    2    2
+[3,]    3    3    3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>mat3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">3</span>,<span class="at">byrow =</span> F)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(mat3) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"r1"</span>, <span class="st">"r2"</span>, <span class="st">"r3"</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mat3) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"c1"</span>, <span class="st">"c2"</span>,<span class="st">'c3'</span>)</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co">#利用rownames和colnames来命名矩阵的行和列</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mat3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   c1 c2 c3
+r1  1  1  1
+r2  2  2  2
+r3  3  3  3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>mat4 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">4</span>,<span class="at">byrow =</span> T)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co">#每个元素将重复两次以填满每一行（当元素不足时）</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mat4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    2    1    2
+[2,]    1    2    1    2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>mat5 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="co">#当你向 diag 函数提供一个向量时，它会创建一个对角矩阵，</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co">#其中对角线上的元素是向量的元素，其余元素都是 0。</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mat5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    3    0    0
+[2,]    0    4    0
+[3,]    0    0    5</code></pre>
+</div>
+</div>
+</section>
+<section id="题目六" class="level2">
+<h2 class="anchored" data-anchor-id="题目六">题目六：</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="co">#用于设置随机数生成器的种子。种子值为 1。</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rpois</span>(<span class="dv">12</span>,<span class="dv">30</span>)</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="co">#生成一个长度为 12 的随机向量，其中每个元素都来自参数为 30 的泊松分布。</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">=</span> <span class="fu">matrix</span>(x,<span class="at">nrow =</span> <span class="dv">4</span>)</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>mat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]   26   21   28
+[2,]   37   32   38
+[3,]   36   34   32
+[4,]   32   33   26</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(mat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"第1行"</span>, <span class="st">"第2行"</span>, <span class="st">"第3行"</span>, <span class="st">"第4行"</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"第1列"</span>, <span class="st">"第2列"</span>, <span class="st">"第3列"</span>)</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="co">#重命名</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>mat[<span class="st">"第2行"</span>, <span class="st">"第3列"</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">15</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> mat[<span class="sc">-</span><span class="dv">3</span>, ]</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a><span class="co">#提取矩阵中除第 3 行之外的所有行，结果存储在变量 y 中</span></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      第1列 第2列 第3列
+第1行    26    21    28
+第2行    37    32   -15
+第4行    32    33    26</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>mat[<span class="fu">c</span>(<span class="st">"第1行"</span>, <span class="st">"第3行"</span>), ] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="sc">-</span><span class="dv">20</span>)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co">#将矩阵中第 1 行和第 3 行的所有元素分别设置为 -10 和 -20</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>mat[, <span class="fu">c</span>(<span class="st">"第1列"</span>, <span class="st">"第2列"</span>)] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">100</span>, <span class="sc">-</span><span class="dv">200</span>)</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co">#将矩阵中第 1 列和第 2 列的所有元素分别设置为 -100 和 -200</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      第1列 第2列 第3列
+第1行  -100  -100   -10
+第2行  -200  -200   -15
+第3行  -100  -100   -20
+第4行  -200  -200    26</code></pre>
+</div>
+</div>
+</section>
+<section id="题目七" class="level2">
+<h2 class="anchored" data-anchor-id="题目七">题目七：</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rpois</span>(<span class="dv">9</span>,<span class="dv">10</span>),<span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">200</span>)</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rpois</span>(<span class="dv">12</span>,<span class="dv">10</span>),<span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>w <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">1</span>)</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>u <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>,<span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x <span class="sc">+</span> u)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    9   16   15
+[2,]   12   15   20
+[3,]   12   17   16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co">#print(x + y)</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="co">#错误于x + y: 非整合陈列</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x <span class="sc">*</span> w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]   24   36   24
+[2,]   70   70   84
+[3,]    9   11    7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co">#print(x * z)</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="co">#错误于x * z: 非整合陈列</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x <span class="sc">%*%</span> y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]  288  280  192  220
+[2,]  332  318  212  256
+[3,]  277  272  184  214</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co">#print(y %*% x)</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="co">#错误于y %*% x: 非整合参数</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x <span class="sc">%*%</span> w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]  116
+[2,]  112
+[3,]  111</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">diag</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  8 10  7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">t</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]   10   10   11
+[2,]   11   10    9
+[3,]    6    8    6
+[4,]    9    7    8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">det</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 120</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">eigen</span>(x)<span class="sc">$</span>values)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 29.184179 -2.606891 -1.577288</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co">#print(eigen(y))</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="co">#错误于eigen(y): eigen里的矩阵不是正方形的</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="题目八" class="level2">
+<h2 class="anchored" data-anchor-id="题目八">题目八：</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,<span class="at">nrow =</span> <span class="dv">5</span>)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  81  87  93  99 105</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  3  8 13 18 23 28</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co">#对矩阵 x 的每一行应用方差函数 var</span></span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(x,<span class="dv">1</span>,var)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 87.5 87.5 87.5 87.5 87.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9455</code></pre>
+</div>
+</div>
+</section>
+<section id="题目九" class="level2">
+<h2 class="anchored" data-anchor-id="题目九">题目九：</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>)</span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="sc">-</span><span class="dv">3</span>,<span class="dv">4</span>)</span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>AB <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="sc">-</span><span class="dv">3</span> <span class="sc">-</span> <span class="dv">3</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="dv">2</span> <span class="sc">-</span> <span class="dv">4</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="dv">4</span> <span class="sc">-</span> <span class="dv">5</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a>BC <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="dv">5</span> <span class="sc">-</span> (<span class="sc">-</span><span class="dv">3</span>))<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="sc">-</span><span class="dv">3</span> <span class="sc">-</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="dv">4</span> <span class="sc">-</span> <span class="dv">4</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb104-6"><a href="#cb104-6" aria-hidden="true" tabindex="-1"></a>CA <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((<span class="dv">3</span> <span class="sc">-</span> <span class="dv">5</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="dv">4</span> <span class="sc">-</span> (<span class="sc">-</span><span class="dv">3</span>))<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="dv">5</span> <span class="sc">-</span> <span class="dv">4</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb104-7"><a href="#cb104-7" aria-hidden="true" tabindex="-1"></a>cos_A <span class="ot">&lt;-</span> (AB<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> CA<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> BC<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> AB <span class="sc">*</span> CA)</span>
+<span id="cb104-8"><a href="#cb104-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cos_A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.06375767</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>cos_B <span class="ot">&lt;-</span> (AB<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> BC<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> CA<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> AB <span class="sc">*</span> BC)</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cos_A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.06375767</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>cos_C <span class="ot">&lt;-</span> (CA<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> BC<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> AB<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (<span class="dv">2</span><span class="sc">*</span> CA <span class="sc">*</span> BC)</span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cos_C)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7356619</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">7</span>,<span class="dv">12</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">3</span>,<span class="dv">11</span>,<span class="dv">13</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">9</span>)</span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>sum_of_products <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">combn</span>(x, <span class="dv">2</span>, <span class="at">FUN =</span> prod))</span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sum_of_products)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8838</code></pre>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
