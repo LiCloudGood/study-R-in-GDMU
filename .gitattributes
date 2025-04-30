@@ -1,2 +1,3 @@
 *.R linguist-language=R
 *.qmd linguist-language=Markdown
+*.pdf linguist-language=Markdown
