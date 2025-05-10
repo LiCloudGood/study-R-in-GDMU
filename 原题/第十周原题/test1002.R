@@ -1,0 +1,6 @@
+set.seed(12345)
+x.1 <- rnorm(200,mean = 2, sd = 2)
+x.2 <- rnorm(200,mean = 4, sd = 3)
+x.3 <- rpois(200,3)
+x.4 <- rbinom(200,8,prob = 0.2)
+x <- data.frame(x.1,x.2,x.3,x.4)
