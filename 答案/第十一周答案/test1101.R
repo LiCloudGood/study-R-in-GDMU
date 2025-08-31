@@ -14,7 +14,7 @@ hist(x$Petal.Length,main = 'Histogram of x$Petal.Length',ylab = 'Frequency',bord
 box()
 hist(x$Petal.Width,main = 'Histogram of x$Petal.Width',ylab = 'Frequency',border = 'black')     
 box()
-par(mfrow = c(1,))
+par(mfrow = c(1,1))
 
 # layout函数
 layout_matrix <- matrix(c(1,2,3),nrow = 2,ncol = 1)
@@ -26,3 +26,4 @@ box()
 hist(x$Sepal.Width,main = 'Histogram of x$Sepal.Width', ylab = 'Frequency',border = 'black')
 box()
 par(mfrow = c(1, 1))
+
