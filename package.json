@@ -1,0 +1,20 @@
+{
+  "name": "studyringdmu",
+  "version": "1.0.0",
+  "description": "本库主要包含两部分：原题、答案，汇总\r 原题部分，word文档、r语言程序都是最初的部分；而html和pdf则为原题与答案的总和。\r 答案部分只有写好的R语言程序。\r 目前没计划出完全部的答案解析。\r 最后的更新就是把全部的汇总在一起,用pdf和html两种格式呈现出来放在汇总文件夹里面",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@ssh.github.com:443/LiCloudGood/study-R-in-GDMU.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
