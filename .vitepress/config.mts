@@ -4,7 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   base: '/study-R-in-GDMU/',
   title: "study R in GDMU",
-  description: "The task background and reference solutions are provided by the GDMU course. All datasets used are built-in R datasets and contain no sensitive real-world information.The website was  built and beautified by Li_CloudGood. Thanks for all the friends and teachers who support me. ",
+  description: "GDMU R course site ",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
