@@ -8,8 +8,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docs:build": "vitepress build docs",
-    "docs:dev": "vitepress dev docs"
+    "docs:build": "vitepress build .",
+    "docs:dev": "vitepress dev .",
+    "preview": "npm run docs:build && cd .vitepress/dist && mkdir study-R-in-GDMU 2>nul && xcopy /E /Y . study-R-in-GDMU\\ && python -m http.server 5173"
+    
   },
   "repository": {
     "type": "git",
