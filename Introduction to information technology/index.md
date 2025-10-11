@@ -8,7 +8,7 @@ title: 'Introduction to information technology（信息技术基础）'
 
 const links = [
   { title: '软件及其软件包安装和脚本编写', desc: '掌握RGUI与RStudio的安装配置、脚本编写运行、软件包管理、赋值语句及运算符与表达式书写',
-  link: '' },
+  link: '/Introduction to information technology/1-软件及其软件包安装和脚本编写.md' },
   { title: '向量与矩阵', desc: '掌握向量与矩阵的创建、操作与运算',
   link: '' },
   { title: '数组与数据框', desc: '掌握数组与数据框的创建、筛选、元素提取及基本操作', 

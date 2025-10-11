@@ -34,7 +34,7 @@ export default defineConfig({
           text: '信息技术基础',
           items: [
             { text: '0-介绍', link: '/Introduction to information technology/index.md' },
-            { text: '1-软件及其软件包安装和脚本编写', link: '' },
+            { text: '1-软件及其软件包安装和脚本编写', link: '/Introduction to information technology/1-软件及其软件包安装和脚本编写.md' },
             { text: '2-向量与矩阵', link: '' },
             { text: '3-数组与数据框', link: '' },
             { text: '4-列表与因子', link: '' },
