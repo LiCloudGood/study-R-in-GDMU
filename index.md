@@ -10,7 +10,7 @@ hero:
 features:
   - title: Introduction to information technology <br>（信息技术基础）
     details: 从这里学习R语言最入门的知识 <br>（即是原文档'study R in GDMU'的内容）
-    link: /Introduction to information technology/index.md
+    link: /intro-it/index.md
   - title: Fundamentals of Medical Big Data Analysis <br>（医学大数据分析与决策）
     details: 从这里学习R语言在医学大数据分析中的应用，学习更加进阶的绘图与数据分析
     link: /Fundamentals of Medical Big Data Analysis in GDMU/index.md
