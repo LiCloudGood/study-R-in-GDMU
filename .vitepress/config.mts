@@ -9,7 +9,7 @@ const lectures: { text: string; link?: string }[] = [
   { text: '1-软件及其软件包安装和脚本编写', link: '/intro-it/1-software-install' },
   { text: '2-向量与矩阵', link: '/intro-it/2-vectors-and-matrices' },
   { text: '3-数组与数据框', link: '/intro-it/3-arrays-and-data-frames' },
-  { text: '4-列表与因子' },
+  { text: '4-列表与因子', link: '/intro-it/4-lists-and-factors' },
   { text: '5-日期、字符与特殊值处理' },
   { text: '6-输入、输出' },
   { text: '7-分支与循环' },

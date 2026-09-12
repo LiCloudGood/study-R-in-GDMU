@@ -12,7 +12,7 @@ const links = [
   { title: '数组与数据框', desc: '掌握数组与数据框的创建、筛选、元素提取及基本操作',
     link: '/intro-it/3-arrays-and-data-frames' },
   { title: '列表与因子', desc: '掌握列表的创建与操作，以及因子的定义与相关函数',
-    link: '' },
+    link: '/intro-it/4-lists-and-factors' },
   { title: '日期、字符与特殊值处理', desc: '掌握日期处理、正则检索与特殊值处理',
     link: '' },
   { title: '输入、输出', desc: '掌握文件读写、数据保存及环境加载的输入输出全套操作',
