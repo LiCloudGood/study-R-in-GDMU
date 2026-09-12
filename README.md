@@ -126,7 +126,10 @@ $$
 - [x] 第 2 讲 向量与矩阵
 - [x] 第 3 讲 数组与数据框
 - [x] 第 4 讲 列表与因子
-- [ ] 第 5~13 讲（整理中）
+- [x] 第 5 讲 日期、字符与特殊值处理
+- [x] 第 6 讲 输入、输出
+- [x] 第 7 讲 分支与循环
+- [ ] 第 8~13 讲（整理中）
 
 ## 整理新一讲的流程
 
@@ -159,5 +162,5 @@ node scripts/extract-docx.mjs "原题/第三周原题/数组与数据框.docx"
 
 - **课程资料**（`原题` / `答案` / `汇总`）：由 [Li_CloudGood](https://github.com/LiCloudGood) 整理提供。
 - **网页实现**：站点基于 [VitePress](https://vitepress.dev/) 构建。页面结构、自定义主题组件、
-  讲义排版与公式还原，由 Li_CloudGood 提出设想与需求，与 DeepSeek Harness 驱动的 AI 助手协作完成——
+  网页讲义排版与公式还原，由 Li_CloudGood 提出设想与需求，与 DeepSeek Harness 驱动的 AI 助手协作完成——
   其中也包括从 docx 的 MathType 二进制里把丢失的公式「挖」回来。
