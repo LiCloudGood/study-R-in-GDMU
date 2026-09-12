@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from 'vue'
+import { describeError, drawImages, getWebR, isWebRReady, runR } from '../webr'
 
 /**
  * 交互式 R 代码块：在浏览器里真实运行 R（基于 WebR），不需要装 R。
@@ -10,8 +11,6 @@ import { computed, onUnmounted, ref } from 'vue'
  *
  * 首次点「一键运行 R」会下载约 10 MB 的 WebR 运行环境，之后就能反复使用。
  */
-const WEBR_MODULE_URL = 'https://webr.r-wasm.org/latest/webr.mjs'
-
 const DEFAULT_CODE = 'plot(rnorm(100))'
 const DEFAULT_OUTPUT = '// WebR 是一个在浏览器中运行 R 的工具，点击上方按钮开始安装'
 
@@ -28,8 +27,8 @@ const errorText = ref('')
 const hasError = ref(false)
 const copyText = ref('复制代码')
 const copyIcon = ref('📋')
+const plotContainer = ref<HTMLElement | null>(null)
 
-let webr: any = null
 let timer: ReturnType<typeof setInterval> | null = null
 
 const rows = computed(() => Math.max(4, Math.min(10, code.value.split('\n').length)))
@@ -56,10 +55,8 @@ async function install() {
       progress.value = Math.min(progress.value + 2, 90)
     }, 200)
 
-    const { WebR } = await import(/* @vite-ignore */ WEBR_MODULE_URL)
+    await getWebR()
     progress.value = 95
-    webr = new WebR()
-    await webr.init()
 
     stopProgress()
     progress.value = 100
@@ -85,15 +82,16 @@ async function install() {
 
 /** 执行编辑器里的代码 */
 async function run() {
-  if (!webr || isRunning.value) return
+  if (!isWebRReady() || isRunning.value) return
   isRunning.value = true
   output.value = '// 正在执行代码...'
+  if (plotContainer.value) plotContainer.value.innerHTML = ''
   try {
-    const result = await (await webr.evalR(code.value)).toString()
-    output.value = result || '// 代码执行成功，但没有返回结果'
+    const result = await runR(code.value)
+    output.value = result.text || '// 代码执行成功，但没有输出内容'
+    if (result.images.length && plotContainer.value) drawImages(plotContainer.value, result.images)
   } catch (e) {
-    output.value =
-      e instanceof Error ? `// 执行错误：${e.message}\n\n请检查代码后重试。` : `// 执行过程中发生未知错误：${String(e)}`
+    output.value = `// ${describeError(e).replace(/\n/g, '\n// ')}`
   } finally {
     isRunning.value = false
   }
@@ -101,14 +99,15 @@ async function run() {
 
 /** 清空 R 环境里的所有变量 */
 async function reset() {
-  if (!webr) return
+  if (!isWebRReady()) return
   isRunning.value = true
   output.value = '// 正在重置 WebR 环境...'
+  if (plotContainer.value) plotContainer.value.innerHTML = ''
   try {
-    await webr.evalR('rm(list = ls(all = TRUE))')
+    await runR('rm(list = ls(all = TRUE))')
     output.value = '// WebR 环境已重置，所有变量已清除'
   } catch (e) {
-    output.value = `// 重置环境失败：${String(e)}`
+    output.value = `// 重置环境失败：${describeError(e)}`
   } finally {
     isRunning.value = false
   }
@@ -139,11 +138,11 @@ function clearCode() {
 
 function clearOutput() {
   output.value = ''
+  if (plotContainer.value) plotContainer.value.innerHTML = ''
 }
 
 onUnmounted(() => {
   stopProgress()
-  webr?.close?.().catch(() => {})
 })
 </script>
 
@@ -236,6 +235,7 @@ onUnmounted(() => {
         </div>
       </div>
       <pre class="r-out" aria-live="polite">{{ output }}</pre>
+      <div ref="plotContainer" class="plot-container" />
     </div>
   </div>
 </template>
@@ -534,6 +534,21 @@ onUnmounted(() => {
   word-break: break-all;
   overflow-x: auto;
   margin: 0;
+}
+
+.plot-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.plot-container :deep(canvas) {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  background: #fff;
 }
 
 .loading-spinner {

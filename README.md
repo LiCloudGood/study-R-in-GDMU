@@ -41,22 +41,38 @@ npm run docs:preview # 预览构建结果
 
 可用属性：`initially-open`、`show-text`、`hide-text`、`theme`、`animation`、`icon-position`。
 
-### 一键运行 R 代码 `<AnswerBlock>`
+### 参考答案卡片 `<AnswerBlock>`
 
 ```md
 <script setup>
 const code = `mean(1:10)`
 </script>
 
-<AnswerBlock title="实验一 · 运行答案" :code="code" />
+<AnswerBlock title="实验一 · 参考答案" :code="code" />
 ```
 
-点击按钮会弹出代码窗口；点「运行」会通过 [WebR](https://webr.r-wasm.org/) 在浏览器里真实执行这段 R 代码，**不需要安装 R**。
+答案代码**直接铺在页面上**，不依赖网络也能看；右上角有「📋 复制」，
+点「▶ 运行」才会通过 [WebR](https://webr.r-wasm.org/) 在浏览器里真实执行，
+**不需要安装 R**，画出来的图也会显示在输出区。
 
-> 首次运行需要从 CDN 下载约 10 MB 的 WebR 运行环境，因此只有点击「运行」时才会加载。
->
-> ⚠️ 注意：WebR 官方已下架旧的 `latest/webr.js` 入口（现在返回 403），本项目用的是现行的
-> ES Module 入口 `latest/webr.mjs`，**不要把地址改回去**。
+> 首次运行需要从 CDN 下载约 10 MB 的 WebR 运行环境，因此只有点击「运行」时才加载。
+
+#### ⚠️ 两个必须记住的 WebR 坑
+
+1. **入口地址**：官方已下架旧的 `latest/webr.js`（现在返回 **403**），
+   现行入口是 ES Module 形式的 `latest/webr.mjs`，**不要把地址改回去**。
+2. **输出捕获**：新版已经**删掉了 `webR.io`**，老写法
+   `webR.io.stdout.on('data', ...)` 会直接抛
+   `Cannot read properties of undefined (reading 'stdout')`。
+   正确做法是用 `Shelter.captureR()`，它一次性返回文本输出、报错和图片。
+
+这两点都封装在 `.vitepress/theme/webr.ts` 里了，新组件请直接复用：
+
+```ts
+import { runR, getWebR, drawImages, describeError } from '../webr'
+```
+
+详见 [官方文档](https://docs.r-wasm.org/webr/latest/evaluating.html)。
 
 ### 交互式 R 代码块 `<RBlock>`
 

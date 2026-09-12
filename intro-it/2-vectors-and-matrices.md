@@ -167,7 +167,7 @@ sum_of_products <- sum(combn(x, 2, FUN = prod))`
 9. 使用 `rep` 函数将 `c(-5, 3, 7)` 中的元素分别重复 3、4、2 次，并将结果打印出来。
 10. 使用 `seq` 函数创建一个从 1 到 10 的向量，其间隔设置为 2，并将结果打印出来。
 
-<AnswerBlock title="实验一 · 运行答案" :code="code0201" />
+<AnswerBlock title="实验一 · 参考答案" :code="code0201" />
 
 ::: tip 三个「生成序列」函数的区别
 - `1:10` —— 冒号运算符，只能生成间隔为 1 的等差数列。
@@ -187,7 +187,7 @@ sum_of_products <- sum(combn(x, 2, FUN = prod))`
 6. 创建一个新的向量 `squares`，其中元素值为 `numbers` 向量中每个元素的平方，并将结果打印出来。
 7. 计算 `numbers` 的 5 次方除以向量 `c(3, 7, -13, 17, -5, 11)` 的余数，并将结果打印出来。
 
-<AnswerBlock title="实验二 · 运行答案" :code="code0202" />
+<AnswerBlock title="实验二 · 参考答案" :code="code0202" />
 
 ::: tip R 的向量化运算
 第 7 题不需要写循环：`numbers^5 %% c(...)` 中两个向量长度相同，R 会自动「按位置一一对应」地计算，这叫做**向量化**。
@@ -205,7 +205,7 @@ sum_of_products <- sum(combn(x, 2, FUN = prod))`
 6. 把 `vect` 向量中的元素分别用 `"a"`、`"b"`、`"c"`、`"d"`、`"e"`、`"f"`、`"g"` 命名，并把结果打印出来。
 7. 创建一个长度为 100 的向量 `x`，其中 `x` 由首项为 5、间隔为 3 的等差序列构成，然后把 `x` 中偶数位置的元素用向量 `c(-10, -20)` 更新，并把结果打印出来。
 
-<AnswerBlock title="实验三 · 运行答案" :code="code0203" />
+<AnswerBlock title="实验三 · 参考答案" :code="code0203" />
 
 ::: warning 负索引是「排除」而不是「取反」
 `vect[-c(3, 7)]` 表示**删掉**第 3、7 个元素；R 的索引不支持下标的负数「从后往前数」。
@@ -220,7 +220,7 @@ sum_of_products <- sum(combn(x, 2, FUN = prod))`
 3. 提取 `numbers` 向量中所有等于 2 和大于 4 的元素的位置。
 4. 用 `x = rpois(300, 100)` 创建长度为 300 的向量 `x`，然后把第 3，6，…，300 号元素筛选出来，并将选择的结果打印出来。
 
-<AnswerBlock title="实验四 · 运行答案" :code="code0204" />
+<AnswerBlock title="实验四 · 参考答案" :code="code0204" />
 
 ::: warning 答案里少了生成 `x` 的一步
 `原题` 中第 4 题要求先生成 `x`，但答案脚本直接使用了 `x`。想让上面的代码跑通，请先执行：
@@ -252,7 +252,7 @@ $$\begin{bmatrix} 1 & 2 & 1 & 2 \\ 1 & 2 & 1 & 2 \end{bmatrix}$$
 
 $$\begin{bmatrix} 3 & 0 & 0 \\ 0 & 4 & 0 \\ 0 & 0 & 5 \end{bmatrix}$$
 
-<AnswerBlock title="实验五 · 运行答案" :code="code0205" />
+<AnswerBlock title="实验五 · 参考答案" :code="code0205" />
 
 ::: tip 注意 `byrow` 参数
 `matrix(data, nrow, ncol)` **默认按列填充**（`byrow = FALSE`）。第 2 题给出的矩阵每一行都是 `1 2 3`，所以要写成 `matrix(c(1, 2, 3), nrow = 3, ncol = 3, byrow = TRUE)`。
@@ -268,7 +268,7 @@ $$\begin{bmatrix} 3 & 0 & 0 \\ 0 & 4 & 0 \\ 0 & 0 & 5 \end{bmatrix}$$
 4. 把矩阵 `mat` 第 1 行元素值改为 -10、第 3 行元素值改为 -20，要求只用一条语句。
 5. 把矩阵 `mat` 第 1 列元素值改为 -100、第 2 列元素值改为 -200，要求只用一条语句。
 
-<AnswerBlock title="实验六 · 运行答案" :code="code0206" />
+<AnswerBlock title="实验六 · 参考答案" :code="code0206" />
 
 ::: tip 矩阵索引和向量一样
 `mat[行, 列]`，下标既可以用数字，也可以用行名/列名；留空表示「整行」或「整列」，例如 `mat[-3, ]` 就是「去掉第 3 行的全部列」。
@@ -292,7 +292,7 @@ $$\begin{bmatrix} 3 & 0 & 0 \\ 0 & 4 & 0 \\ 0 & 0 & 5 \end{bmatrix}$$
 12. 求矩阵 `x` 的特征值。
 13. 用 `eigen` 函数计算矩阵 `y` 的特征值与特征向量，观察返回结果。
 
-<AnswerBlock title="实验七 · 运行答案" :code="code0207" />
+<AnswerBlock title="实验七 · 参考答案" :code="code0207" />
 
 ::: tip 三个运算符别搞混
 | 写法 | 含义 | 要求 |
@@ -315,7 +315,7 @@ $$\begin{bmatrix} 3 & 0 & 0 \\ 0 & 4 & 0 \\ 0 & 0 & 5 \end{bmatrix}$$
 5. 用 `apply` 函数计算矩阵 `x` 每行的方差。
 6. 计算矩阵 `x` 所有元素的平方和。
 
-<AnswerBlock title="实验八 · 运行答案" :code="code0208" />
+<AnswerBlock title="实验八 · 参考答案" :code="code0208" />
 
 ::: tip `apply` 的第二个参数
 `apply(x, MARGIN, FUN)` 中，`MARGIN = 1` 表示按**行**计算，`MARGIN = 2` 表示按**列**计算。
@@ -330,7 +330,7 @@ $$\begin{bmatrix} 3 & 0 & 0 \\ 0 & 4 & 0 \\ 0 & 0 & 5 \end{bmatrix}$$
 
    例如 $x = c(x_1, x_2, x_3)$，则两两相乘之积的和为 $x_1x_2 + x_1x_3 + x_2x_3$。
 
-<AnswerBlock title="实验九 · 运行答案" :code="code0209" />
+<AnswerBlock title="实验九 · 参考答案" :code="code0209" />
 
 ::: tip 余弦定理与 `combn`
 - 三边长度用两点间距离公式 $AB=\sqrt{(x_1-x_2)^2+(y_1-y_2)^2+(z_1-z_2)^2}$，再配合余弦定理 $\cos A=\dfrac{AB^2+AC^2-BC^2}{2\,AB\cdot AC}$ 求夹角。

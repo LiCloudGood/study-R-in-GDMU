@@ -88,8 +88,8 @@ vioplot(mtcars$wt[mtcars$cyl==4],
 5. 运行上面脚本，观察运行结果。
 
 <AnswerBlock
-  title="题目三：安装包 · 运行答案"
-  description="点击“运行”后会在浏览器里真实执行这份 R 代码（首次需要下载约 10 MB 的 WebR 运行环境）"
+  title="题目三：安装包 · 参考答案"
+  description="注意：这段代码要读取本地的 vioplot_0.4.0.tar.gz，网页运行环境里没有这个文件，直接点「运行」会报错，属正常现象，请在本机 R 里执行。"
   :code="code0103"
 />
 
