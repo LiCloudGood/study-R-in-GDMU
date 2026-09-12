@@ -23,15 +23,20 @@ const props = withDefaults(
     description?: string
     /** 只展示代码，不提供运行按钮 */
     readOnly?: boolean
+    /** 是否默认展开答案（默认收起，让学生先自己试） */
+    defaultOpen?: boolean
   }>(),
   {
     code: '',
     packages: () => [],
     title: '参考答案',
     description: '',
-    readOnly: false
+    readOnly: false,
+    defaultOpen: false
   }
 )
+
+const isOpen = ref(props.defaultOpen)
 
 const copied = ref(false)
 const isRunning = ref(false)
@@ -92,52 +97,64 @@ function clearOutput() {
 </script>
 
 <template>
-  <div class="answer-block">
+  <div class="answer-block" :class="{ 'answer-block-open': isOpen }">
     <div class="answer-header">
       <div class="answer-title">
         <span class="answer-icon">📘</span>
         <span class="answer-title-text">{{ title }}</span>
       </div>
       <div class="answer-actions">
-        <button type="button" class="action-btn" @click="copyCode">
-          {{ copied ? '✅ 已复制' : '📋 复制' }}
-        </button>
         <button
-          v-if="!readOnly"
           type="button"
-          class="action-btn action-btn-primary"
-          :disabled="isRunning"
-          @click="run"
+          class="action-btn action-btn-toggle"
+          :aria-expanded="isOpen"
+          @click="isOpen = !isOpen"
         >
-          {{ isRunning ? '⏳ 运行中…' : '▶ 运行' }}
+          {{ isOpen ? '🙈 收起答案' : '👀 查看参考答案' }}
         </button>
-        <button
-          v-if="hasOutput && !readOnly"
-          type="button"
-          class="action-btn"
-          title="清空输出"
-          @click="clearOutput"
-        >
-          🧹
-        </button>
+        <template v-if="isOpen">
+          <button type="button" class="action-btn" @click="copyCode">
+            {{ copied ? '✅ 已复制' : '📋 复制' }}
+          </button>
+          <button
+            v-if="!readOnly"
+            type="button"
+            class="action-btn action-btn-primary"
+            :disabled="isRunning"
+            @click="run"
+          >
+            {{ isRunning ? '⏳ 运行中…' : '▶ 运行' }}
+          </button>
+          <button
+            v-if="hasOutput && !readOnly"
+            type="button"
+            class="action-btn"
+            title="清空输出"
+            @click="clearOutput"
+          >
+            🧹
+          </button>
+        </template>
       </div>
     </div>
 
-    <p v-if="description" class="answer-desc">{{ description }}</p>
+    <div v-show="isOpen" class="answer-body">
+      <p v-if="description" class="answer-desc">{{ description }}</p>
 
-    <pre class="answer-code"><code>{{ code }}</code></pre>
+      <pre class="answer-code"><code>{{ code }}</code></pre>
 
-    <div v-if="status" class="answer-status">
-      <span class="spinner" />
-      {{ status }}
-    </div>
+      <div v-if="status" class="answer-status">
+        <span class="spinner" />
+        {{ status }}
+      </div>
 
-    <div v-if="error" class="answer-error">{{ error }}</div>
+      <div v-if="error" class="answer-error">{{ error }}</div>
 
-    <div v-if="hasOutput" class="answer-output">
-      <div class="output-header">输出结果</div>
-      <pre v-if="output" class="output-text">{{ output }}</pre>
-      <div ref="plotContainer" class="plot-container" />
+      <div v-if="hasOutput" class="answer-output">
+        <div class="output-header">输出结果</div>
+        <pre v-if="output" class="output-text">{{ output }}</pre>
+        <div ref="plotContainer" class="plot-container" />
+      </div>
     </div>
   </div>
 </template>
@@ -159,7 +176,11 @@ function clearOutput() {
   flex-wrap: wrap;
   padding: 10px 16px;
   background: var(--ra-bg);
-  border-bottom: 1px solid var(--ra-border);
+}
+
+/* 展开时才给内容区加分隔线，收起状态下不留一条突兀的横线 */
+.answer-body {
+  border-top: 1px solid var(--ra-border);
 }
 
 .answer-title {
@@ -225,6 +246,19 @@ function clearOutput() {
 .action-btn-primary:hover:not(:disabled) {
   background: var(--ra-primary-dark);
   border-color: var(--ra-primary-dark);
+}
+
+/* 「查看参考答案」按钮——让它在收起状态下明显一点 */
+.action-btn-toggle {
+  border-color: var(--ra-primary);
+  color: var(--ra-primary);
+  font-weight: 600;
+}
+
+.action-btn-toggle:hover:not(:disabled) {
+  background: var(--ra-primary);
+  border-color: var(--ra-primary);
+  color: var(--ra-text-light);
 }
 
 .answer-desc {
