@@ -16,9 +16,9 @@ const lectures: { text: string; link?: string }[] = [
   { text: '8-自定义函数', link: '/intro-it/8-custom-functions' },
   { text: '9-高级绘图', link: '/intro-it/9-base-graphics' },
   { text: '10-ggplot2包', link: '/intro-it/10-ggplot2' },
-  { text: '11-参数估计' },
-  { text: '12-参数假设检验' },
-  { text: '13-同分布检验与列联表检验' }
+  { text: '11-参数估计', link: '/intro-it/11-parameter-estimation' },
+  { text: '12-参数假设检验', link: '/intro-it/12-hypothesis-testing' },
+  { text: '13-同分布检验与列联表检验', link: '/intro-it/13-goodness-of-fit-and-contingency' }
 ]
 
 /** 三个板块共用的「入口」分组，方便在各板块之间跳转。 */
