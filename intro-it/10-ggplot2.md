@@ -160,7 +160,7 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
 # ggplot2包
 
 ::: info 老师的建议
-请完成实验题 1~6（实验题 7 的完整代码已在原题中给出）。
+请完成实验题 1~5（实验题 6 的完整代码已在原题中给出）。
 :::
 
 ## 实验目的
@@ -247,14 +247,7 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 `legend.position = 'none'` 则是把整个图例藏起来。
 :::
 
-::: info 关于题号：为什么没有实验题 3
-原题的实验题 3 是「用 `geom_polygon` 绘制中国地图」，本页**未收录**。
-
-地图类图形涉及国界线、行政区划等规范性问题，稍有不慎就可能画出不标准的图，
-因此不作为教学示例。其余题号保持与原题一致，方便和 `原题/第十一周原题` 对照。
-:::
-
-## 实验题 4：geom_text、标度变换、主题元素
+## 实验题 3：geom_text、标度变换、主题元素
 
 打开 **test1104.R**，完成下面任务。
 
@@ -263,7 +256,7 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 3. 用标度变换函数 `scale_color_gradientn` 设置变换颜色集为 `rainbow(20)`，设置图例标题为“气缸数”。
 4. 图例标题和轴标签字号设置为 18，图例关键字标签和刻度标签字号设置为 16。
 
-<AnswerBlock title="实验题 4 · 参考答案" :packages="['ggplot2']" :code="code1104" />
+<AnswerBlock title="实验题 3 · 参考答案" :packages="['ggplot2']" :code="code1104" />
 
 ::: tip geom_text 的 nudge_x 与标度变换
 **`nudge_x` / `nudge_y`** 是「把文字整体挪一点」的参数——散点图上的文字如果不挪开，
@@ -282,7 +275,7 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 `name = "气缸数"` 就是在标度函数里直接改图例标题（也可以统一写在 `labs()` 里）。
 :::
 
-## 实验题 5：geom_raster 和 geom_contour 展示三维数据
+## 实验题 4：geom_raster 和 geom_contour 展示三维数据
 
 打开 **test1105.R**，完成下面操作。
 
@@ -290,7 +283,7 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 2. 用 `geom_raster` 绘制二维密度，填充颜色映射为 `density`。
 3. 轴标签和图例标签字号为 16，图例关键字标签和刻度标签字号为 14，面板背景颜色为 `"lightblue"`，清除主网格线与次网格线。
 
-<AnswerBlock title="实验题 5 · 参考答案" :packages="['ggplot2']" :code="code1105" />
+<AnswerBlock title="实验题 4 · 参考答案" :packages="['ggplot2']" :code="code1105" />
 
 ::: tip 把「第三个维度」画到平面上
 三维数据（x, y, z）在平面上有两种常用表达：
@@ -310,7 +303,7 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 都设成 `element_blank()`。
 :::
 
-## 实验题 6：颜色标度和统计变量
+## 实验题 5：颜色标度和统计变量
 
 打开 **test1106.R**，完成下面操作。
 
@@ -319,7 +312,7 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 3. 轴标签和图像标题字号为 20，图例关键字标签和刻度标签字号设置为 18。
 4. 图标题字号为 22，标题与图间距为 12，且标题居中对齐。
 
-<AnswerBlock title="实验题 6 · 参考答案" :packages="['ggplot2']" :code="code1106" />
+<AnswerBlock title="实验题 5 · 参考答案" :packages="['ggplot2']" :code="code1106" />
 
 ::: tip ..density.. 是什么：用「统计变换的结果」做映射
 直方图在画之前，ggplot2 内部会先做一次**统计变换**：把原始数据分箱、算出每箱的
@@ -339,7 +332,7 @@ geom_histogram(aes(fill = ..density..), binwidth = 1000)
 因为它不随数据范围变化。
 :::
 
-## 实验题 7：geom_point、属性映射、主题设置、标度变换
+## 实验题 6：geom_point、属性映射、主题设置、标度变换
 
 1. 用 `geom_point` 绘制 `iris` 的 `Sepal.Length`、`Sepal.Width` 作为绘图数据，绘制散点图，其中 `Sepal.Length` 为 x 轴，`Sepal.Width` 为 y 轴。
 2. 点大小为 5，透明度为 0.7，点形状为 21。
@@ -350,7 +343,7 @@ geom_histogram(aes(fill = ..density..), binwidth = 1000)
 7. 图例关键字高度为 1cm，宽度为 0.9cm。注：用 `unit(1, 'cm')` 的形式设置。
 8. 图例背景色为 `grey90`，边框颜色为红色。
 
-<AnswerBlock title="实验题 7 · 参考答案" :packages="['ggplot2']" :code="code1107" />
+<AnswerBlock title="实验题 6 · 参考答案" :packages="['ggplot2']" :code="code1107" />
 
 ::: tip theme 的命名规律——记住两条就够了
 `theme()` 里几十个参数其实遵循固定命名法：
@@ -387,7 +380,7 @@ geom_histogram(aes(fill = ..density..), binwidth = 1000)
 | --- | --- |
 | 多图布局 | `par(mfrow = c(行, 列))`、`layout(mat, widths, heights)` |
 | 基础结构 | `ggplot(数据, aes(映射)) + geom_*() + scale_*() + labs() + theme()` |
-| 几何对象 | `geom_point` / `geom_rect` / `geom_polygon` / `geom_text` / `geom_raster` / `geom_contour` / `geom_histogram` |
+| 几何对象 | `geom_point` / `geom_rect` / `geom_text` / `geom_raster` / `geom_contour` / `geom_histogram` |
 | 统计变换 | `..density..`（旧）/ `after_stat(density)`（新）、`binwidth` |
 | 标度变换 | `scale_color_gradientn`、`scale_fill_continuous`、`scale_fill_brewer`、`scale_x_continuous` |
 | 主题元素 | `element_text`（文字）、`element_rect`（方块）、`element_blank`（去掉）|
@@ -395,7 +388,6 @@ geom_histogram(aes(fill = ..density..), binwidth = 1000)
 
 ::: info 关于本页的题目与答案
 题目来自 `原题/第十一周原题`，答案来自 `答案/第十一周答案`，两处均保持原样未做改动。
-原题中的「图 1~图 8」是 Word 里的截图，本页以文字要求为准；
-实验题 7 的完整代码原题已直接在文档中给出。
-原题的实验题 3（绘制中国地图）出于规范性考虑未收录，详见上文说明。
+原题中的图是 Word 里的截图，本页以文字要求为准；
+最后一题的完整代码原题已直接在文档中给出。
 :::
