@@ -10,14 +10,27 @@ hero:
 features:
   - title: Introduction to information technology <br>（信息技术基础）
     details: 从这里学习R语言最入门的知识 <br>（即是原文档'study R in GDMU'的内容）
-    link: /intro-it/index.md
+    link: /intro-it/
   - title: Fundamentals of Medical Big Data Analysis <br>（医学大数据分析与决策）
     details: 从这里学习R语言在医学大数据分析中的应用，学习更加进阶的绘图与数据分析
-    link: /Fundamentals of Medical Big Data Analysis in GDMU/index.md
+    link: /Medical-Big-Data-Analysis/
   - title: Health statistics <br>（卫生统计学）
     details: 还未完成的内容，敬请期待~（指新建文件夹）
+    link: /Health-statistics/
 
 ---
+
+## 这个仓库里有什么
+
+| 目录 | 内容 | 说明 |
+| --- | --- | --- |
+| `原题/` | 各周 Word 文档、R 脚本、数据文件 | 学校下发的原始练习资料，**保持原样** |
+| `答案/` | 各周写好的 R 脚本 | 与 `原题` 一一对应，**保持原样** |
+| `汇总/` | 各周整理好的 HTML 与 PDF | 原题 + 答案的合集，**保持原样** |
+| `intro-it/` 等 | 本站的网页源码 | 由上述资料整理而成的在线讲义 |
+
+---
+
 ## 鸣谢
 
 本站由[VitePress](https://vitepress.dev/)驱动，感谢你们的付出！<br>
@@ -25,13 +38,9 @@ features:
 我们将持续更新本站内容，欢迎各位同学交流学习！
 
 ---
+
 #### 友情链接
 
 [Github本人链接](https://github.com/LiCloudGood)<br>
 [信息技术基础](https://github.com/LiCloudGood/study-R-in-GDMU)<br>
 [医学大数据分析与决策](https://github.com/LiCloudGood/Fundamentals-of-Medical-Big-Data-Analysis-in-GDMU)
-
----
-
-
-

@@ -137,3 +137,86 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+/**
+ * Component: 卡片导航（各讲目录页使用）
+ * -------------------------------------------------------------------------- */
+
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.grid-cards .card {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 12px;
+  transition: all 0.25s;
+  color: inherit;
+  text-decoration: none;
+}
+
+.grid-cards .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--vp-c-brand-rgb), 0.12);
+}
+
+.grid-cards .card-icon {
+  font-size: 32px;
+  margin-right: 1rem;
+}
+
+.grid-cards .card-text h3 {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+}
+
+.grid-cards .card-text p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--vp-c-text-2);
+}
+
+/**
+ * Component: ClickAnswer
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --ans-btn-hover-bg: var(--vp-c-brand);
+  --ans-btn-hover-text: #fff;
+}
+
+/**
+ * Component: AnswerBlock
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --ra-primary: #42b883;
+  --ra-primary-dark: #359e6f;
+  --ra-secondary: #35495e;
+  --ra-text: #2c3e50;
+  --ra-text-light: #ffffff;
+  --ra-bg: #ffffff;
+  --ra-bg-panel: #f8f9fa;
+  --ra-border: #eaecef;
+  --ra-error: #e53e3e;
+  --ra-error-bg: #fff5f5;
+  --ra-overlay: rgba(0, 0, 0, 0.5);
+}
+
+.dark {
+  --ra-primary: #52c41a;
+  --ra-primary-dark: #45a817;
+  --ra-secondary: #e0e0e0;
+  --ra-text: #e0e0e0;
+  --ra-bg: #1e1e1e;
+  --ra-bg-panel: #2d2d2d;
+  --ra-border: #383838;
+  --ra-error: #ff6b6b;
+  --ra-error-bg: #4a1a1a;
+  --ra-overlay: rgba(0, 0, 0, 0.7);
+}
+
