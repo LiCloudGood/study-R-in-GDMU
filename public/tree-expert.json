@@ -1,0 +1,389 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "question": "您的研究场景属于哪种高级分析需求？",
+      "options": [
+        { "value": "rare", "text": "罕见事件分析（发生率 <1%）", "next": 2 },
+        { "value": "bayes", "text": "贝叶斯统计与先验信息整合", "next": 3 },
+        { "value": "ml", "text": "高维数据与机器学习预测", "next": 4 },
+        { "value": "causal", "text": "因果推断与因果效应估计", "next": 5 },
+        { "value": "advanced", "text": "其他高级建模技术", "next": 6 }
+      ]
+    },
+    {
+      "id": 2,
+      "question": "罕见事件分析的具体需求？",
+      "options": [
+        { 
+          "value": "midp", 
+          "text": "需要精确置信区间估计", 
+          "next": -1, 
+          "result": {
+            "method": "mid-p 精确置信区间",
+            "description": "针对罕见事件（发生率 <1%）的精确置信区间估计，作为连续性校正方法，在覆盖率与区间长度间取得平衡，优于传统Clopper-Pearson的保守性",
+            "assumptions": "二项分布假设，独立同分布观测",
+            "sample_size": "适用于小到中等样本量",
+            "software": "R: exactci包; Python: statsmodels"
+          }
+        },
+        { 
+          "value": "bayesbin", 
+          "text": "整合先验信息的贝叶斯方法", 
+          "next": -1, 
+          "result": {
+            "method": "Beta-Binomial 贝叶斯模型",
+            "description": "使用Beta-Binomial共轭先验整合历史信息或专家先验，通过后验分布提供完整的不确定性量化",
+            "assumptions": "二项分布似然，Beta先验分布",
+            "sample_size": "特别适用于样本量有限的场景",
+            "software": "R: rstanarm; Python: pymc3"
+          }
+        },
+        { 
+          "value": "exact", 
+          "text": "小样本精确检验", 
+          "next": -1, 
+          "result": {
+            "method": "精确条件检验（Fisher精确检验）",
+            "description": "基于超几何分布的确切概率计算，不依赖大样本渐近理论，适用于样本量极小的场景",
+            "assumptions": "固定边际总和，超几何分布",
+            "sample_size": "n < 20 或期望频数 < 5",
+            "software": "R: exact2x2; Python: scipy.stats.fisher_exact"
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "question": "贝叶斯分析的先验信息来源？",
+      "options": [
+        { 
+          "value": "meta", 
+          "text": "基于Meta分析或历史数据", 
+          "next": -1, 
+          "result": {
+            "method": "贝叶斯Meta分析更新",
+            "description": "使用历史研究的后验分布作为当前研究的先验分布，实现证据的累积更新和动态Meta分析",
+            "assumptions": "研究间异质性可建模，先验分布选择合理",
+            "sample_size": "需要足够的历史研究数量",
+            "software": "R: bayesmeta; Python: pymc3"
+          }
+        },
+        { 
+          "value": "expert", 
+          "text": "基于专家共识信息", 
+          "next": -1, 
+          "result": {
+            "method": "专家先验贝叶斯分析",
+            "description": "使用SHELF/MATCH等方法构建专家先验分布，通过系统化流程将专家知识转化为统计先验",
+            "assumptions": "专家意见具有代表性，先验编码过程无偏",
+            "sample_size": "适用于专家知识丰富的领域",
+            "software": "R: SHELF包; 在线工具: MATCH"
+          }
+        },
+        { 
+          "value": "noninfo", 
+          "text": "使用无信息/弱信息先验", 
+          "next": -1, 
+          "result": {
+            "method": "参考先验贝叶斯分析",
+            "description": "使用Jeffreys先验、均匀分布等无信息或弱信息先验，让数据主导推断结果，接近频率学派结论",
+            "assumptions": "先验对后验影响可忽略",
+            "sample_size": "适用于样本量较大的情况",
+            "software": "R: brms; Python: pymc3"
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "question": "机器学习与高维数据分析目标？",
+      "options": [
+        { 
+          "value": "lasso", 
+          "text": "变量筛选与稀疏建模", 
+          "next": -1, 
+          "result": {
+            "method": "Lasso及相关正则化方法",
+            "description": "使用L1正则化进行变量筛选和系数收缩，适用于高维数据（p >> n）的特征选择和预测建模",
+            "assumptions": "稀疏性假设，预测变量间相关性不强",
+            "sample_size": "n > p 或 p >> n 均可",
+            "software": "R: glmnet; Python: sklearn.linear_model"
+          }
+        },
+        { 
+          "value": "rf", 
+          "text": "处理复杂非线性关系", 
+          "next": -1, 
+          "result": {
+            "method": "随机森林与集成学习",
+            "description": "通过Bootstrap聚合和随机特征选择构建多个决策树，处理复杂的非线性关系和交互效应",
+            "assumptions": "特征具有预测能力，样本独立性",
+            "sample_size": "n > 50，特征数适中",
+            "software": "R: randomForest; Python: sklearn.ensemble"
+          }
+        },
+        { 
+          "value": "nn", 
+          "text": "深度学习方法", 
+          "next": -1, 
+          "result": {
+            "method": "深度神经网络",
+            "description": "使用多层神经网络处理复杂的模式识别和预测问题，通过自动特征工程适应复杂数据结构",
+            "assumptions": "大数据量，特征与输出存在复杂映射",
+            "sample_size": "n > 1000（推荐）",
+            "software": "R: keras; Python: tensorflow/pytorch"
+          }
+        },
+        { 
+          "value": "svm", 
+          "text": "支持向量机与核方法", 
+          "next": -1, 
+          "result": {
+            "method": "支持向量机（SVM）",
+            "description": "使用核技巧将数据映射到高维空间实现线性分离，在处理小样本高维分类问题时表现优异",
+            "assumptions": "特征缩放重要，核函数选择合适",
+            "sample_size": "小到中等样本量",
+            "software": "R: e1071; Python: sklearn.svm"
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "question": "因果推断的研究设计类型？",
+      "options": [
+        { 
+          "value": "rct", 
+          "text": "随机试验的增强分析", 
+          "next": -1, 
+          "result": {
+            "method": "目标最大似然估计（TMLE）",
+            "description": "半参数双重稳健估计方法，即使倾向评分或结果模型之一误设仍能保持一致性，效率较高",
+            "assumptions": "无未测量混杂，正性假设，一致性",
+            "sample_size": "n > 30（每组）",
+            "software": "R: tmle; Python: causalinference"
+          }
+        },
+        { 
+          "value": "obs", 
+          "text": "观察性研究的混杂控制", 
+          "next": -1, 
+          "result": {
+            "method": "逆概率加权+双重选择",
+            "description": "结合逆概率加权和高维变量选择，通过双重稳健估计和变量筛选有效控制观察性研究中的混杂偏倚",
+            "assumptions": "无未测量混杂，正确模型设定",
+            "sample_size": "需要足够样本以支持变量选择",
+            "software": "R: glmnet + ipw; Python: doubleml"
+          }
+        },
+        { 
+          "value": "iv", 
+          "text": "工具变量分析", 
+          "next": -1, 
+          "result": {
+            "method": "两阶段最小二乘（2SLS）/IV方法",
+            "description": "使用工具变量处理未测量混杂，估计局部平均处理效应，要求工具变量满足相关性和排他性限制",
+            "assumptions": "工具变量有效性，单调性，无直接效应",
+            "sample_size": "需要强工具变量（F > 10）",
+            "software": "R: AER; Python: linearmodels"
+          }
+        },
+        { 
+          "value": "did", 
+          "text": "差异中的差异与面板数据", 
+          "next": -1, 
+          "result": {
+            "method": "差异中的差异（DID）模型",
+            "description": "适用于政策干预评估的准实验设计，通过双重差分消除时间不变混杂因素和组间固定差异",
+            "assumptions": "平行趋势假设，无预期效应",
+            "sample_size": "多期面板数据，足够时间点",
+            "software": "R: fixest; Python: linearmodels"
+          }
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "question": "其他高级建模需求？",
+      "options": [
+        { 
+          "value": "multi", 
+          "text": "多水平与层次模型", 
+          "next": -1, 
+          "result": {
+            "method": "多水平模型（HLM）/混合效应模型",
+            "description": "处理具有层次结构的数据（如患者嵌套于医院），通过随机效应估计组内和组间变异，考虑数据相关性",
+            "assumptions": "随机效应正态分布，方差组分结构正确",
+            "sample_size": "每组至少5-10个观测，足够组数",
+            "software": "R: lme4; Python: statsmodels MixedLM"
+          }
+        },
+        { 
+          "value": "surv", 
+          "text": "复杂生存分析", 
+          "next": -1, 
+          "result": {
+            "method": "联合模型/竞争风险模型",
+            "description": "处理纵向数据与生存时间的联合建模，或存在竞争风险时的累积发生率函数估计，避免传统生存分析的偏倚",
+            "assumptions": "竞争风险独立，模型设定正确",
+            "sample_size": "足够的事件数（每个风险≥10）",
+            "software": "R: JM, cmprsk; Python: lifelines"
+          }
+        },
+        { 
+          "value": "meta", 
+          "text": "网络Meta分析", 
+          "next": -1, 
+          "result": {
+            "method": "贝叶斯网络Meta分析",
+            "description": "在证据网络中比较多种干预措施的相对效果，通过一致性模型处理直接和间接比较，进行干预措施排序",
+            "assumptions": "一致性假设，研究间同质性",
+            "sample_size": "足够的研究数量和连接性",
+            "software": "R: gemtc; 软件: WinBUGS/OpenBUGS"
+          }
+        },
+        { 
+          "value": "measure", 
+          "text": "测量误差与潜变量模型", 
+          "next": -1, 
+          "result": {
+            "method": "结构方程模型（SEM）",
+            "description": "处理测量误差、潜变量建模和复杂因果路径分析，通过验证性因子分析和路径分析检验理论模型",
+            "assumptions": "多元正态分布，模型识别",
+            "sample_size": "n > 200（推荐），至少5:1 观测变量比",
+            "software": "R: lavaan; Python: semopy"
+          }
+        }
+      ]
+    }
+  ],
+  "decisionPaths": {
+    "rare,midp": {
+      "method": "mid-p 精确置信区间",
+      "description": "针对罕见事件（发生率 <1%）的精确置信区间估计，作为连续性校正方法，在覆盖率与区间长度间取得平衡",
+      "assumptions": "二项分布假设，独立同分布观测",
+      "sample_size": "适用于小到中等样本量",
+      "software": "R: exactci包; Python: statsmodels"
+    },
+    "rare,bayesbin": {
+      "method": "Beta-Binomial 贝叶斯模型",
+      "description": "使用Beta-Binomial共轭先验整合历史信息或专家先验，通过后验分布提供完整的不确定性量化",
+      "assumptions": "二项分布似然，Beta先验分布",
+      "sample_size": "特别适用于样本量有限的场景",
+      "software": "R: rstanarm; Python: pymc3"
+    },
+    "rare,exact": {
+      "method": "精确条件检验（Fisher精确检验）",
+      "description": "基于超几何分布的确切概率计算，不依赖大样本渐近理论，适用于样本量极小的场景",
+      "assumptions": "固定边际总和，超几何分布",
+      "sample_size": "n < 20 或期望频数 < 5",
+      "software": "R: exact2x2; Python: scipy.stats.fisher_exact"
+    },
+    "bayes,meta": {
+      "method": "贝叶斯Meta分析更新",
+      "description": "使用历史研究的后验分布作为当前研究的先验分布，实现证据的累积更新和动态Meta分析",
+      "assumptions": "研究间异质性可建模，先验分布选择合理",
+      "sample_size": "需要足够的历史研究数量",
+      "software": "R: bayesmeta; Python: pymc3"
+    },
+    "bayes,expert": {
+      "method": "专家先验贝叶斯分析",
+      "description": "使用SHELF/MATCH等方法构建专家先验分布，通过系统化流程将专家知识转化为统计先验",
+      "assumptions": "专家意见具有代表性，先验编码过程无偏",
+      "sample_size": "适用于专家知识丰富的领域",
+      "software": "R: SHELF包; 在线工具: MATCH"
+    },
+    "bayes,noninfo": {
+      "method": "参考先验贝叶斯分析",
+      "description": "使用Jeffreys先验、均匀分布等无信息或弱信息先验，让数据主导推断结果，接近频率学派结论",
+      "assumptions": "先验对后验影响可忽略",
+      "sample_size": "适用于样本量较大的情况",
+      "software": "R: brms; Python: pymc3"
+    },
+    "ml,lasso": {
+      "method": "Lasso及相关正则化方法",
+      "description": "使用L1正则化进行变量筛选和系数收缩，适用于高维数据（p >> n）的特征选择和预测建模",
+      "assumptions": "稀疏性假设，预测变量间相关性不强",
+      "sample_size": "n > p 或 p >> n 均可",
+      "software": "R: glmnet; Python: sklearn.linear_model"
+    },
+    "ml,rf": {
+      "method": "随机森林与集成学习",
+      "description": "通过Bootstrap聚合和随机特征选择构建多个决策树，处理复杂的非线性关系和交互效应",
+      "assumptions": "特征具有预测能力，样本独立性",
+      "sample_size": "n > 50，特征数适中",
+      "software": "R: randomForest; Python: sklearn.ensemble"
+    },
+    "ml,nn": {
+      "method": "深度神经网络",
+      "description": "使用多层神经网络处理复杂的模式识别和预测问题，通过自动特征工程适应复杂数据结构",
+      "assumptions": "大数据量，特征与输出存在复杂映射",
+      "sample_size": "n > 1000（推荐）",
+      "software": "R: keras; Python: tensorflow/pytorch"
+    },
+    "ml,svm": {
+      "method": "支持向量机（SVM）",
+      "description": "使用核技巧将数据映射到高维空间实现线性分离，在处理小样本高维分类问题时表现优异",
+      "assumptions": "特征缩放重要，核函数选择合适",
+      "sample_size": "小到中等样本量",
+      "software": "R: e1071; Python: sklearn.svm"
+    },
+    "causal,rct": {
+      "method": "目标最大似然估计（TMLE）",
+      "description": "半参数双重稳健估计方法，即使倾向评分或结果模型之一误设仍能保持一致性，效率较高",
+      "assumptions": "无未测量混杂，正性假设，一致性",
+      "sample_size": "n > 30（每组）",
+      "software": "R: tmle; Python: causalinference"
+    },
+    "causal,obs": {
+      "method": "逆概率加权+双重选择",
+      "description": "结合逆概率加权和高维变量选择，通过双重稳健估计和变量筛选有效控制观察性研究中的混杂偏倚",
+      "assumptions": "无未测量混杂，正确模型设定",
+      "sample_size": "需要足够样本以支持变量选择",
+      "software": "R: glmnet + ipw; Python: doubleml"
+    },
+    "causal,iv": {
+      "method": "两阶段最小二乘（2SLS）/IV方法",
+      "description": "使用工具变量处理未测量混杂，估计局部平均处理效应，要求工具变量满足相关性和排他性限制",
+      "assumptions": "工具变量有效性，单调性，无直接效应",
+      "sample_size": "需要强工具变量（F > 10）",
+      "software": "R: AER; Python: linearmodels"
+    },
+    "causal,did": {
+      "method": "差异中的差异（DID）模型",
+      "description": "适用于政策干预评估的准实验设计，通过双重差分消除时间不变混杂因素和组间固定差异",
+      "assumptions": "平行趋势假设，无预期效应",
+      "sample_size": "多期面板数据，足够时间点",
+      "software": "R: fixest; Python: linearmodels"
+    },
+    "advanced,multi": {
+      "method": "多水平模型（HLM）/混合效应模型",
+      "description": "处理具有层次结构的数据（如患者嵌套于医院），通过随机效应估计组内和组间变异，考虑数据相关性",
+      "assumptions": "随机效应正态分布，方差组分结构正确",
+      "sample_size": "每组至少5-10个观测，足够组数",
+      "software": "R: lme4; Python: statsmodels MixedLM"
+    },
+    "advanced,surv": {
+      "method": "联合模型/竞争风险模型",
+      "description": "处理纵向数据与生存时间的联合建模，或存在竞争风险时的累积发生率函数估计，避免传统生存分析的偏倚",
+      "assumptions": "竞争风险独立，模型设定正确",
+      "sample_size": "足够的事件数（每个风险≥10）",
+      "software": "R: JM, cmprsk; Python: lifelines"
+    },
+    "advanced,meta": {
+      "method": "贝叶斯网络Meta分析",
+      "description": "在证据网络中比较多种干预措施的相对效果，通过一致性模型处理直接和间接比较，进行干预措施排序",
+      "assumptions": "一致性假设，研究间同质性",
+      "sample_size": "足够的研究数量和连接性",
+      "software": "R: gemtc; 软件: WinBUGS/OpenBUGS"
+    },
+    "advanced,measure": {
+      "method": "结构方程模型（SEM）",
+      "description": "处理测量误差、潜变量建模和复杂因果路径分析，通过验证性因子分析和路径分析检验理论模型",
+      "assumptions": "多元正态分布，模型识别",
+      "sample_size": "n > 200（推荐），至少5:1 观测变量比",
+      "software": "R: lavaan; Python: semopy"
+    }
+  }
+}

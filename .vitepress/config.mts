@@ -65,7 +65,13 @@ export default defineConfig({
       '/': [],
       '/intro-it/': [entryGroup, { text: '信息技术基础', items: lectures }],
       '/Medical-Big-Data-Analysis/': [entryGroup],
-      '/Health-statistics/': [entryGroup]
+      '/Health-statistics/': [
+        entryGroup,
+        {
+          text: '卫生统计学',
+          items: [{ text: '统计方法选择器', link: '/Health-statistics/choice' }]
+        }
+      ]
     },
 
     outline: { level: [2, 3], label: '本页目录' },

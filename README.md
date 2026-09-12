@@ -54,6 +54,37 @@ const code = `mean(1:10)`
 点击按钮会弹出代码窗口；点「运行」会通过 [WebR](https://webr.r-wasm.org/) 在浏览器里真实执行这段 R 代码，**不需要安装 R**。
 
 > 首次运行需要从 CDN 下载约 10 MB 的 WebR 运行环境，因此只有点击「运行」时才会加载。
+>
+> ⚠️ 注意：WebR 官方已下架旧的 `latest/webr.js` 入口（现在返回 403），本项目用的是现行的
+> ES Module 入口 `latest/webr.mjs`，**不要把地址改回去**。
+
+### 交互式 R 代码块 `<RBlock>`
+
+```md
+<RBlock />
+```
+
+读者可以自己在框里改代码、反复运行，还能「重置环境」清空所有变量。适合放演示性质的例子。
+
+### 学习进度清单 `<TrackList>`
+
+```md
+<TrackList :tasks="['安装 R', '安装 RStudio', '跑通第一段代码']" />
+```
+
+勾选状态保存在浏览器 localStorage 里，按页面路径分开存。
+
+### 统计方法选择器 `<ChoiceFlow>`
+
+```md
+<ChoiceFlow />
+```
+
+交互式问答，最后给出推荐的统计方法。题库放在 `public/tree-normal.json`、
+`public/tree-med.json`、`public/tree-expert.json`，分别对应普通版 / 医学生版 / 专家版。
+
+> 可选属性 `show-detail-link`（默认 `false`）：打开后会显示「查看完整教程 →」链接，
+> 指向 `/method/<方法名>` 页面。本仓库还没有这些页面，等你写好后在各页面把它打开即可。
 
 ## 数学公式
 
