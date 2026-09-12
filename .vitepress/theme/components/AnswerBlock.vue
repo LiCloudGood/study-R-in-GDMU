@@ -47,42 +47,44 @@ const hasError = ref(false)
 
 const output = ref('// 点击“运行”后查看结果')
 const error = ref('')
+const errorTitle = ref('运行出错')
 
 let webr: any = null
 let webrReady = false
 const installedPackages = new Set<string>()
 
-/** 动态加载 WebR 运行时（只在第一次点开时执行） */
+/**
+ * WebR 的官方 CDN 入口。
+ *
+ * 注意：不要再改回 `.../latest/webr.js`。那个旧版的全局脚本入口已经被官方下架，
+ * 现在访问会直接返回 403，浏览器表现为「脚本加载失败」。
+ * 现行入口是 ES Module 形式的 `webr.mjs`，用 `new WebR()` 实例化。
+ */
+const WEBR_MODULE_URL = 'https://webr.r-wasm.org/latest/webr.mjs'
+
+/** 动态加载 WebR 运行时（只在第一次点「运行」时执行） */
 async function loadWebR(): Promise<boolean> {
   if (webrReady || isLoadingWebR.value) return true
   isLoadingWebR.value = true
-  output.value = '正在加载 WebR 环境...'
   hasError.value = false
+  errorTitle.value = '运行环境加载失败'
+  output.value = '正在加载 WebR 运行环境（首次约 10 MB，请稍候）…'
   try {
-    if ((window as any).webr) {
-      webr = (window as any).webr
-    } else {
-      const script = document.createElement('script')
-      script.src = 'https://webr.r-wasm.org/latest/webr.js'
-      script.type = 'text/javascript'
-      await new Promise<void>((resolve, reject) => {
-        script.onload = () => resolve()
-        script.onerror = () => reject(new Error('WebR 脚本加载失败'))
-        document.head.appendChild(script)
-      })
-      await new Promise<void>((resolve) => {
-        const check = () => ((window as any).webr ? resolve() : setTimeout(check, 100))
-        check()
-      })
-      webr = (window as any).webr
-      await webr.init({ homedir: '/home/web_user' })
-    }
+    const { WebR } = await import(/* @vite-ignore */ WEBR_MODULE_URL)
+    webr = new WebR()
+    await webr.init()
     webrReady = true
     return true
   } catch (e) {
-    const message = e instanceof Error ? e.message.trim() : '初始化失败'
-    error.value = `WebR 加载失败: ${message}`
-    console.error('WebR 初始化错误:', e)
+    const detail = e instanceof Error ? e.message.trim() : String(e)
+    error.value =
+      `无法加载 WebR 运行环境：${detail}\n\n` +
+      '可能的解决办法：\n' +
+      '· 检查网络连接是否正常；\n' +
+      '· 该运行环境托管在境外 CDN，必要时请开启代理后重试；\n' +
+      '· 也可以直接复制上面的代码，在本机的 R / RStudio 里运行。'
+    output.value = '// 运行环境加载失败，可先复制代码在本机 R 中运行'
+    console.warn('[AnswerBlock] WebR 加载失败:', e)
     hasError.value = true
     return false
   } finally {
@@ -139,6 +141,7 @@ async function run() {
     const text = chunks.join('').trim()
     output.value = `${text || '代码执行成功 (无输出)'}\n\n[执行时间: ${elapsed}ms]`
   } catch (e) {
+    errorTitle.value = '运行出错'
     error.value = e instanceof Error ? e.message.trim() : '运行出错'
     hasError.value = true
   } finally {
@@ -252,7 +255,7 @@ onUnmounted(() => {
 
               <div v-if="hasError" class="error-overlay">
                 <div class="error-card">
-                  <h4>运行出错</h4>
+                  <h4>{{ errorTitle }}</h4>
                   <p>{{ error }}</p>
                   <button class="retry-btn" @click="retry">重试</button>
                   <button class="close-error" @click="close">关闭</button>
@@ -525,6 +528,10 @@ header {
 .error-card p {
   margin: 0 0 16px;
   color: var(--ra-text);
+  white-space: pre-line;
+  text-align: left;
+  line-height: 1.7;
+  font-size: 14px;
 }
 
 .fade-enter-active,
