@@ -13,9 +13,9 @@ const lectures: { text: string; link?: string }[] = [
   { text: '5-日期、字符与特殊值处理', link: '/intro-it/5-dates-strings-and-special-values' },
   { text: '6-输入、输出', link: '/intro-it/6-input-output' },
   { text: '7-分支与循环', link: '/intro-it/7-branches-and-loops' },
-  { text: '8-自定义函数' },
-  { text: '9-高级绘图' },
-  { text: '10-ggplot2包' },
+  { text: '8-自定义函数', link: '/intro-it/8-custom-functions' },
+  { text: '9-高级绘图', link: '/intro-it/9-base-graphics' },
+  { text: '10-ggplot2包', link: '/intro-it/10-ggplot2' },
   { text: '11-参数估计' },
   { text: '12-参数假设检验' },
   { text: '13-同分布检验与列联表检验' }
