@@ -75,6 +75,27 @@ export async function ensurePackages(packages: string[], onStatus?: (text: strin
 }
 
 /**
+ * 把数据文件写进 WebR 的虚拟文件系统。
+ *
+ * 讲义里很多实验要读 `scores.csv` 之类的文件，而浏览器里的 R 环境默认是空的，
+ * 用这个函数先把数据准备好，示例代码就能原样跑通。
+ */
+const writtenFiles = new Set<string>()
+
+export async function writeFiles(files: Record<string, string>) {
+  const entries = Object.entries(files ?? {})
+  if (!entries.length) return
+  const webR = await getWebR()
+  for (const [name, content] of entries) {
+    // 不带路径的文件名写到 R 的默认工作目录，read.csv('xxx.csv') 就能直接读到
+    const path = name.startsWith('/') ? name : `/home/web_user/${name}`
+    if (writtenFiles.has(path)) continue
+    await webR.FS.writeFile(path, content)
+    writtenFiles.add(path)
+  }
+}
+
+/**
  * 执行一段 R 代码，返回输出文本与图片。
  *
  * `withAutoprint` 让顶层表达式的值自动打印出来（和 R 控制台一样），

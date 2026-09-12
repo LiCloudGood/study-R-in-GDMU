@@ -10,7 +10,7 @@ const links = [
   { title: '向量与矩阵', desc: '掌握向量与矩阵的创建、操作与运算',
     link: '/intro-it/2-vectors-and-matrices' },
   { title: '数组与数据框', desc: '掌握数组与数据框的创建、筛选、元素提取及基本操作',
-    link: '' },
+    link: '/intro-it/3-arrays-and-data-frames' },
   { title: '列表与因子', desc: '掌握列表的创建与操作，以及因子的定义与相关函数',
     link: '' },
   { title: '日期、字符与特殊值处理', desc: '掌握日期处理、正则检索与特殊值处理',

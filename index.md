@@ -39,6 +39,14 @@ features:
 
 ---
 
+#### 关于制作
+
+- **课程资料**（原题、答案、汇总）：由 [LiCloudGood](https://github.com/LiCloudGood) 整理提供。
+- **网页实现**（站点结构、主题组件、讲义排版与公式还原）：
+  由 LiCloudGood 提出设想，与 DeepSeek Harness 驱动的 AI 助手协作完成。
+
+---
+
 #### 友情链接
 
 [Github本人链接](https://github.com/LiCloudGood)<br>

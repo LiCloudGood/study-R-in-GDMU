@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { describeError, drawImages, ensurePackages, isWebRReady, runR } from '../webr'
+import { describeError, drawImages, ensurePackages, isWebRReady, runR, writeFiles } from '../webr'
 
 /**
  * 参考答案卡片。
@@ -17,6 +17,8 @@ const props = withDefaults(
     code?: string
     /** 运行前需要安装的 R 包 */
     packages?: string[]
+    /** 运行前要写进运行环境的数据文件，键是文件名、值是文件内容 */
+    files?: Record<string, string>
     /** 卡片标题 */
     title?: string
     /** 补充说明 */
@@ -29,6 +31,7 @@ const props = withDefaults(
   {
     code: '',
     packages: () => [],
+    files: () => ({}),
     title: '参考答案',
     description: '',
     readOnly: false,
@@ -72,6 +75,9 @@ async function run() {
   try {
     status.value = isWebRReady() ? '正在运行…' : '正在下载 WebR 运行环境（首次约 10 MB）…'
     await ensurePackages(props.packages, (text) => (status.value = text))
+
+    status.value = '正在准备数据文件…'
+    await writeFiles(props.files)
 
     status.value = '正在运行…'
     const startedAt = Date.now()
