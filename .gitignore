@@ -21,3 +21,4 @@ _*.mjs
 _patches*.json
 _fcheck/
 _pdfprint/
+_outs.json

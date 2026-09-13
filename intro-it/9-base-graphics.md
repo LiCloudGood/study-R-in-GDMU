@@ -4,6 +4,7 @@ title: 9-高级绘图
 ---
 
 <script setup>
+import { withBase } from 'vitepress'
 const code0901 = `install.packages('ISwR')
 library(ISwR)
 head(nickel.expand)
@@ -85,7 +86,6 @@ barplot(VADeaths_t,
         beside = T
         )
 
-
 data("UCBAdmissions")
 df <- as.data.frame(UCBAdmissions)
 df.m <- subset(df, Gender == "Male")
@@ -113,7 +113,6 @@ pie(x,
     labels = rep('',n),
     main = '彩虹饼图（n=100）'
     )
-
 
 data("WorldPhones")
 data_1961 <- WorldPhones['1961',]
@@ -206,7 +205,6 @@ plot(airmiles,
      xlab = "年份", 
      ylab = "飞行距离"
 )
-
 
 data('trees')
 plot(trees$Girth, trees$Volume, 
@@ -305,7 +303,6 @@ R 在网页里运行时用的是画布设备，所以 `hist` / `barplot` / `pie`
 <AnswerBlock
   title="实验题 1 · 参考答案"
   description="这一题需要 ISwR 包，首次运行会在线安装，可能要等一会儿。"
-  :packages="['ISwR']"
   :code="code0901"
 />
 
@@ -522,7 +519,6 @@ boxplot(Wind ~ Month, data = airquality_clean, ...)
 <AnswerBlock
   title="实验题 7 · 参考答案"
   description="这一题也需要 ISwR 包，首次运行会在线安装。"
-  :packages="['ISwR']"
   :code="code0907"
 />
 
@@ -613,6 +609,40 @@ par(new = TRUE)
 从图上能直观看到：自由度越小，t 分布的尾巴越厚；
 自由度到 30 时已经和标准正态几乎重合了——这正是 t 分布「大样本趋近正态」的体现。
 :::
+
+## 本讲参考答案的输出图
+
+下面这些图是**把本讲的参考答案完整跑一遍之后得到的结果**（按实验顺序排列），
+可以对照着检查自己的图有没有画对。
+
+<div class="fig-gallery">
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-2-1.png')" alt="输出图 1" loading="lazy" /><figcaption>输出图 1</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-2-2.png')" alt="输出图 2" loading="lazy" /><figcaption>输出图 2</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-3-1.png')" alt="输出图 3" loading="lazy" /><figcaption>输出图 3</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-3-2.png')" alt="输出图 4" loading="lazy" /><figcaption>输出图 4</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-4-1.png')" alt="输出图 5" loading="lazy" /><figcaption>输出图 5</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-4-2.png')" alt="输出图 6" loading="lazy" /><figcaption>输出图 6</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-5-1.png')" alt="输出图 7" loading="lazy" /><figcaption>输出图 7</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-5-2.png')" alt="输出图 8" loading="lazy" /><figcaption>输出图 8</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-6-1.png')" alt="输出图 9" loading="lazy" /><figcaption>输出图 9</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-6-2.png')" alt="输出图 10" loading="lazy" /><figcaption>输出图 10</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-7-1.png')" alt="输出图 11" loading="lazy" /><figcaption>输出图 11</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-7-2.png')" alt="输出图 12" loading="lazy" /><figcaption>输出图 12</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-8-1.png')" alt="输出图 13" loading="lazy" /><figcaption>输出图 13</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-8-2.png')" alt="输出图 14" loading="lazy" /><figcaption>输出图 14</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-9-1.png')" alt="输出图 15" loading="lazy" /><figcaption>输出图 15</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-9-2.png')" alt="输出图 16" loading="lazy" /><figcaption>输出图 16</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-10-1.png')" alt="输出图 17" loading="lazy" /><figcaption>输出图 17</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-10-2.png')" alt="输出图 18" loading="lazy" /><figcaption>输出图 18</figcaption></figure>
+  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-11-1.png')" alt="输出图 19" loading="lazy" /><figcaption>输出图 19</figcaption></figure>
+</div>
+
+<style scoped>
+.fig-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1.25rem; }
+.fig-gallery figure { margin: 0; }
+.fig-gallery img { width: 100%; height: auto; border: 1px solid var(--vp-c-border); border-radius: 8px; background: #fff; }
+.fig-gallery figcaption { font-size: 12px; color: var(--vp-c-text-2); text-align: center; margin-top: 4px; }
+</style>
 
 ## 本讲小结
 

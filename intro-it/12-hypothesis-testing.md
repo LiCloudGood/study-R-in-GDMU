@@ -55,6 +55,8 @@ y = c(0.580, 0.509, 0.500, 0.316, 0.337, 0.517,
 t.test(x, y, paired = TRUE)$p.value
 #两种方法的测试结果有显著差异`
 
+const out1303 = `[1] 2.383952e-05`
+
 const code1304 = `x = c(134, 146, 104, 119, 124, 161, 107,
       83, 113, 129, 97, 123)
 y = c(70, 118, 101, 85, 107, 132, 94)
@@ -69,6 +71,8 @@ print(p)
 
 const code1305 = `binom.test(45, 100, p = 0.6, alternative = 'less')$p.value
 # 拒绝原假设，可认为明显低于 60%`
+
+const out1305 = `[1] 0.001710927`
 
 const code1306 = `fun1306 = function(x, lambda, alt){
   n = length(x)
@@ -206,7 +210,8 @@ P 值那一段**一模一样**——因为 $2\times\min(p_0,1-p_0)$ 这套逻辑
 
 问两种方法结果是否不同？其中 $\alpha=0.05$。
 
-<AnswerBlock title="实验题 3 · 参考答案" :code="code1303" />
+<AnswerBlock title="实验题 3 · 参考答案" :code="code1303"
+  :output="out1303" />
 
 ::: tip 为什么用 paired = TRUE —— 判断配对还是独立
 这是做假设检验时**第一步就要想清楚**的问题：
@@ -260,7 +265,8 @@ P 值那一段**一模一样**——因为 $2\times\min(p_0,1-p_0)$ 这套逻辑
 
 某种能力测试项目通过率一般为 60%，从今年参加测试的人员中随机抽取 100 人，发现只有 45 人通过该项测试，问今年的测试通过率是否明显低于一般水平？其中 $\alpha=0.05$。
 
-<AnswerBlock title="实验题 5 · 参考答案" :code="code1305" />
+<AnswerBlock title="实验题 5 · 参考答案" :code="code1305"
+  :output="out1305" />
 
 ::: tip 比例检验为什么用 binom.test
 这里的数据是「100 次试验中有 45 次成功」，属于**二项分布**的样本，

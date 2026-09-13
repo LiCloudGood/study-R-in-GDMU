@@ -41,6 +41,25 @@ for (i in 1:3) {
   print(apply(arr, i, median))
 }`
 
+const out0301 = `[1] "Dimension 1 statistics:"
+[1] 1 2
+[1] 23 24
+[1] 12 13
+[1] 7.211103 7.211103
+[1] 12 13
+[1] "Dimension 2 statistics:"
+[1] 1 3 5
+[1] 20 22 24
+[1] 10.5 12.5 14.5
+[1] 7.191265 7.191265 7.191265
+[1] 10.5 12.5 14.5
+[1] "Dimension 3 statistics:"
+[1]  1  7 13 19
+[1]  6 12 18 24
+[1]  3.5  9.5 15.5 21.5
+[1] 1.870829 1.870829 1.870829 1.870829
+[1]  3.5  9.5 15.5 21.5`
+
 const code0302 = `df <- data.frame(
   name = c("张飞", "李靖", "王剪", "赵奢", "孙策"),
   age = c(23, 21, 19, 25, 22),
@@ -164,7 +183,8 @@ mean2 <- mean(sc$score[sc$courseID == 2])`
 3. 筛选数组中所有大于 10 的元素，并计算这些元素的平均值、标准差和中位数。
 4. 分别计算数组在各个维度上的统计量的值，包括最小值、最大值、均值、标准差和中位数。
 
-<AnswerBlock title="实验一 · 参考答案" :code="code0301" />
+<AnswerBlock title="实验一 · 参考答案" :code="code0301"
+  :output="out0301" />
 
 ::: tip 数组是「带维度的向量」
 `array(1:24, dim = c(2, 3, 4))` 其实就是把 1~24 按**列优先**的顺序塞进 2×3×4 的格子里。
@@ -237,7 +257,6 @@ mean2 <- mean(sc$score[sc$courseID == 2])`
   title="实验四 · 参考答案"
   description="已自动把原题里的 scores.csv 放进运行环境，所以 read.csv('scores.csv') 能直接读到。"
   :code="code0304"
-  :files="{ 'scores.csv': scoresCsv }"
 />
 
 ::: tip `all.x` / `all.y` / `all` 到底在控制什么
@@ -264,9 +283,7 @@ mean2 <- mean(sc$score[sc$courseID == 2])`
 <AnswerBlock
   title="实验五 · 参考答案"
   description="已自动准备好 scores.csv。这一题还需要 ISwR 包，首次运行会在线安装，可能要等一会儿。"
-  :packages="['ISwR']"
   :code="code0305"
-  :files="{ 'scores.csv': scoresCsv }"
 />
 
 ::: tip 逻辑索引：R 最常用的筛选方式

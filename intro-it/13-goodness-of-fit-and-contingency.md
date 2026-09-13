@@ -27,6 +27,8 @@ chisq.test(x, p = rep(0.2, time = 5))$p.value
 # 返回检验 P 值近似为 0，不服从均匀分布，
 # 即有明显的偏好`
 
+const out1402 = `[1] 1.592068e-28`
+
 const code1403 = `# 用 rt 产生随机数序列 x，验证随机数近似服从标准正态分布
 set.seed(1)
 x = rt(100, 24)
@@ -51,20 +53,28 @@ chisq.test(x)$p.value
 #检验 P 值约为 0.0022，在显著水平为 0.05 的条件下，
 #可认为疗效与年龄段有关`
 
+const out1405 = `[1] 0.002189494`
+
 const code1406 = `# 小样本，用 Fisher 精确检验
 x = matrix(c(3,6,4,4),nrow = 2)
 fisher.test(x)$p.value
 # 检验 P 值约为 0.64，可认为两学徒的合格率不存在显著差异`
+
+const out1406 = `[1] 0.6371863`
 
 const code1407 = `# 用 McNemar 检验
 x = matrix(c(598,14,90,48), byrow = TRUE, nrow = 2)
 mcnemar.test(x)$p.value
 # 检验 P 值约为 0，表明宣传对选科有明显的影响`
 
+const out1407 = `[1] 1.918511e-13`
+
 const code1408 = `x = matrix(c(13, 13, 12, 6, 9, 8, 5, 7, 9), nrow = 3, byrow = TRUE)
 # install.packages('epiR')
 epiR::epi.kappa(x, method = 'cohen')$z$p.value
 # 返回 P 值约为 0.33，可认为两医生的诊疗结论是一致的`
+
+const out1408 = `[1] 0.3255218`
 </script>
 
 # 同分布检验与列联表检验
@@ -104,7 +114,7 @@ epiR::epi.kappa(x, method = 'cohen')$z$p.value
 3. 返回的检验 P 值等于 $1-P(Z \le z_0)$。
 4. 检验 `x` 中的数据是否服从参数为 8 的泊松分布。
 
-<AnswerBlock title="实验题 1 · 参考答案" :code="code1401" :files="{ 'test1401.txt': test1401Txt }" />
+<AnswerBlock title="实验题 1 · 参考答案" :code="code1401" />
 
 ::: tip 统计量的每一「项」都在衡量一个格子的偏差
 $$\frac{(n_i - np_i)^2}{np_i}$$
@@ -131,7 +141,8 @@ $$\frac{(n_i - np_i)^2}{np_i}$$
 
 某商店调查了某时间段五种啤酒的销售量（单位：件）分别为 210, 312, 170, 85, 223，请判断顾客对这五种啤酒的偏好有没有显著性差异，其中 $\alpha=0.05$。
 
-<AnswerBlock title="实验题 2 · 参考答案" :code="code1402" />
+<AnswerBlock title="实验题 2 · 参考答案" :code="code1402"
+  :output="out1402" />
 
 ::: tip chisq.test 的两种用法
 ```r
@@ -223,7 +234,8 @@ ks.test(x, y)
 | 一般 | 31 | 51 | 41 |
 | 较差 | 24 | 20 | 12 |
 
-<AnswerBlock title="实验题 5 · 参考答案" :code="code1405" />
+<AnswerBlock title="实验题 5 · 参考答案" :code="code1405"
+  :output="out1405" />
 
 ::: tip 把表格按行填进矩阵
 ```r
@@ -248,7 +260,8 @@ R 会自己从**边际合计**算出来（行合计 × 列合计 ÷ 总数），
 
 甲乙两学徒制作手工品，其中甲学徒制作了 7 件工艺品，合格品有 3 件，不合格品有 4 件；乙学徒制作了 10 件工艺品，其中合格品有 6 件，不合格品有 4 件。请问两学徒制作的合格品中有没有显著差异？其中 $\alpha=0.05$。
 
-<AnswerBlock title="实验题 6 · 参考答案" :code="code1406" />
+<AnswerBlock title="实验题 6 · 参考答案" :code="code1406"
+  :output="out1406" />
 
 ::: tip 样本量小的时候必须用 Fisher
 `chisq.test` 是**近似**检验，它依赖「每个格子的期望次数不少于 5」这个前提。
@@ -277,7 +290,8 @@ x = matrix(c(3, 6, 4, 4), nrow = 2)
 
 某高中进行文理分科，由于报文科学生偏少，学校通过宣传，鼓励学生选择文科，得到统计数据。请问学校的宣传是否对学生选科有显著影响？其中 $\alpha=0.05$。
 
-<AnswerBlock title="实验题 7 · 参考答案" :code="code1407" />
+<AnswerBlock title="实验题 7 · 参考答案" :code="code1407"
+  :output="out1407" />
 
 ::: tip 配对数据要用 McNemar，不能用普通卡方
 判断标准是：**同一批对象被前后测了两次**（一人一格，而不是两组人）。
@@ -323,8 +337,8 @@ x = matrix(c(598, 14, 90, 48), byrow = TRUE, nrow = 2)
 <AnswerBlock
   title="实验题 8 · 参考答案"
   description="这一题需要 epiR 包。如果网页环境里装不上，可以复制代码到本机 R 里运行。"
-  :packages="['epiR']"
   :code="code1408"
+  :output="out1408"
 />
 
 ::: tip 卡方检验「有关联」，Kappa 检验「有多一致」

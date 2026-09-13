@@ -1,53 +1,50 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { describeError, drawImages, ensurePackages, isWebRReady, runR, writeFiles } from '../webr'
+import { computed, ref } from 'vue'
 
 /**
- * 参考答案卡片。
+ * 参考答案卡片（静态版）。
  *
- * 答案代码**直接显示在页面上**，不依赖任何网络；
- * 想动手试试时再点「▶ 运行」，会通过 WebR 在浏览器里真实执行这段 R 代码。
+ * 答案代码、运行结果、输出图形都是**事先准备好**的静态内容，
+ * 页面不做任何在线执行 —— 打开就能看到结果，离线可用，也不受
+ * 网络与浏览器兼容性影响。
  *
- * 用法：在 Markdown 页面顶部的 script setup 块里定义一个装着 R 代码的字符串常量，
- * 再用 `:code="常量名"` 传给本组件即可。
+ * 可用属性：
+ *   code        答案的 R 代码（必填）
+ *   title       卡片标题，如「实验一 · 参考答案」
+ *   description 补充说明
+ *   output      事先跑出来的文字输出（原样显示，保留换行）
+ *   images      事先跑出来的图，public/ 下的路径，如 ['/figures/09/a.png']
+ *   defaultOpen 是否默认展开（默认收起，让学生先自己做）
  */
 const props = withDefaults(
   defineProps<{
-    /** 答案的 R 代码 */
     code?: string
-    /** 运行前需要安装的 R 包 */
-    packages?: string[]
-    /** 运行前要写进运行环境的数据文件，键是文件名、值是文件内容 */
-    files?: Record<string, string>
-    /** 卡片标题 */
     title?: string
-    /** 补充说明 */
     description?: string
-    /** 只展示代码，不提供运行按钮 */
-    readOnly?: boolean
-    /** 是否默认展开答案（默认收起，让学生先自己试） */
+    output?: string
+    images?: string[]
     defaultOpen?: boolean
   }>(),
   {
     code: '',
-    packages: () => [],
-    files: () => ({}),
     title: '参考答案',
     description: '',
-    readOnly: false,
+    output: '',
+    images: () => [],
     defaultOpen: false
   }
 )
 
 const isOpen = ref(props.defaultOpen)
-
 const copied = ref(false)
-const isRunning = ref(false)
-const status = ref('')
-const output = ref('')
-const error = ref('')
-const hasOutput = ref(false)
-const plotContainer = ref<HTMLElement | null>(null)
+
+/** 图片路径要补上部署前缀（本站是 /study-R-in-GDMU/） */
+const BASE = import.meta.env.BASE_URL || '/'
+const imageUrls = computed(() =>
+  (props.images ?? []).map((src) =>
+    /^(https?:|data:|\/\/)/.test(src) ? src : BASE.replace(/\/$/, '') + src
+  )
+)
 
 async function copyCode() {
   try {
@@ -63,47 +60,10 @@ async function copyCode() {
   copied.value = true
   setTimeout(() => (copied.value = false), 2000)
 }
-
-async function run() {
-  if (isRunning.value) return
-  error.value = ''
-  output.value = ''
-  hasOutput.value = false
-  if (plotContainer.value) plotContainer.value.innerHTML = ''
-
-  isRunning.value = true
-  try {
-    status.value = isWebRReady() ? '正在运行…' : '正在下载 WebR 运行环境（首次约 10 MB）…'
-    await ensurePackages(props.packages, (text) => (status.value = text))
-
-    status.value = '正在准备数据文件…'
-    await writeFiles(props.files)
-
-    status.value = '正在运行…'
-    const startedAt = Date.now()
-    const result = await runR(props.code)
-
-    output.value = `${result.text || '（代码执行成功，没有输出内容）'}\n\n[执行用时 ${Date.now() - startedAt} ms]`
-    if (result.images.length && plotContainer.value) drawImages(plotContainer.value, result.images)
-    hasOutput.value = true
-  } catch (e) {
-    error.value = describeError(e)
-  } finally {
-    status.value = ''
-    isRunning.value = false
-  }
-}
-
-function clearOutput() {
-  output.value = ''
-  error.value = ''
-  hasOutput.value = false
-  if (plotContainer.value) plotContainer.value.innerHTML = ''
-}
 </script>
 
 <template>
-  <div class="answer-block" :class="{ 'answer-block-open': isOpen }">
+  <div class="answer-block">
     <div class="answer-header">
       <div class="answer-title">
         <span class="answer-icon">📘</span>
@@ -118,29 +78,9 @@ function clearOutput() {
         >
           {{ isOpen ? '🙈 收起答案' : '👀 查看参考答案' }}
         </button>
-        <template v-if="isOpen">
-          <button type="button" class="action-btn" @click="copyCode">
-            {{ copied ? '✅ 已复制' : '📋 复制' }}
-          </button>
-          <button
-            v-if="!readOnly"
-            type="button"
-            class="action-btn action-btn-primary"
-            :disabled="isRunning"
-            @click="run"
-          >
-            {{ isRunning ? '⏳ 运行中…' : '▶ 运行' }}
-          </button>
-          <button
-            v-if="hasOutput && !readOnly"
-            type="button"
-            class="action-btn"
-            title="清空输出"
-            @click="clearOutput"
-          >
-            🧹
-          </button>
-        </template>
+        <button v-if="isOpen" type="button" class="action-btn" @click="copyCode">
+          {{ copied ? '✅ 已复制' : '📋 复制' }}
+        </button>
       </div>
     </div>
 
@@ -149,17 +89,16 @@ function clearOutput() {
 
       <pre class="answer-code"><code>{{ code }}</code></pre>
 
-      <div v-if="status" class="answer-status">
-        <span class="spinner" />
-        {{ status }}
+      <div v-if="output" class="answer-output">
+        <div class="output-header">运行结果</div>
+        <pre class="output-text">{{ output }}</pre>
       </div>
 
-      <div v-if="error" class="answer-error">{{ error }}</div>
-
-      <div v-if="hasOutput" class="answer-output">
-        <div class="output-header">输出结果</div>
-        <pre v-if="output" class="output-text">{{ output }}</pre>
-        <div ref="plotContainer" class="plot-container" />
+      <div v-if="imageUrls.length" class="answer-figures">
+        <div class="output-header">输出图形</div>
+        <figure v-for="(src, i) in imageUrls" :key="src + i">
+          <img :src="src" :alt="`输出图 ${i + 1}`" loading="lazy" />
+        </figure>
       </div>
     </div>
   </div>
@@ -184,7 +123,6 @@ function clearOutput() {
   background: var(--ra-bg);
 }
 
-/* 展开时才给内容区加分隔线，收起状态下不留一条突兀的横线 */
 .answer-body {
   border-top: 1px solid var(--ra-border);
 }
@@ -233,35 +171,18 @@ function clearOutput() {
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.action-btn:hover:not(:disabled) {
+.action-btn:hover {
   background: var(--ra-bg-panel);
   border-color: var(--ra-primary);
 }
 
-.action-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.action-btn-primary {
-  background: var(--ra-primary);
-  border-color: var(--ra-primary);
-  color: var(--ra-text-light);
-}
-
-.action-btn-primary:hover:not(:disabled) {
-  background: var(--ra-primary-dark);
-  border-color: var(--ra-primary-dark);
-}
-
-/* 「查看参考答案」按钮——让它在收起状态下明显一点 */
 .action-btn-toggle {
   border-color: var(--ra-primary);
   color: var(--ra-primary);
   font-weight: 600;
 }
 
-.action-btn-toggle:hover:not(:disabled) {
+.action-btn-toggle:hover {
   background: var(--ra-primary);
   border-color: var(--ra-primary);
   color: var(--ra-text-light);
@@ -288,43 +209,8 @@ function clearOutput() {
   white-space: pre;
 }
 
-.answer-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  font-size: 13px;
-  color: var(--ra-text);
-  background: var(--ra-bg);
-  border-top: 1px solid var(--ra-border);
-}
-
-.spinner {
-  width: 12px;
-  height: 12px;
-  border: 2px solid var(--ra-border);
-  border-top-color: var(--ra-primary);
-  border-radius: 50%;
-  animation: ans-spin 0.8s linear infinite;
-}
-
-@keyframes ans-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.answer-error {
-  padding: 12px 16px;
-  font-size: 13px;
-  line-height: 1.7;
-  white-space: pre-line;
-  color: var(--ra-error);
-  background: var(--ra-error-bg);
-  border-top: 1px solid var(--ra-border);
-}
-
-.answer-output {
+.answer-output,
+.answer-figures {
   border-top: 1px solid var(--ra-border);
   background: var(--ra-bg);
 }
@@ -352,14 +238,17 @@ function clearOutput() {
   overflow-y: auto;
 }
 
-.plot-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.answer-figures figure {
+  margin: 0;
   padding: 12px 16px;
 }
 
-.plot-container :deep(canvas) {
+.answer-figures figure + figure {
+  border-top: 1px dashed var(--ra-border);
+}
+
+.answer-figures img {
+  display: block;
   max-width: 100%;
   height: auto;
   border: 1px solid var(--ra-border);
@@ -380,12 +269,6 @@ function clearOutput() {
   .answer-code,
   .output-text {
     font-size: 12px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .spinner {
-    animation: none;
   }
 }
 </style>

@@ -182,6 +182,8 @@ const code0809 = `mysum <- function(x){
 # 测试
 mysum(100)`
 
+const out0809 = `[1] 5050`
+
 const code0810 = `myrecur <- function(x, n) {
   x_str <- as.character(x)
   if (n == 1) {
@@ -504,7 +506,8 @@ bin2dec <- function(sbin) {
 2. 要求用递归完成（不用循环语句）。
 3. 用 `mysum(100)` 测试，其结果是否为 5050。
 
-<AnswerBlock title="实验题 9 · 参考答案" :code="code0809" />
+<AnswerBlock title="实验题 9 · 参考答案" :code="code0809"
+  :output="out0809" />
 
 ::: tip 递归的两要素
 任何递归函数都必须有这两样，缺一就会无限递归直到报错：

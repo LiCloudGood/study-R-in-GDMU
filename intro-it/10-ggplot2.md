@@ -187,7 +187,9 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
 
 > 注意：图中的直方图使用了 `box()` 函数添加边框；在脚本文件最后添加 `par(mfrow = c(1,1))`，恢复为单一窗口。
 
-<AnswerBlock title="实验题 1 · 参考答案" :code="code1101" />
+<AnswerBlock title="实验题 1 · 参考答案" :code="code1101"
+  :images="['/figures/10-ggplot2/unnamed-chunk-7-1.png', '/figures/10-ggplot2/unnamed-chunk-7-2.png', '/figures/10-ggplot2/unnamed-chunk-7-3.png']"
+/>
 
 ::: tip par(mfrow) 与 layout 的分工
 | 函数 | 能做什么 | 局限 |
@@ -222,8 +224,8 @@ layout(mat, widths = c(0.6, 0.4), heights = c(0.5, 0.5))
 <AnswerBlock
   title="实验题 2 · 参考答案"
   description="这一题需要 ggplot2，首次运行会在线安装，请耐心等待。"
-  :packages="['ggplot2']"
   :code="code1102"
+  :images="['/figures/10-ggplot2/unnamed-chunk-8-1.png']"
 />
 
 ::: tip ggplot2 的「图层语法」
@@ -256,7 +258,9 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 3. 用标度变换函数 `scale_color_gradientn` 设置变换颜色集为 `rainbow(20)`，设置图例标题为“气缸数”。
 4. 图例标题和轴标签字号设置为 18，图例关键字标签和刻度标签字号设置为 16。
 
-<AnswerBlock title="实验题 3 · 参考答案" :packages="['ggplot2']" :code="code1104" />
+<AnswerBlock title="实验题 3 · 参考答案" :code="code1104"
+  :images="['/figures/10-ggplot2/unnamed-chunk-9-1.png']"
+/>
 
 ::: tip geom_text 的 nudge_x 与标度变换
 **`nudge_x` / `nudge_y`** 是「把文字整体挪一点」的参数——散点图上的文字如果不挪开，
@@ -283,7 +287,9 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 2. 用 `geom_raster` 绘制二维密度，填充颜色映射为 `density`。
 3. 轴标签和图例标签字号为 16，图例关键字标签和刻度标签字号为 14，面板背景颜色为 `"lightblue"`，清除主网格线与次网格线。
 
-<AnswerBlock title="实验题 4 · 参考答案" :packages="['ggplot2']" :code="code1105" />
+<AnswerBlock title="实验题 4 · 参考答案" :code="code1105"
+  :images="['/figures/10-ggplot2/unnamed-chunk-10-1.png']"
+/>
 
 ::: tip 把「第三个维度」画到平面上
 三维数据（x, y, z）在平面上有两种常用表达：
@@ -312,7 +318,9 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 3. 轴标签和图像标题字号为 20，图例关键字标签和刻度标签字号设置为 18。
 4. 图标题字号为 22，标题与图间距为 12，且标题居中对齐。
 
-<AnswerBlock title="实验题 5 · 参考答案" :packages="['ggplot2']" :code="code1106" />
+<AnswerBlock title="实验题 5 · 参考答案" :code="code1106"
+  :images="['/figures/10-ggplot2/unnamed-chunk-11-1.png']"
+/>
 
 ::: tip ..density.. 是什么：用「统计变换的结果」做映射
 直方图在画之前，ggplot2 内部会先做一次**统计变换**：把原始数据分箱、算出每箱的
@@ -343,7 +351,9 @@ geom_histogram(aes(fill = ..density..), binwidth = 1000)
 7. 图例关键字高度为 1cm，宽度为 0.9cm。注：用 `unit(1, 'cm')` 的形式设置。
 8. 图例背景色为 `grey90`，边框颜色为红色。
 
-<AnswerBlock title="实验题 6 · 参考答案" :packages="['ggplot2']" :code="code1107" />
+<AnswerBlock title="实验题 6 · 参考答案" :code="code1107"
+  :images="['/figures/10-ggplot2/unnamed-chunk-12-1.png']"
+/>
 
 ::: tip theme 的命名规律——记住两条就够了
 `theme()` 里几十个参数其实遵循固定命名法：

@@ -50,7 +50,6 @@ diff(x.date)
 y <- c('2025-3-24;9:20:45','2025-3-24;9:10:45')
 as.Date(y)
 
-
 y.time <- strptime(y,"%Y-%m-%d;%H:%M:%S")
 diff(y.time)
 
@@ -226,7 +225,7 @@ x <- x[-which(is.infinite(x))]`
 6. 找出包含有数字的单词。
 7. 找出有连续重叠字母的单词，不区分大小写。
 
-<AnswerBlock title="实验三 · 参考答案" :code="code0503" :files="{ 'Solomon.txt': solomonTxt }" />
+<AnswerBlock title="实验三 · 参考答案" :code="code0503" />
 
 ::: tip 正则「元字符」速查
 | 写法 | 含义 | 例子 |
@@ -252,7 +251,7 @@ x <- x[-which(is.infinite(x))]`
 1. 使用 `grep` 函数把 `x` 中的含有单引号、双引号、问号、句号、逗号、分号、冒号和感叹号的单词找出，并显示单词本身。
 2. 删除字符串中的 `\` 与标点符号（`. , ? ; : !`），并把结果赋值给 `y`。
 
-<AnswerBlock title="实验四 · 参考答案" :code="code0504" :files="{ 'Solomon2.txt': solomon2Txt }" />
+<AnswerBlock title="实验四 · 参考答案" :code="code0504" />
 
 ::: tip sub 只换第一个，gsub 全换
 - `sub(旧, 新, 字符串)` —— 只替换**第一个**匹配。
@@ -315,7 +314,7 @@ x <- x[-which(is.infinite(x))]`
 3. 删除 `z` 中的空字符串。
 4. 统计 `w` 中各个单词出现的频数。
 
-<AnswerBlock title="实验七 · 参考答案" :code="code0507" :files="{ 'Solomon2.txt': solomon2Txt }" />
+<AnswerBlock title="实验七 · 参考答案" :code="code0507" />
 
 ::: tip strsplit 返回的永远是列表
 `strsplit(y, split = ' ')` 的结果是一个**列表**，所以答案里要加 `[[1]]` 取第一项。
