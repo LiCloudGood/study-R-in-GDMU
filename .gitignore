@@ -13,14 +13,5 @@ node_modules/
 .DS_Store
 Thumbs.db
 
-# 修改前的原件备份
-_backup-summary/
-
-# 本地临时脚本与产物（核对 / 修补 / 打印用，不入库）
-_*.mjs
-_patches*.json
-_fcheck/
-_pdfprint/
-_outs.json
-_*.ps1
-_msg*.txt
+# 本地临时脚本与产物（核对、修补、生成 PDF 用），统一放 _dev/，不入库
+_dev/
