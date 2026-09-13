@@ -1,0 +1,6 @@
+x = rpois(1, 60)
+y = rpois(1, 60)
+z = rpois(1, 60)
+a = rpois(1, 30)
+b = rpois(1, 50)
+c = rpois(1, 70)

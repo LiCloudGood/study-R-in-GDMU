@@ -1,0 +1,12 @@
+patientID,age,diabetes,status
+1,25,Type1,Poor
+2,34,Type2,Improved
+3,28,Type1,Excellent
+4,52,Type1,Poor
+5,47,Type2,Improved
+6,61,Type1,Poor
+8,33,Type2,Excellent
+9,70,Type1,Improved
+10,29,Type2,Improved
+11,38,Type2,Excellent
+12,50,Type2,Poor

@@ -3,7 +3,7 @@
  * 把「原题」里的 .docx 转成方便整理成网页的文本。
  *
  * 用法：
- *   node scripts/extract-docx.mjs "原题/第三周原题/数组与数据框.docx"
+ *   node scripts/extract-docx.mjs "资料/原题/第三周原题/数组与数据框.docx"
  *
  * 它会做三件事：
  *   1. 打印正文（每段一行）；

@@ -35,20 +35,20 @@ gdmu R 语言课程的在线讲义。
 
 | 目录 | 内容 |
 | --- | --- |
-| `原题/` | 学校下发的原始练习（Word 文档、R 脚本、数据） |
-| `答案/` | 各周写好的 R 脚本 |
-| `汇总/` | 原题 + 答案的 HTML 与 PDF 合订本 |
-| `intro-it/` 等 | 在线讲义的源码（Markdown） |
-| `.vitepress/` | 站点配置与自定义主题 |
+| `docs/` | **网站源码**（VitePress）：讲义 Markdown、主题、配图 |
+| `资料/原题/` | 学校下发的原始练习（Word 文档、R 脚本、数据） |
+| `资料/答案/` | 各周写好的 R 脚本 |
+| `资料/汇总/` | 原题 + 答案合订的 HTML |
+| `scripts/` | 整理资料用的小工具与维护文档 |
 
-> `原题`、`答案`、`汇总` 保存的是最初整理好的原始资料，**内容不做改动**。
+> `资料/` 里保存的是最初整理好的原始资料，**内容不做改动**。
 
 ## 自己跑起来
 
 ```bash
 npm install
 npm run docs:dev      # 本地预览 http://localhost:5173/study-R-in-GDMU/
-npm run docs:build    # 构建静态站点到 .vitepress/dist
+npm run docs:build    # 构建静态站点到 docs/.vitepress/dist
 npm run docs:preview  # 预览构建结果
 ```
 
@@ -61,7 +61,7 @@ npm run docs:preview  # 预览构建结果
 
 ## 关于制作
 
-- **课程资料**（`原题` / `答案` / `汇总`）：由 [Li_CloudGood](https://github.com/LiCloudGood) 整理提供。
+- **课程资料**（`资料/原题` / `资料/答案` / `资料/汇总`）：由 [Li_CloudGood](https://github.com/LiCloudGood) 整理提供。
 - **网页实现**：站点基于 [VitePress](https://vitepress.dev/) 构建。网页讲义排版、
   自定义主题组件与公式还原，由 Li_CloudGood 提出设想与需求，
   与 DeepSeek Harness 驱动的 AI 助手协作完成。
@@ -74,5 +74,5 @@ npm run docs:preview  # 预览构建结果
 
 - [`scripts/项目状态.md`](scripts/项目状态.md) —— 仓库地图、自定义组件速查、
   图片怎么接、已知坑、给下一个会话的建议
-- [`scripts/原题修正记录.md`](scripts/原题修正记录.md) —— `原题`/`答案`/`汇总`
+- [`scripts/原题修正记录.md`](scripts/原题修正记录.md) —— `资料/原题`/`资料/答案`/`资料/汇总`
   的每一处改动及理由
