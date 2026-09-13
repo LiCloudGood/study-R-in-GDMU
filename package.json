@@ -1,7 +1,7 @@
 {
   "name": "study-r-in-gdmu",
   "version": "1.0.0",
-  "description": "广东医科大学 R 语言课程学习站点（VitePress）",
+  "description": "广东医 R 语言课程学习站点（VitePress）",
   "private": true,
   "type": "module",
   "scripts": {
