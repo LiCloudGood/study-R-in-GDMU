@@ -78,10 +78,6 @@ export default defineConfig({
 
   // 站点源码全在 docs/ 下（srcDir = docs），仓库说明、工具与原始资料都在 docs/ 之外。
   //
-  // 这里额外排除「统计方法选择器」：它的推荐流程还不够严谨，先下线（不构建、侧栏也不挂），
-  // 文件与组件都保留着，想恢复时删掉下面这一行、再把侧栏条目加回去即可。
-  srcExclude: ['Health-statistics/choice.md'],
-
   markdown: {
     // 公式交给 VitePress 内置的 math（markdown-it-mathjax3）处理
     math: true,
@@ -104,9 +100,12 @@ export default defineConfig({
         entryGroup,
         { text: '医学大数据分析与决策', items: mbdLectures }
       ],
-      // 统计方法选择器已暂时下线（见 srcExclude 的说明）
       '/Health-statistics/': [
         entryGroup,
+        {
+          text: '先选方法',
+          items: [{ text: '统计方法选择器', link: '/Health-statistics/choice' }]
+        },
         { text: '卫生统计学', items: healthLectures }
       ]
     },

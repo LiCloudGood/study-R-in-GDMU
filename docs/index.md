@@ -15,7 +15,7 @@ features:
     details: 从这里学习R语言在医学大数据分析中的应用，学习更加进阶的绘图与数据分析
     link: /Medical-Big-Data-Analysis/
   - title: Health statistics <br>（卫生统计学）
-    details: 还未完成的内容，敬请期待~（指新建文件夹）
+    details: 17 章知识点归纳，覆盖从统计描述到生存分析；另配一个统计方法选择器帮你挑方法
     link: /Health-statistics/
 
 ---

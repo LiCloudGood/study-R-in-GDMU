@@ -1,707 +1,400 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
+import { withBase } from 'vitepress'
 
 /**
  * 统计方法选择器（StatMed Choice）。
  *
- * 交互式问答：按「研究阶段 → 具体场景 → …」逐步选择，
- * 最后给出推荐的统计方法。题目与结论来自 public/tree-*.json 三个题库文件。
+ * 交互式问答：按「研究设计 → 测量尺度 → 样本量与分布」逐步选择，
+ * 最后给出推荐的方法、适用条件、R 代码、该看哪些输出、常见误用，
+ * 并跳到《卫生统计学》对应章节。
+ *
+ * 题库来自 public/selector-tree.json —— 那份文件由规则表生成，
+ * 页面上的「决策速查表」出自同一份规则，两者不会打架。
  *
  * 全程不收集任何数据，选择过程只保存在当前页面内存里。
  */
 
 interface Option {
-  value: string
   text: string
-  /** 下一个节点的 id；-1 表示到此为止 */
+  detail?: string
   next: number
-  result?: Result
 }
 
 interface TreeNode {
   id: number
-  question: string
-  options: Option[]
+  question?: string
+  hint?: string
+  options?: Option[]
+  result?: Result
 }
 
 interface Result {
   method: string
-  description: string
-  link: string
+  why: string
+  cond?: string[]
+  note?: string
+  criteria?: string[][]
+  code?: string
+  read?: string[]
+  pit?: string[]
+  c: { text: string; link: string }
 }
 
-const props = withDefaults(
-  defineProps<{
-    /**
-     * 是否显示「查看完整教程 →」链接。
-     * 该链接指向 /method/<方法名> 页面，本仓库目前还没有这些页面，
-     * 所以默认关闭；等你写好了统计方法教程再把页面级的开关打开即可。
-     */
-    showDetailLink?: boolean
-  }>(),
-  { showDetailLink: false }
-)
-
-const versions = [
-  { key: 'med', label: '医学生版' },
-  { key: 'normal', label: '普通版' },
-  { key: 'expert', label: '专家版' }
-]
-
-const version = ref('normal')
 const nodes = ref<TreeNode[]>([])
-const decisionPaths = ref<Record<string, Result>>({})
+const byId = ref<Map<number, TreeNode>>(new Map())
 const loading = ref(true)
 const error = ref<string | null>(null)
 
-/** 当前走到第几步；等于 nodes.length 表示已经出结果 */
-const stepIndex = ref(0)
-/** 每一步选了哪个选项（按顺序） */
-const answers = ref<string[]>([])
-/** 当前这一步选中的值 */
-const selected = ref('')
-const result = ref<Result>({ method: '', description: '', link: '' })
+/** 已经回答过的步骤：{问题, 选了什么} */
+const history = ref<{ question: string; answer: string }[]>([])
+const currentId = ref(1)
 
-const current = computed<TreeNode>(
-  () => nodes.value[stepIndex.value] || { id: 0, question: '', options: [] }
-)
-
-/** 步骤条上显示的短标题 */
-function stepLabel(index: number) {
-  const question = nodes.value[index]?.question || ''
-  return question.length > 10 ? `${question.slice(0, 10)}…` : question
-}
-
-function slug(text: string) {
-  return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
-}
-
-const NEED_EXPERT: Result = {
-  method: '（请咨询统计专家）',
-  description: '当前选择组合暂无自动推荐方法，请尝试其他选择或咨询统计专家',
-  link: ''
-}
+const current = computed<TreeNode | null>(() => byId.value.get(currentId.value) || null)
+const result = computed<Result | null>(() => (current.value?.result ? current.value.result : null))
 
 async function loadTree() {
   loading.value = true
   error.value = null
   try {
-    stepIndex.value = 0
-    answers.value = []
-    selected.value = ''
-    result.value = { method: '', description: '', link: '' }
-
-    // 题库文件放在 public/ 下，用 BASE_URL 保证换了部署路径也能取到
-    const url = `${import.meta.env.BASE_URL}tree-${version.value}.json`
-    const response = await fetch(url)
-    if (!response.ok) throw new Error(`题库文件不存在: ${response.status} ${response.statusText}`)
-
-    const data = await response.json()
-    if (!data || typeof data !== 'object' || !Array.isArray(data.nodes)) {
-      throw new Error('数据结构不完整，缺少 nodes')
-    }
-
+    const res = await fetch(`${import.meta.env.BASE_URL}selector-tree.json`)
+    if (!res.ok) throw new Error(`题库加载失败：${res.status}`)
+    const data = (await res.json()) as { nodes: TreeNode[] }
     nodes.value = data.nodes
-    decisionPaths.value = data.decisionPaths || {}
-
-    // 题库里没有 decisionPaths 时，把每个「终点选项」自带的 result 收拢成路径表
-    if (!data.decisionPaths) {
-      for (const node of data.nodes as TreeNode[]) {
-        for (const option of node.options || []) {
-          if (option.next === -1 && option.result) {
-            decisionPaths.value[`${node.id}-${option.value}`] = option.result
-          }
-        }
-      }
-    }
+    byId.value = new Map(data.nodes.map((n) => [n.id, n]))
+    currentId.value = nodes.value.find((n) => n.question)?.id ?? 1
+    history.value = []
   } catch (e) {
-    error.value = e instanceof Error ? e.message : '加载失败'
+    error.value = e instanceof Error ? e.message : String(e)
   } finally {
     loading.value = false
   }
 }
 
-function next() {
-  if (!selected.value) return
-  const option = current.value.options?.find((o) => o.value === selected.value)
-  if (!option) {
-    error.value = '未找到匹配的选项'
-    return
-  }
-  answers.value.push(selected.value)
-
-  // 走到终点：先查精确路径，再退回使用选项自带的结论
-  if (option.next === -1) {
-    const key = `${current.value.id || 1}-${selected.value}`
-    result.value = decisionPaths.value[key] || option.result || { ...NEED_EXPERT }
-    stepIndex.value = nodes.value.length
-    return
-  }
-
-  selected.value = ''
-  if (option.next > 0) {
-    const target = nodes.value.findIndex((n) => n.id === option.next)
-    if (target >= 0) {
-      stepIndex.value = target
-      return
-    }
-  }
-
-  if (stepIndex.value < nodes.value.length - 1) stepIndex.value++
-  else resolveResult()
-}
-
-/** 没有显式终点时，用「最长前缀匹配」从决策表里推断结论 */
-function resolveResult() {
-  try {
-    let withIds = ''
-    answers.value.forEach((value, index) => {
-      const id = nodes.value[index]?.id ?? index + 1
-      withIds += withIds ? `,${id}-${value}` : `${id}-${value}`
-    })
-    const valuesOnly = answers.value.join(',')
-
-    for (const candidate of [withIds, valuesOnly]) {
-      if (decisionPaths.value[candidate]) {
-        result.value = decisionPaths.value[candidate]
-        stepIndex.value = nodes.value.length
-        return
-      }
-    }
-
-    let best: Result | null = null
-    let bestScore = 0
-    for (const [key, value] of Object.entries(decisionPaths.value)) {
-      const keyParts = key.split(',')
-      for (const candidate of [withIds, valuesOnly]) {
-        const candidateParts = candidate.split(',')
-        const limit = Math.min(keyParts.length, candidateParts.length)
-        let matched = 0
-        while (matched < limit && keyParts[matched] === candidateParts[matched]) matched++
-        // 必须是完整命中某条已知路径，且命中的最长
-        if (matched > bestScore && matched === keyParts.length) {
-          bestScore = matched
-          best = value
-        }
-      }
-    }
-
-    result.value = best || { ...NEED_EXPERT }
-    stepIndex.value = nodes.value.length
-  } catch (e) {
-    result.value = {
-      method: '（计算错误）',
-      description: `计算结果时出现错误: ${e instanceof Error ? e.message : '未知错误'}`,
-      link: ''
-    }
-    stepIndex.value = nodes.value.length
-  }
-}
-
-function prev() {
-  if (stepIndex.value <= 0) return
-  stepIndex.value--
-  if (answers.value.length > stepIndex.value) {
-    selected.value = answers.value[stepIndex.value]
-    answers.value = answers.value.slice(0, stepIndex.value)
-  } else {
-    selected.value = ''
-  }
+function choose(opt: Option) {
+  history.value = [...history.value, { question: current.value?.question || '', answer: opt.text }]
+  currentId.value = opt.next
 }
 
 function restart() {
-  stepIndex.value = 0
-  answers.value = []
-  selected.value = ''
-  result.value = { method: '', description: '', link: '' }
+  currentId.value = nodes.value.find((n) => n.question)?.id ?? 1
+  history.value = []
 }
 
-function switchVersion(key: string) {
-  version.value = key
-  loadTree()
+/** 只支持 **粗体** 和 `代码` 两种行内标记，内容是我们自己写的，安全 */
+function md(s: string) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
 }
 
 onMounted(loadTree)
 </script>
 
 <template>
-  <div class="statistical-guide">
-    <div class="ver-bar">
-      <button
-        v-for="v in versions"
-        :key="v.key"
-        class="ver-btn"
-        :class="{ active: version === v.key }"
-        @click="switchVersion(v.key)"
-      >
-        {{ v.label }}
-      </button>
-    </div>
+  <div class="sf">
+    <div v-if="loading" class="sf-status">正在加载题库…</div>
+    <div v-else-if="error" class="sf-status sf-error">{{ error }}</div>
 
-    <div v-if="loading" class="loading">加载中...</div>
+    <template v-else>
+      <!-- 已经走过的步骤 -->
+      <ol v-if="history.length" class="sf-history">
+        <li v-for="(h, i) in history" :key="i">
+          <span class="sf-q">{{ h.question }}</span>
+          <span class="sf-a">{{ h.answer }}</span>
+        </li>
+      </ol>
 
-    <div v-else-if="error" class="error">
-      {{ error }}
-      <button class="btn-retry" @click="loadTree">重试</button>
-    </div>
+      <!-- 出结果 -->
+      <div v-if="result" class="sf-result">
+        <div class="sf-badge">推荐方法</div>
+        <h3 class="sf-method">{{ result.method }}</h3>
+        <p class="sf-why" v-html="md(result.why)" />
 
-    <div v-else>
-      <div v-if="nodes.length" class="steps">
-        <div
-          v-for="(node, index) in nodes"
-          :key="node.id"
-          class="step"
-          :class="{ active: stepIndex === index, completed: stepIndex > index }"
-        >
-          <div class="step-number">{{ index + 1 }}</div>
-          <div class="step-label">{{ stepLabel(index) }}</div>
+        <div v-if="result.cond && result.cond.length" class="sf-block">
+          <div class="sf-label">适用条件</div>
+          <ul>
+            <li v-for="(c, i) in result.cond" :key="i" v-html="md(c)" />
+          </ul>
+        </div>
+
+        <p v-if="result.note" class="sf-note" v-html="md(result.note)" />
+
+        <table v-if="result.criteria" class="sf-criteria">
+          <thead>
+            <tr><th>条件</th><th>用哪种写法</th></tr>
+          </thead>
+          <tbody>
+            <tr v-for="(row, i) in result.criteria" :key="i">
+              <td v-html="md(row[0])" />
+              <td v-html="md(row[1])" />
+            </tr>
+          </tbody>
+        </table>
+
+        <div v-if="result.code" class="sf-block">
+          <div class="sf-label">在 R 里怎么做</div>
+          <pre class="sf-code"><code>{{ result.code }}</code></pre>
+        </div>
+
+        <div v-if="result.read && result.read.length" class="sf-block">
+          <div class="sf-label">输出看这几个数</div>
+          <ul>
+            <li v-for="(r, i) in result.read" :key="i" v-html="md(r)" />
+          </ul>
+        </div>
+
+        <div v-if="result.pit && result.pit.length" class="sf-block sf-pit">
+          <div class="sf-label">容易踩的坑</div>
+          <ul>
+            <li v-for="(p, i) in result.pit" :key="i" v-html="md(p)" />
+          </ul>
+        </div>
+
+        <div class="sf-foot">
+          <a class="sf-chapter" :href="withBase(result.c.link)">
+            想弄懂原理 → {{ result.c.text }}
+          </a>
+          <button type="button" class="sf-again" @click="restart">↺ 换一组条件重选</button>
         </div>
       </div>
 
-      <div class="step-content">
-        <div v-if="stepIndex < nodes.length" class="question-section">
-          <h3 class="q-title">{{ current.question }}</h3>
-          <div class="options">
-            <label v-for="option in current.options" :key="option.value">
-              <input v-model="selected" type="radio" class="radio-input" :value="option.value" />
-              <span class="radio-custom" />
-              <span class="option-text">{{ option.text }}</span>
-            </label>
-          </div>
+      <!-- 继续提问 -->
+      <div v-else-if="current" class="sf-ask">
+        <div class="sf-question">{{ current.question }}</div>
+        <p v-if="current.hint" class="sf-hint">{{ current.hint }}</p>
+        <div class="sf-options">
+          <button
+            v-for="(o, i) in current.options"
+            :key="i"
+            type="button"
+            class="sf-option"
+            @click="choose(o)"
+          >
+            <span class="sf-opt-text">{{ o.text }}</span>
+            <span v-if="o.detail" class="sf-opt-detail">{{ o.detail }}</span>
+          </button>
         </div>
-
-        <div v-else class="method-recommendation">
-          <h3>统计分析建议</h3>
-          <div class="recommendation-result">
-            <div class="primary-method">
-              <h4>推荐方法：{{ result.method }}</h4>
-              <p v-if="result.description" class="method-description">{{ result.description }}</p>
-            </div>
-            <div class="result-actions">
-              <a v-if="result.link" class="calc-link" :href="result.link" target="_blank">
-                查精确 P 值 ↗
-              </a>
-              <button class="btn btn-secondary" @click="restart">重新开始</button>
-            </div>
-            <a
-              v-if="showDetailLink && result.method && result.method !== NEED_EXPERT.method && result.method !== '（计算错误）'"
-              class="detail-link"
-              :href="`/method/${slug(result.method)}`"
-            >
-              查看完整教程 →
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="navigation">
-        <button v-if="stepIndex > 0" class="btn btn-secondary" @click="prev">上一步</button>
-        <button
-          v-if="stepIndex < nodes.length"
-          class="btn btn-primary"
-          :disabled="!selected"
-          @click="next"
-        >
-          {{ stepIndex === nodes.length - 1 ? '查看结果' : '下一步' }}
+        <button v-if="history.length" type="button" class="sf-again sf-again-top" @click="restart">
+          ↺ 重新开始
         </button>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <style scoped>
-.statistical-guide {
-  max-width: 800px;
-  margin: 0 auto;
+.sf {
+  border: 1px solid var(--ra-border);
+  border-radius: 12px;
+  background: var(--ra-bg-panel);
+  padding: 18px 20px;
+  margin: 18px 0;
+}
+.sf-status {
+  color: var(--ra-text);
+  opacity: 0.75;
+  font-size: 14px;
+}
+.sf-error {
+  color: var(--ra-error);
 }
 
-.ver-bar {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
-  justify-content: center;
-  flex-wrap: wrap;
+/* 已走过的步骤 */
+.sf-history {
+  margin: 0 0 16px;
+  padding-left: 20px;
+  font-size: 13px;
+  color: var(--ra-text);
+  opacity: 0.8;
+}
+.sf-history li {
+  margin: 2px 0;
+}
+.sf-q::after {
+  content: ' → ';
+  opacity: 0.6;
+}
+.sf-a {
+  font-weight: 600;
 }
 
-.ver-btn {
-  padding: 8px 20px;
-  border: 2px solid #409eff;
-  color: #409eff;
-  background: #fff;
-  border-radius: 6px;
+/* 提问 */
+.sf-question {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ra-text);
+  margin-bottom: 6px;
+}
+.sf-hint {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: var(--ra-text);
+  opacity: 0.7;
+}
+.sf-options {
+  display: grid;
+  gap: 8px;
+}
+.sf-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  appearance: none;
+  border: 1px solid var(--ra-border);
+  border-radius: 8px;
+  background: var(--ra-bg);
+  color: var(--ra-text);
+  padding: 10px 14px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.ver-btn:hover {
-  background: #f5f9ff;
-}
-
-.ver-btn.active {
-  background: #409eff;
-  color: #fff;
-}
-
-.loading,
-.error {
-  text-align: center;
-  padding: 60px 20px;
-  font-size: 16px;
-  color: #666;
-  background: #f8f9fa;
-  border-radius: 8px;
-  margin: 20px 0;
-}
-
-.btn-retry {
-  margin-left: 12px;
-  padding: 6px 16px;
-  background: #f5f5f5;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-retry:hover {
-  background: #e0e0e0;
-}
-
-.steps {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 32px;
-  position: relative;
-  padding: 0 8px;
-}
-
-.steps::before {
-  content: '';
-  position: absolute;
-  top: 20px;
-  left: 16px;
-  right: 16px;
-  height: 3px;
-  background: #e0e0e0;
-  z-index: 1;
-}
-
-.step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  z-index: 2;
-  flex: 1;
-}
-
-.step-number {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #e0e0e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  color: #666;
-  margin-bottom: 8px;
-  transition: all 0.3s ease;
-}
-
-.step.active .step-number {
-  background: #409eff;
-  color: #fff;
-  transform: scale(1.1);
-}
-
-.step.completed .step-number {
-  background: #67c23a;
-  color: #fff;
-}
-
-.step.completed .step-number::after {
-  content: '✓';
-  font-size: 16px;
-}
-
-.step-label {
-  font-size: 12px;
-  color: #666;
-  text-align: center;
-  line-height: 1.2;
-  max-width: 100%;
-  word-break: break-word;
-}
-
-.step.active .step-label {
-  color: #409eff;
-  font-weight: 700;
-}
-
-.step-content {
-  min-height: 300px;
-  margin-bottom: 32px;
-}
-
-.question-section {
-  background: #f8f9fa;
-  border-radius: 12px;
-  padding: 24px;
-  border-left: 4px solid #409eff;
-}
-
-.q-title {
-  margin-bottom: 24px;
-  font-size: 20px;
-  color: #333;
-  line-height: 1.4;
-}
-
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.options label {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  cursor: pointer;
-  padding: 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  background: #fff;
-}
-
-.options label:hover {
-  border-color: #409eff;
-  background: #f5f9ff;
-}
-
-.radio-input {
-  display: none;
-}
-
-.radio-custom {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #ccc;
-  border-radius: 50%;
-  position: relative;
-  flex-shrink: 0;
-  margin-top: 2px;
-  transition: all 0.3s ease;
-}
-
-.radio-input:checked + .radio-custom {
-  border-color: #409eff;
-  background: #409eff;
-}
-
-.radio-input:checked + .radio-custom::after {
-  content: '';
-  width: 10px;
-  height: 10px;
-  background: #fff;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.option-text {
-  flex: 1;
-  font-size: 15px;
   line-height: 1.5;
-  color: #333;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.sf-option:hover {
+  border-color: var(--ra-primary);
+  background: var(--ra-bg-panel);
+}
+.sf-opt-text {
+  display: block;
+  font-weight: 600;
+}
+.sf-opt-detail {
+  display: block;
+  font-size: 12px;
+  opacity: 0.65;
+  margin-top: 2px;
 }
 
-.method-recommendation h3 {
-  margin-bottom: 24px;
-  color: #333;
-  font-size: 22px;
+/* 结果 */
+.sf-badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--ra-primary);
+  color: var(--ra-primary);
+  margin-bottom: 8px;
 }
-
-.recommendation-result {
-  background: #f8f9fa;
-  border-radius: 12px;
-  padding: 24px;
-  border-left: 4px solid #67c23a;
+.sf-method {
+  margin: 0 0 6px;
+  font-size: 19px;
+  color: var(--ra-text);
 }
-
-.primary-method h4 {
-  color: #67c23a;
-  margin-bottom: 16px;
-  font-size: 18px;
+.sf-why {
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ra-text);
 }
-
-.method-description {
-  color: #666;
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 24px;
-  padding: 16px;
-  background: #fff;
+.sf-block {
+  margin: 14px 0;
+}
+.sf-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ra-text);
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+.sf-result ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ra-text);
+}
+.sf-result li {
+  margin: 3px 0;
+}
+.sf-note {
+  margin: 12px 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--ra-primary);
+  background: var(--ra-bg);
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--ra-text);
+}
+.sf-criteria {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin: 12px 0;
+}
+.sf-criteria th,
+.sf-criteria td {
+  border: 1px solid var(--ra-border);
+  padding: 7px 10px;
+  text-align: left;
+  color: var(--ra-text);
+}
+.sf-criteria th {
+  background: var(--ra-bg);
+  font-weight: 600;
+}
+.sf-code {
+  margin: 0;
+  padding: 12px 14px;
+  background: var(--ra-bg);
+  border: 1px solid var(--ra-border);
   border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  font-family: Consolas, Monaco, 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-x: auto;
+  color: var(--ra-text);
+  white-space: pre;
 }
-
-.result-actions {
+.sf-pit {
+  border-left: 3px solid var(--ra-error);
+  padding-left: 12px;
+}
+.sf-foot {
   display: flex;
-  gap: 16px;
-  align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  gap: 10px;
+  align-items: center;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--ra-border);
 }
-
-.calc-link {
-  display: inline-block;
-  padding: 10px 20px;
-  color: #409eff;
-  text-decoration: none;
-  border: 2px solid #409eff;
-  border-radius: 6px;
-  transition: all 0.3s ease;
+.sf-chapter {
   font-size: 14px;
-  font-weight: 500;
-}
-
-.calc-link:hover {
-  background: #409eff;
-  color: #fff;
-  transform: translateY(-1px);
-}
-
-.detail-link {
-  display: inline-block;
-  font-size: 14px;
-  color: #409eff;
+  font-weight: 600;
+  color: var(--ra-primary);
   text-decoration: none;
-  margin-top: 16px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  font-weight: 500;
 }
-
-.detail-link:hover {
-  background: #f5f9ff;
+.sf-chapter:hover {
   text-decoration: underline;
 }
-
-.navigation {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 32px;
-}
-
-.btn {
-  padding: 12px 28px;
-  border: none;
-  border-radius: 8px;
+.sf-again {
+  appearance: none;
+  border: 1px solid var(--ra-border);
+  background: var(--ra-bg);
+  color: var(--ra-text);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
   cursor: pointer;
-  font-size: 15px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  margin-left: auto;
 }
-
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none !important;
+.sf-again:hover {
+  border-color: var(--ra-primary);
+  color: var(--ra-primary);
 }
-
-.btn-primary {
-  background: #409eff;
-  color: #fff;
+.sf-again-top {
+  margin: 14px 0 0;
 }
-
-.btn-primary:hover:not(:disabled) {
-  background: #337ecc;
-  transform: translateY(-1px);
-}
-
-.btn-secondary {
-  background: #f5f5f5;
-  color: #666;
-  border: 1px solid #e0e0e0;
-}
-
-.btn-secondary:hover:not(:disabled) {
-  background: #e0e0e0;
-  transform: translateY(-1px);
-}
-
-@media (max-width: 768px) {
-  .steps {
-    padding: 0;
-  }
-
-  .steps::before {
-    left: 0;
-    right: 0;
-  }
-
-  .step-label {
-    font-size: 11px;
-  }
-
-  .question-section,
-  .recommendation-result {
-    padding: 20px 16px;
-  }
-
-  .q-title {
-    font-size: 18px;
-  }
-
-  .options label {
-    padding: 14px;
-  }
-
-  .navigation {
-    flex-direction: column;
-  }
-
-  .btn {
-    width: 100%;
-  }
-
-  .ver-bar {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .ver-btn {
-    width: 100%;
-    max-width: 200px;
-  }
-}
-
-@media (max-width: 480px) {
-  .step-number {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
-  }
-
-  .steps {
-    margin-bottom: 24px;
-  }
-
-  .step-content {
-    min-height: 250px;
-  }
+:deep(code) {
+  font-family: Consolas, Monaco, 'Courier New', monospace;
+  font-size: 0.92em;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: var(--ra-bg);
 }
 </style>
