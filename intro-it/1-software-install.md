@@ -8,6 +8,14 @@ import { ref } from 'vue'
 
 const showDownload = ref(false)
 
+const code0102 = `setwd("E:/test01")
+getwd()
+version
+source("test0102.R")
+setwd("E:/")
+source("test0102.R") #会报错，因为文件不在当前目录
+source('E:/test01/test0102.R')`
+
 const code0103 = `setwd("e:/test01")
 install.packages("vioplot_0.4.0.tar.gz", repos = NULL)
 library(vioplot)
@@ -72,6 +80,19 @@ source("test0102.R")
 <ClickAnswer>
 因为此时使用了文件的绝对路径，所以不受当前工作目录的影响，能正确找到并运行该文件。
 </ClickAnswer>
+
+<AnswerBlock title="题目二 · 参考答案" :code="code0102" />
+
+::: tip 工作目录是「相对路径的起点」
+`source("test0102.R")` 用的是**相对路径**，R 会从「当前工作目录」开始找文件。
+
+- 目录在 `E:/test01` 时 → 找得到 ✓
+- 一旦 `setwd("E:/")` 切到 E 盘根目录 → 就找不到了，于是报错
+- 写成 `source('E:/test01/test0102.R')` 这种**绝对路径** → 和当前目录无关，永远找得到 ✓
+
+工作目录可以用 `getwd()` 查看、`setwd()` 修改，
+这是新手最常踩的坑之一：脚本在自己电脑上跑得好好的，换台电脑就报「找不到文件」。
+:::
 
 ## 题目三：安装包
 
