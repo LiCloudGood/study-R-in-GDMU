@@ -33,6 +33,27 @@ const mbdLectures: { text: string; link?: string }[] = [
   { text: '8-神经网络', link: '/Medical-Big-Data-Analysis/8-neural-networks' }
 ]
 
+/** 《卫生统计学》的课程目录（按章）。 */
+const healthLectures: { text: string; link?: string }[] = [
+  { text: '1-绪论', link: '/Health-statistics/01-introduction' },
+  { text: '3-实验设计与调查设计', link: '/Health-statistics/03-study-design' },
+  { text: '4-定量资料的统计描述', link: '/Health-statistics/04-describing-quantitative-data' },
+  { text: '5-定性资料的统计描述', link: '/Health-statistics/05-describing-qualitative-data' },
+  { text: '6-总体均数与总体率的估计', link: '/Health-statistics/06-estimation' },
+  { text: '7-假设检验', link: '/Health-statistics/07-hypothesis-testing' },
+  { text: '8-t 检验', link: '/Health-statistics/08-t-test' },
+  { text: '9-方差分析', link: '/Health-statistics/09-anova' },
+  { text: '10-卡方检验', link: '/Health-statistics/10-chi-square' },
+  { text: '11-非参数检验与秩和检验', link: '/Health-statistics/11-nonparametric' },
+  { text: '12-双变量关联性分析', link: '/Health-statistics/12-bivariate-association' },
+  { text: '13-直线回归', link: '/Health-statistics/13-linear-regression' },
+  { text: '14-生存分析', link: '/Health-statistics/14-survival-analysis' },
+  { text: '16-Meta 分析', link: '/Health-statistics/16-meta-analysis' },
+  { text: '17-样本含量估计', link: '/Health-statistics/17-sample-size' },
+  { text: '18-生命统计的常用指标', link: '/Health-statistics/18-vital-statistics' },
+  { text: '19-常用统计图表', link: '/Health-statistics/19-tables-and-charts' }
+]
+
 /** 三个板块共用的「入口」分组，方便在各板块之间跳转。 */
 const entryGroup = {
   text: '入口',
@@ -83,8 +104,11 @@ export default defineConfig({
         entryGroup,
         { text: '医学大数据分析与决策', items: mbdLectures }
       ],
-      // 统计方法选择器已暂时下线（见 srcExclude 的说明），侧栏先只留入口分组
-      '/Health-statistics/': [entryGroup]
+      // 统计方法选择器已暂时下线（见 srcExclude 的说明）
+      '/Health-statistics/': [
+        entryGroup,
+        { text: '卫生统计学', items: healthLectures }
+      ]
     },
 
     outline: { level: [2, 3], label: '本页目录' },
