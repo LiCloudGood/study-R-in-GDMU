@@ -16,7 +16,8 @@ Thumbs.db
 # 修改前的原件备份
 _backup-summary/
 
-# 本地临时脚本与产物（核对 / 修补用，不入库）
+# 本地临时脚本与产物（核对 / 修补 / 打印用，不入库）
 _*.mjs
 _patches*.json
 _fcheck/
+_pdfprint/
