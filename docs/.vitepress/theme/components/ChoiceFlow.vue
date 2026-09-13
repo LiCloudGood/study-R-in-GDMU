@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref } from 'vue'
 import { withBase } from 'vitepress'
+import { selectorTree, type SelectorNode } from '../selector-data'
 
 /**
  * 统计方法选择器（StatMed Choice）。
@@ -9,75 +10,37 @@ import { withBase } from 'vitepress'
  * 最后给出推荐的方法、适用条件、R 代码、该看哪些输出、常见误用，
  * 并跳到《卫生统计学》对应章节。
  *
- * 题库来自 public/selector-tree.json —— 那份文件由规则表生成，
+ * 题库直接 import 进来（`theme/selector-data.ts`，由 _dev/selector-build.mjs
+ * 从规则表生成）—— **不走 fetch**，避免异步加载失败时组件卡在「正在加载」。
  * 页面上的「决策速查表」出自同一份规则，两者不会打架。
  *
  * 全程不收集任何数据，选择过程只保存在当前页面内存里。
  */
 
-interface Option {
-  text: string
-  detail?: string
-  next: number
-}
+type TreeNode = SelectorNode
 
-interface TreeNode {
-  id: number
-  question?: string
-  hint?: string
-  options?: Option[]
-  result?: Result
-}
+const ALL = selectorTree?.nodes ?? []
+const byId = new Map<number, TreeNode>(ALL.map((n) => [n.id, n]))
 
-interface Result {
-  method: string
-  why: string
-  cond?: string[]
-  note?: string
-  criteria?: string[][]
-  code?: string
-  read?: string[]
-  pit?: string[]
-  c: { text: string; link: string }
+/** 起始节点：第一个「问题」节点，兜底取列表里第一个 */
+function firstId(): number {
+  return ALL.find((n) => n.question)?.id ?? ALL[0]?.id ?? 0
 }
-
-const nodes = ref<TreeNode[]>([])
-const byId = ref<Map<number, TreeNode>>(new Map())
-const loading = ref(true)
-const error = ref<string | null>(null)
 
 /** 已经回答过的步骤：{问题, 选了什么} */
 const history = ref<{ question: string; answer: string }[]>([])
-const currentId = ref(1)
+const currentId = ref(firstId())
 
-const current = computed<TreeNode | null>(() => byId.value.get(currentId.value) || null)
-const result = computed<Result | null>(() => (current.value?.result ? current.value.result : null))
+const current = computed<TreeNode | null>(() => byId.get(currentId.value) ?? null)
+const result = computed(() => current.value?.result ?? null)
 
-async function loadTree() {
-  loading.value = true
-  error.value = null
-  try {
-    const res = await fetch(`${import.meta.env.BASE_URL}selector-tree.json`)
-    if (!res.ok) throw new Error(`题库加载失败：${res.status}`)
-    const data = (await res.json()) as { nodes: TreeNode[] }
-    nodes.value = data.nodes
-    byId.value = new Map(data.nodes.map((n) => [n.id, n]))
-    currentId.value = nodes.value.find((n) => n.question)?.id ?? 1
-    history.value = []
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : String(e)
-  } finally {
-    loading.value = false
-  }
-}
-
-function choose(opt: Option) {
+function choose(opt: { text: string; next: number }) {
   history.value = [...history.value, { question: current.value?.question || '', answer: opt.text }]
   currentId.value = opt.next
 }
 
 function restart() {
-  currentId.value = nodes.value.find((n) => n.question)?.id ?? 1
+  currentId.value = firstId()
   history.value = []
 }
 
@@ -89,16 +52,16 @@ function md(s: string) {
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/`(.+?)`/g, '<code>$1</code>')
 }
-
-onMounted(loadTree)
 </script>
 
 <template>
-  <div class="sf">
-    <div v-if="loading" class="sf-status">正在加载题库…</div>
-    <div v-else-if="error" class="sf-status sf-error">{{ error }}</div>
-
-    <template v-else>
+  <!--
+    用 ClientOnly 包起来：选择器完全在浏览器里渲染。
+    题库是静态数据，没必要参与服务端渲染 —— 而 SSR 与客户端状态一旦不一致，
+    水合（hydration）会把正确的内容覆盖掉，反而显示成空白。
+  -->
+  <ClientOnly>
+    <div class="sf">
       <!-- 已经走过的步骤 -->
       <ol v-if="history.length" class="sf-history">
         <li v-for="(h, i) in history" :key="i">
@@ -181,8 +144,8 @@ onMounted(loadTree)
           ↺ 重新开始
         </button>
       </div>
-    </template>
-  </div>
+    </div>
+  </ClientOnly>
 </template>
 
 <style scoped>

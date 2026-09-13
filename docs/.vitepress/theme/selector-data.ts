@@ -1,4 +1,27 @@
-{
+/**
+ * 统计方法选择器题库 —— 由 _dev/selector-build.mjs 从规则表生成，请勿手改。
+ * 改规则请改生成脚本，然后重跑它。
+ */
+export interface SelectorOption { text: string; detail?: string; next: number }
+export interface SelectorResult {
+  method: string
+  why: string
+  cond?: string[]
+  note?: string
+  criteria?: string[][]
+  code?: string
+  read?: string[]
+  pit?: string[]
+  c: { text: string; link: string }
+}
+export interface SelectorNode {
+  id: number
+  question?: string
+  hint?: string
+  options?: SelectorOption[]
+  result?: SelectorResult
+}
+export const selectorTree: { nodes: SelectorNode[] } = {
   "nodes": [
     {
       "id": 1,
