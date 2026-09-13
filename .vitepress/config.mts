@@ -39,7 +39,7 @@ export default defineConfig({
   lang: 'zh-CN',
   base: '/study-R-in-GDMU/',
   title: 'study R in GDMU',
-  description: '广东医 R 语言课程学习站点：原题、答案与知识点汇总',
+  description: 'gdmu R 语言课程学习站点：原题、答案与知识点汇总',
 
   lastUpdated: true,
 

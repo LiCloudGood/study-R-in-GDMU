@@ -1,6 +1,6 @@
 # study R in GDMU
 
-广东医 R 语言课程的在线讲义。
+gdmu R 语言课程的在线讲义。
 
 🌐 在线阅读：**<https://licloudgood.github.io/study-R-in-GDMU/>**
 
