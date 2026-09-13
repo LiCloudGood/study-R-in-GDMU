@@ -282,7 +282,7 @@ mean2 <- mean(sc$score[sc$courseID == 2])`
 
 <AnswerBlock
   title="实验五 · 参考答案"
-  description="已自动准备好 scores.csv。这一题还需要 ISwR 包，首次运行会在线安装，可能要等一会儿。"
+  description="这一题需要 ISwR 包，另外用到了本页前面生成的 scores.csv。"
   :code="code0305"
 />
 

@@ -4,6 +4,8 @@ title: 10-ggplot2包
 ---
 
 <script setup>
+import { withBase } from 'vitepress'
+
 const code1101 = `x = iris[101:150,]
 
 #par函数
@@ -182,10 +184,21 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
 
 打开脚本文件 **test1101.R**，完成下面任务。
 
-1. 用 `par` 函数按行将画布分成 2 行 3 列，然后用 `x` 中的数据绘制图形。
-2. 用 `layout` 函数将画布分成 2 行 2 列，宽度分别为 0.6 和 0.4，高度分别为 0.5 和 0.5，然后用 `x` 中的数据绘制图形。
+1. 用 `par` 函数按行将画布分成 2 行 3 列，然后用 `x` 中的数据绘制图形（如 **图 1** 所示）。
+2. 用 `layout` 函数将画布分成 2 行 2 列，宽度分别为 0.6 和 0.4，高度分别为 0.5 和 0.5，然后用 `x` 中的数据绘制图形（如 **图 2** 所示）。
 
 > 注意：图中的直方图使用了 `box()` 函数添加边框；在脚本文件最后添加 `par(mfrow = c(1,1))`，恢复为单一窗口。
+
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/10-question/fig01.png')" alt="图 1" loading="lazy" />
+    <figcaption>图 1</figcaption>
+  </figure>
+  <figure>
+    <img :src="withBase('/figures/10-question/fig02.png')" alt="图 2" loading="lazy" />
+    <figcaption>图 2</figcaption>
+  </figure>
+</div>
 
 <AnswerBlock title="实验题 1 · 参考答案" :code="code1101"
   :images="['/figures/10-ggplot2/unnamed-chunk-7-1.png', '/figures/10-ggplot2/unnamed-chunk-7-2.png', '/figures/10-ggplot2/unnamed-chunk-7-3.png']"
@@ -221,9 +234,16 @@ layout(mat, widths = c(0.6, 0.4), heights = c(0.5, 0.5))
 2. 颜色映射为 `x`。
 3. 不显示图例和轴标签，刻度标签字号为 20。
 
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/10-question/fig03.png')" alt="图 3" loading="lazy" />
+    <figcaption>图 3</figcaption>
+  </figure>
+</div>
+
 <AnswerBlock
   title="实验题 2 · 参考答案"
-  description="这一题需要 ggplot2，首次运行会在线安装，请耐心等待。"
+  description="这一题需要先 library(ggplot2)。"
   :code="code1102"
   :images="['/figures/10-ggplot2/unnamed-chunk-8-1.png']"
 />
@@ -258,6 +278,13 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 3. 用标度变换函数 `scale_color_gradientn` 设置变换颜色集为 `rainbow(20)`，设置图例标题为“气缸数”。
 4. 图例标题和轴标签字号设置为 18，图例关键字标签和刻度标签字号设置为 16。
 
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/10-question/fig04.png')" alt="图 4" loading="lazy" />
+    <figcaption>图 4</figcaption>
+  </figure>
+</div>
+
 <AnswerBlock title="实验题 3 · 参考答案" :code="code1104"
   :images="['/figures/10-ggplot2/unnamed-chunk-9-1.png']"
 />
@@ -286,6 +313,13 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 1. 用数据框 `faithfuld` 中的 `eruptions` 和 `waiting` 映射为 x 和 y，`density` 映射为 z，用 `geom_contour` 绘制等高线，颜色为红色。
 2. 用 `geom_raster` 绘制二维密度，填充颜色映射为 `density`。
 3. 轴标签和图例标签字号为 16，图例关键字标签和刻度标签字号为 14，面板背景颜色为 `"lightblue"`，清除主网格线与次网格线。
+
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/10-question/fig05.png')" alt="图 5" loading="lazy" />
+    <figcaption>图 5</figcaption>
+  </figure>
+</div>
 
 <AnswerBlock title="实验题 4 · 参考答案" :code="code1105"
   :images="['/figures/10-ggplot2/unnamed-chunk-10-1.png']"
@@ -317,6 +351,13 @@ ggplot(数据, aes(映射)) +    # 第 1 层：画布 + 数据 + 坐标映射
 2. 用连续标度变换重置映射颜色，其中参数 `low` 和 `high` 设置为 `blue` 和 `green`。
 3. 轴标签和图像标题字号为 20，图例关键字标签和刻度标签字号设置为 18。
 4. 图标题字号为 22，标题与图间距为 12，且标题居中对齐。
+
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/10-question/fig06.png')" alt="图 6" loading="lazy" />
+    <figcaption>图 6</figcaption>
+  </figure>
+</div>
 
 <AnswerBlock title="实验题 5 · 参考答案" :code="code1106"
   :images="['/figures/10-ggplot2/unnamed-chunk-11-1.png']"
@@ -350,6 +391,13 @@ geom_histogram(aes(fill = ..density..), binwidth = 1000)
 6. 图例标题字号为 18，棕色，粗体，与图例之间的空白为 10。
 7. 图例关键字高度为 1cm，宽度为 0.9cm。注：用 `unit(1, 'cm')` 的形式设置。
 8. 图例背景色为 `grey90`，边框颜色为红色。
+
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/10-question/fig07.png')" alt="图 7" loading="lazy" />
+    <figcaption>图 7</figcaption>
+  </figure>
+</div>
 
 <AnswerBlock title="实验题 6 · 参考答案" :code="code1107"
   :images="['/figures/10-ggplot2/unnamed-chunk-12-1.png']"
@@ -398,6 +446,6 @@ geom_histogram(aes(fill = ..density..), binwidth = 1000)
 
 ::: info 关于本页的题目与答案
 题目来自 `原题/第十一周原题`，答案来自 `答案/第十一周答案`（仅修正过其中的错别字）。
-原题中的图是 Word 里的截图，本页以文字要求为准；
+原题正文里的「图 1~图 7」已经按题号贴回各题下方（取自 `汇总/第十一周——ggplot2包_files/figure-html/`，与 原题 docx 里的截图是同一批图，但分辨率更高）；
 最后一题的完整代码原题已直接在文档中给出。
 :::

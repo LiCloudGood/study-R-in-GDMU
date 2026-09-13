@@ -220,3 +220,35 @@
   --ra-overlay: rgba(0, 0, 0, 0.7);
 }
 
+
+/* ── 题面配图（原题正文里引用的「图 N」）───────────────────── */
+.q-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 18px 0 6px;
+}
+
+.q-figures figure {
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--ra-border);
+  border-radius: 10px;
+  background: var(--ra-bg-panel);
+}
+
+.q-figures img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.q-figures figcaption {
+  margin-top: 8px;
+  font-size: 12px;
+  text-align: center;
+  color: var(--ra-text);
+  opacity: 0.72;
+}

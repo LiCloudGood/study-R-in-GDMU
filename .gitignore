@@ -22,3 +22,5 @@ _patches*.json
 _fcheck/
 _pdfprint/
 _outs.json
+_*.ps1
+_msg*.txt

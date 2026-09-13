@@ -300,10 +300,22 @@ R 在网页里运行时用的是画布设备，所以 `hist` / `barplot` / `pie`
    - 用 `hist` 绘制 `x` 的直方图，每个柱状条标明相应的频数，即设置 `labels = lbs`，填充颜色为 `colors()` 中的第 51 到 60 号颜色，即 `colors()[51:60]`；
    - 在 `hist` 函数中使用 `cex.main=2`，`cex.axis=1.5`，`cex.lab=1.5` 分别设置图标题、坐标轴刻度、坐标轴标签的字体大小。
 
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/09-question/fig01.png')" alt="图 1" loading="lazy" />
+    <figcaption>图 1</figcaption>
+  </figure>
+  <figure>
+    <img :src="withBase('/figures/09-question/fig02.png')" alt="图 2" loading="lazy" />
+    <figcaption>图 2</figcaption>
+  </figure>
+</div>
+
 <AnswerBlock
   title="实验题 1 · 参考答案"
-  description="这一题需要 ISwR 包，首次运行会在线安装，可能要等一会儿。"
+  description="这一题需要 ISwR 包（install.packages('ISwR')）。"
   :code="code0901"
+  :images="['/figures/09-base-graphics/unnamed-chunk-3-1.png', '/figures/09-base-graphics/unnamed-chunk-3-2.png']"
 />
 
 ::: tip hist 常用参数一览
@@ -342,7 +354,20 @@ R 在网页里运行时用的是画布设备，所以 `hist` / `barplot` / `pie`
    - 分类轴坐标刻度字体大小为 1.2；
    - y 轴使用对数坐标。
 
-<AnswerBlock title="实验题 2 · 参考答案" :code="code0902" />
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/09-question/fig03.png')" alt="图 3" loading="lazy" />
+    <figcaption>图 3</figcaption>
+  </figure>
+  <figure>
+    <img :src="withBase('/figures/09-question/fig04.png')" alt="图 4" loading="lazy" />
+    <figcaption>图 4</figcaption>
+  </figure>
+</div>
+
+<AnswerBlock title="实验题 2 · 参考答案" :code="code0902"
+  :images="['/figures/09-base-graphics/unnamed-chunk-4-1.png', '/figures/09-base-graphics/unnamed-chunk-4-2.png']"
+/>
 
 ::: tip beside 与 space：分组柱状图的两个开关
 | 参数 | 含义 |
@@ -360,7 +385,7 @@ R 在网页里运行时用的是画布设备，所以 `hist` / `barplot` / `pie`
 
 创建脚本文件 **test0903.R**，按下面的要求绘制图形。
 
-1. 按原题样式绘制柱状图，数据来自 `VADeaths`（弗吉尼亚死亡率数据），部分图形参数的设置规则如下：
+1. 按 **图 5** 的样式绘制柱状图，数据来自 `VADeaths`（弗吉尼亚死亡率数据），部分图形参数的设置规则如下：
    - 柱条边框颜色为 `2:5`；
    - 每英寸填充 20 条斜线，斜线的倾角分别为 25，50，75，100 度；
    - 填充线条的颜色为 `colors()` 返回值中第 44 到 47 号颜色，即 `colors()[44:47]`；
@@ -369,15 +394,28 @@ R 在网页里运行时用的是画布设备，所以 `hist` / `barplot` / `pie`
    - 数值轴坐标刻度字体大小为 1.2；
    - 分类轴坐标刻度字体大小为 1.2；
    - 坐标轴标签字体为 1.2。
-2. 按原题样式绘制柱状图，数据来源于 `UCBAdmissions`（伯克利分校招生数）：
+2. 按 **图 6** 的样式绘制柱状图，数据来源于 `UCBAdmissions`（伯克利分校招生数）：
    - 先将数据转换数据框；
    - 把 `Gender` 为 `Male` 的记录提取出来，存储到变量 `df.m`；
    - 绘制数据框 `df.m` 中 `Freq` 数据，要求以变量 `Dept` 和 `Admit` 分组，每个柱状条代表录取与未录取的人数（提示：分组用公式，即 `Freq ~ Admit + Dept`）；
    - 把数值轴的范围设置为 0~600；
-   - 图例文本和轴标签文本按原题设置；
+   - 图例文本和轴标签文本按 **图 6** 设置；
    - 填充颜色为蓝色和绿色。
 
-<AnswerBlock title="实验题 3 · 参考答案" :code="code0903" />
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/09-question/fig05.png')" alt="图 5" loading="lazy" />
+    <figcaption>图 5</figcaption>
+  </figure>
+  <figure>
+    <img :src="withBase('/figures/09-question/fig06.png')" alt="图 6" loading="lazy" />
+    <figcaption>图 6</figcaption>
+  </figure>
+</div>
+
+<AnswerBlock title="实验题 3 · 参考答案" :code="code0903"
+  :images="['/figures/09-base-graphics/unnamed-chunk-5-1.png', '/figures/09-base-graphics/unnamed-chunk-5-2.png']"
+/>
 
 ::: tip 公式式写法：Freq ~ Admit + Dept
 `barplot(Freq ~ Admit + Dept, data = df.m)` 里的 `~` 是 **R 的公式语法**，
@@ -405,7 +443,20 @@ R 在网页里运行时用的是画布设备，所以 `hist` / `barplot` / `pie`
    - 用 `x` 绘制饼图，用 `rainbow` 为每个切片设置不同的颜色（即获取 6 个颜色），其中 `rainbow` 中的参数 `s` 为 0.4，`alpha` 为 0.6；
    - 边框设置黑色，标题字体大小为 1.5。
 
-<AnswerBlock title="实验题 4 · 参考答案" :code="code0904" />
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/09-question/fig07.png')" alt="图 7" loading="lazy" />
+    <figcaption>图 7</figcaption>
+  </figure>
+  <figure>
+    <img :src="withBase('/figures/09-question/fig08.png')" alt="图 8" loading="lazy" />
+    <figcaption>图 8</figcaption>
+  </figure>
+</div>
+
+<AnswerBlock title="实验题 4 · 参考答案" :code="code0904"
+  :images="['/figures/09-base-graphics/unnamed-chunk-6-1.png', '/figures/09-base-graphics/unnamed-chunk-6-2.png']"
+/>
 
 ::: tip 饼图的两个实用技巧
 **1. 切片太多就关掉标签**
@@ -438,7 +489,16 @@ labels <- paste(names(x), "(", proportions, "%)", sep = "")
 - 边框为红色；
 - 标题字体大小为 1.5。
 
-<AnswerBlock title="实验题 5 · 参考答案" :code="code0905" />
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/09-question/fig09.png')" alt="图 9" loading="lazy" />
+    <figcaption>图 9</figcaption>
+  </figure>
+</div>
+
+<AnswerBlock title="实验题 5 · 参考答案" :code="code0905"
+  :images="['/figures/09-base-graphics/unnamed-chunk-7-1.png']"
+/>
 
 ::: tip aggregate 的公式写法
 ```r
@@ -472,7 +532,20 @@ aggregate(Freq ~ Dept, data = df_admitted, sum)
    - 边框颜色为红色；
    - 图形标题的字体大小为 1.5。
 
-<AnswerBlock title="实验题 6 · 参考答案" :code="code0906" />
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/09-question/fig10.png')" alt="图 10" loading="lazy" />
+    <figcaption>图 10</figcaption>
+  </figure>
+  <figure>
+    <img :src="withBase('/figures/09-question/fig11.png')" alt="图 11" loading="lazy" />
+    <figcaption>图 11</figcaption>
+  </figure>
+</div>
+
+<AnswerBlock title="实验题 6 · 参考答案" :code="code0906"
+  :images="['/figures/09-base-graphics/unnamed-chunk-8-1.png', '/figures/09-base-graphics/unnamed-chunk-8-2.png']"
+/>
 
 ::: tip 两种数据源的写法差别
 **向量写法**（第 1 小题要求）：先自己把数据切好，再传给 `boxplot`
@@ -516,10 +589,18 @@ boxplot(Wind ~ Month, data = airquality_clean, ...)
 - 组标签的分隔符为 `"--"`（两个减号）；
 - y 轴的范围为 [0, 1500]。
 
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/09-question/fig12.png')" alt="图 12" loading="lazy" />
+    <figcaption>图 12</figcaption>
+  </figure>
+</div>
+
 <AnswerBlock
   title="实验题 7 · 参考答案"
-  description="这一题也需要 ISwR 包，首次运行会在线安装。"
+  description="这一题同样需要 ISwR 包。"
   :code="code0907"
+  :images="['/figures/09-base-graphics/unnamed-chunk-9-1.png']"
 />
 
 ::: tip interaction 造「两两组合」的分组变量
@@ -557,7 +638,20 @@ R 会按字母序排列，图里箱子的顺序就乱了。
    - 轴标签字体大小为 1.5；
    - 轴刻度字体大小为 1.2。
 
-<AnswerBlock title="实验题 8 · 参考答案" :code="code0908" />
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/09-question/fig13.png')" alt="图 13" loading="lazy" />
+    <figcaption>图 13</figcaption>
+  </figure>
+  <figure>
+    <img :src="withBase('/figures/09-question/fig14.png')" alt="图 14" loading="lazy" />
+    <figcaption>图 14</figcaption>
+  </figure>
+</div>
+
+<AnswerBlock title="实验题 8 · 参考答案" :code="code0908"
+  :images="['/figures/09-base-graphics/unnamed-chunk-10-1.png', '/figures/09-base-graphics/unnamed-chunk-10-2.png']"
+/>
 
 ::: tip type 决定「画成什么形状」
 | `type` | 效果 |
@@ -587,9 +681,17 @@ R 会按字母序排列，图里箱子的顺序就乱了。
 - 再叠加绘制下一个图形；
 - 用 `plot` 函数绘制**标准正态分布**的密度曲线。参数 `type` 为 `"l"`，线宽为 2，颜色为黑色，x 和 y 轴的标签分别为 `"x"` 和 `"y=f(x)"`，x 和 y 轴的刻度使用默认值，标题字体大小设置为 1.8，轴标签字体大小为 1.5，轴刻度字体大小为 1.2。
 
+<div class="q-figures">
+  <figure>
+    <img :src="withBase('/figures/09-question/fig15.png')" alt="图 15" loading="lazy" />
+    <figcaption>图 15</figcaption>
+  </figure>
+</div>
+
 <AnswerBlock
   title="实验题 9 · 参考答案"
   :code="code0909"
+  :images="['/figures/09-base-graphics/unnamed-chunk-11-1.png']"
 />
 
 ::: tip par(new = TRUE) 是叠加绘图的关键
@@ -609,40 +711,6 @@ par(new = TRUE)
 从图上能直观看到：自由度越小，t 分布的尾巴越厚；
 自由度到 30 时已经和标准正态几乎重合了——这正是 t 分布「大样本趋近正态」的体现。
 :::
-
-## 本讲参考答案的输出图
-
-下面这些图是**把本讲的参考答案完整跑一遍之后得到的结果**（按实验顺序排列），
-可以对照着检查自己的图有没有画对。
-
-<div class="fig-gallery">
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-2-1.png')" alt="输出图 1" loading="lazy" /><figcaption>输出图 1</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-2-2.png')" alt="输出图 2" loading="lazy" /><figcaption>输出图 2</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-3-1.png')" alt="输出图 3" loading="lazy" /><figcaption>输出图 3</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-3-2.png')" alt="输出图 4" loading="lazy" /><figcaption>输出图 4</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-4-1.png')" alt="输出图 5" loading="lazy" /><figcaption>输出图 5</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-4-2.png')" alt="输出图 6" loading="lazy" /><figcaption>输出图 6</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-5-1.png')" alt="输出图 7" loading="lazy" /><figcaption>输出图 7</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-5-2.png')" alt="输出图 8" loading="lazy" /><figcaption>输出图 8</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-6-1.png')" alt="输出图 9" loading="lazy" /><figcaption>输出图 9</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-6-2.png')" alt="输出图 10" loading="lazy" /><figcaption>输出图 10</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-7-1.png')" alt="输出图 11" loading="lazy" /><figcaption>输出图 11</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-7-2.png')" alt="输出图 12" loading="lazy" /><figcaption>输出图 12</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-8-1.png')" alt="输出图 13" loading="lazy" /><figcaption>输出图 13</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-8-2.png')" alt="输出图 14" loading="lazy" /><figcaption>输出图 14</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-9-1.png')" alt="输出图 15" loading="lazy" /><figcaption>输出图 15</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-9-2.png')" alt="输出图 16" loading="lazy" /><figcaption>输出图 16</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-10-1.png')" alt="输出图 17" loading="lazy" /><figcaption>输出图 17</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-10-2.png')" alt="输出图 18" loading="lazy" /><figcaption>输出图 18</figcaption></figure>
-  <figure><img :src="withBase('/figures/09-base-graphics/unnamed-chunk-11-1.png')" alt="输出图 19" loading="lazy" /><figcaption>输出图 19</figcaption></figure>
-</div>
-
-<style scoped>
-.fig-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1.25rem; }
-.fig-gallery figure { margin: 0; }
-.fig-gallery img { width: 100%; height: auto; border: 1px solid var(--vp-c-border); border-radius: 8px; background: #fff; }
-.fig-gallery figcaption { font-size: 12px; color: var(--vp-c-text-2); text-align: center; margin-top: 4px; }
-</style>
 
 ## 本讲小结
 
@@ -668,5 +736,5 @@ par(new = TRUE)
 
 ::: info 关于本页的题目与答案
 题目来自 `原题/第九周原题`，答案来自 `答案/第九周答案`（仅修正过其中的错别字）。
-原题中的「图 1~图 15」是 Word 里的截图，本页以文字要求为准。
+原题正文里的「图 1~图 15」已经按题号贴回各题下方（取自 `汇总/第九周——高级绘图_files/figure-html/`，与 原题 docx 里的截图是同一批图，但分辨率更高），参考答案卡片里另附该题答案跑出来的实际图形。
 :::
