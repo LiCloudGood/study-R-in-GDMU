@@ -25,9 +25,12 @@ features:
 | 目录 | 内容 | 说明 |
 | --- | --- | --- |
 | `docs/` | 本站的网页源码 | 由下面的资料整理而成的在线讲义 |
-| `资料/原题/` | 各周 Word 文档、R 脚本、数据文件 | 学校下发的原始练习资料，**保持原样** |
+| `资料/原题/` | 各周 Word 文档、R 脚本、数据文件 | 《信息技术基础》的原始练习资料，**保持原样** |
 | `资料/答案/` | 各周写好的 R 脚本 | 与 `资料/原题` 一一对应，**保持原样** |
 | `资料/汇总/` | 各周整理好的 HTML | 原题 + 答案的合集，**保持原样** |
+| `资料/医学大数据/` | 《医学大数据分析与决策》的原题、答案与汇总 | 同样是**保持原样**的课程资料 |
+
+> 两门课的资料都在这一个仓库里 —— 都是学 R 的材料，放在一起更省事。
 
 ---
 
@@ -49,6 +52,17 @@ features:
 
 #### 友情链接
 
-[Github本人链接](https://github.com/LiCloudGood)<br>
-[信息技术基础](https://github.com/LiCloudGood/study-R-in-GDMU)<br>
-[医学大数据分析与决策](https://github.com/LiCloudGood/Fundamentals-of-Medical-Big-Data-Analysis-in-GDMU)
+**R 与 RStudio**
+
+[R 官网](https://www.r-project.org/)　·　[R 下载（Windows）](https://cran.r-project.org/bin/windows/base/)　·　[R 下载（全部平台）](https://cran.r-project.org/mirrors.html)<br>
+[RStudio 官网](https://posit.co/)　·　[RStudio Desktop 下载](https://posit.co/download/rstudio-desktop/)　·　[RStudio 全部版本](https://docs.posit.co/ide/news/)
+
+> 建议顺序：先装 **R**，再装 **RStudio**。RStudio 是 R 的编辑器，本身不带 R。
+> 装机步骤见[第 1 讲](/intro-it/1-software-install)。
+
+**本站相关**
+
+[GitHub 本人链接](https://github.com/LiCloudGood)<br>
+[本站仓库](https://github.com/LiCloudGood/study-R-in-GDMU)
+
+> 两门课（《信息技术基础》与《医学大数据分析与决策》）的资料都收在同一个仓库里。

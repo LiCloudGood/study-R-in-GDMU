@@ -15,3 +15,6 @@ Thumbs.db
 
 # 本地临时脚本与产物（核对、修补、生成 PDF 用），统一放 _dev/，不入库
 _dev/
+
+# R 的默认绘图设备产物（dev.new 在非交互会话下会开 pdf）
+Rplots*.pdf

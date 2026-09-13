@@ -21,6 +21,18 @@ const lectures: { text: string; link?: string }[] = [
   { text: '13-同分布检验与列联表检验', link: '/intro-it/13-goodness-of-fit-and-contingency' }
 ]
 
+/** 《医学大数据分析与决策》的课程目录（32 学时，8 周实验）。 */
+const mbdLectures: { text: string; link?: string }[] = [
+  { text: '1-R的使用及数据获取', link: '/Medical-Big-Data-Analysis/1-r-basics-and-data' },
+  { text: '2-数据预处理', link: '/Medical-Big-Data-Analysis/2-data-preprocessing' },
+  { text: '3-回归分析', link: '/Medical-Big-Data-Analysis/3-regression' },
+  { text: '4-关联规则', link: '/Medical-Big-Data-Analysis/4-association-rules' },
+  { text: '5-分类（一）', link: '/Medical-Big-Data-Analysis/5-classification-1' },
+  { text: '6-分类（二）', link: '/Medical-Big-Data-Analysis/6-classification-2' },
+  { text: '7-聚类', link: '/Medical-Big-Data-Analysis/7-clustering' },
+  { text: '8-神经网络', link: '/Medical-Big-Data-Analysis/8-neural-networks' }
+]
+
 /** 三个板块共用的「入口」分组，方便在各板块之间跳转。 */
 const entryGroup = {
   text: '入口',
@@ -64,7 +76,10 @@ export default defineConfig({
     sidebar: {
       '/': [],
       '/intro-it/': [entryGroup, { text: '信息技术基础', items: lectures }],
-      '/Medical-Big-Data-Analysis/': [entryGroup],
+      '/Medical-Big-Data-Analysis/': [
+        entryGroup,
+        { text: '医学大数据分析与决策', items: mbdLectures }
+      ],
       '/Health-statistics/': [
         entryGroup,
         {

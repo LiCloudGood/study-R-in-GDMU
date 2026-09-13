@@ -1,0 +1,20 @@
+#install.packages('arules')
+#install.packages('arulesViz')
+library(arules)
+library(arulesViz)
+trans = read.transactions('breast31.txt',format = 'basket',sep = ',')
+summary(trans)
+
+basketSize = size(trans)
+itemFrequency(trans)
+itemFreq  = sort(itemFrequency(trans),decreasing = T)
+itemFrequencyPlot(trans,support = 0.1)
+itemFrequencyPlot(trans,topN = 10,horiz = T)
+trans_use = trans[basketSize > 1]
+trans_rule = apriori(trans_use,parameter = list(support = 0.2,
+                     confidence = 0.7,minlen = 2))
+summary(trans_rule)
+crules = subset(trans_rule,items %pin% c('C0') & lift >1.2)
+summary(crules)
+inspect(crules[1:15])
+plot(crules,measure = 'confidence',method = 'graph',shading = 'lift')
