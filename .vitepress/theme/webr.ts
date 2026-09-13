@@ -24,6 +24,33 @@ export interface RunResult {
   failed: boolean
 }
 
+/**
+ * 把 captureR 输出里的一项转成可读文字。
+ *
+ * ⚠️ 报错/警告项的 data 是一个 **RObject**，直接 String() 会抛
+ * `Cannot convert object to primitive value`（R 的报错因此在页面上变成 JS 异常）。
+ * 所以这里逐级降级：toJs() → toString() → 兜底文案。
+ */
+async function conditionText(item: { type?: string; data?: unknown }): Promise<string> {
+  const data = item.data
+  if (typeof data === 'string') return data
+  // WebR 的 RObject 有 async toString()，能把 R 对象「反解析」成可读文字
+  const own = data && Object.getPrototypeOf(data)?.toString
+  if (own && own !== Object.prototype.toString && typeof (data as any).toString === 'function') {
+    try {
+      const s = await (data as any).toString()
+      if (typeof s === 'string' && s.length && !s.startsWith('[object')) return s
+    } catch {
+      /* 落到下一级 */
+    }
+  }
+  try {
+    return String(data)
+  } catch {
+    return `（R ${item.type ?? '输出'}）\n`
+  }
+}
+
 let webRInstance: any = null
 let loadingPromise: Promise<any> | null = null
 
@@ -115,9 +142,8 @@ export async function runR(code: string): Promise<RunResult> {
     const chunks: string[] = []
     let failed = false
     for (const item of capture.output ?? []) {
-      const text = typeof item.data === 'string' ? item.data : String(item.data)
       if (item.type === 'error') failed = true
-      chunks.push(text)
+      chunks.push(await conditionText(item))
     }
 
     return {

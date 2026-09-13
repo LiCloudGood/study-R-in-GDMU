@@ -4,6 +4,10 @@ title: 'Introduction to information technology（信息技术基础）'
 ---
 
 <script setup>
+// withBase 会给站内链接补上部署前缀（本站是 /study-R-in-GDMU/）。
+// 原生 HTML 里的 href 不会被 VitePress 自动处理，不加就会 404。
+import { withBase } from 'vitepress'
+
 const links = [
   { title: '软件及其软件包安装和脚本编写', desc: '掌握RGUI与RStudio的安装配置、脚本编写运行、软件包管理、赋值语句及运算符与表达式书写',
     link: '/intro-it/1-software-install' },
@@ -43,7 +47,7 @@ const links = [
     v-for="l in links"
     :key="l.title"
     :is="l.link ? 'a' : 'div'"
-    :href="l.link || undefined"
+    :href="l.link ? withBase(l.link) : undefined"
     class="card"
     :class="{ 'card-pending': !l.link }"
   >
