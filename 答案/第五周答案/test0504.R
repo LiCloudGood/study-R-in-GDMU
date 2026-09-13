@@ -1,4 +1,4 @@
-x<-scan('C:\\Users\\Administrator\\Desktop\\test05\\Solomon2.txt',
+x<-scan('Solomon2.txt',
         what = '',
         quote = "",
         fileEncoding = 'gb2312')

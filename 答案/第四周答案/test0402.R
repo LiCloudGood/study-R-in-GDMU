@@ -13,6 +13,6 @@ my.list2
 my.list2$vector[length(my.list2$vector)] = 6
 my.list2
 
-names(my.list2$vector)[1] <- "Frist"
+names(my.list2$vector)[1] <- "First"
 lapply(my.list2,length)
 sapply(my.list2,length)

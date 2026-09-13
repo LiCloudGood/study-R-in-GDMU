@@ -387,7 +387,7 @@ geom_histogram(aes(fill = ..density..), binwidth = 1000)
 | 常用主题项 | `plot.title`、`axis.title`、`axis.text`、`legend.title`、`legend.text`、`panel.grid`、`panel.background` |
 
 ::: info 关于本页的题目与答案
-题目来自 `原题/第十一周原题`，答案来自 `答案/第十一周答案`，两处均保持原样未做改动。
+题目来自 `原题/第十一周原题`，答案来自 `答案/第十一周答案`（仅修正过其中的错别字）。
 原题中的图是 Word 里的截图，本页以文字要求为准；
 最后一题的完整代码原题已直接在文档中给出。
 :::

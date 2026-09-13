@@ -1,6 +1,6 @@
 mat1 <- matrix(1:12, nrow = 4, ncol = 3, byrow = TRUE)
 
-mat2 <- matrix(c(1, 2, 3), nrow = 3, ncol = 3)
+mat2 <- matrix(c(1, 2, 3), nrow = 3, ncol = 3, byrow = TRUE)
 
 mat3 <- matrix(1:3, nrow = 3, ncol = 3,byrow = F)
 rownames(mat3) <- c("r1", "r2", "r3")

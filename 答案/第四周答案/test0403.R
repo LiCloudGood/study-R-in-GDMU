@@ -1,7 +1,7 @@
 df <- data.frame(
   patientID = 1:4,
   age = c(25,34,28,52),
-  diabetes = c('Type1','Tpye2','Type1','Type1'),
+  diabetes = c('Type1','Type2','Type1','Type1'),
   status = c('Poor','Improved','Excellent','Poor'),
   stringsAsFactors = TRUE
 )

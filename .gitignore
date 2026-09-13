@@ -12,3 +12,6 @@ node_modules/
 .idea/
 .DS_Store
 Thumbs.db
+
+# 修改前的原件备份
+_backup-summary/

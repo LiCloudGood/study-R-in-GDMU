@@ -41,14 +41,14 @@ my.list2
 my.list2$vector[length(my.list2$vector)] = 6
 my.list2
 
-names(my.list2$vector)[1] <- "Frist"
+names(my.list2$vector)[1] <- "First"
 lapply(my.list2,length)
 sapply(my.list2,length)`
 
 const code0403 = `df <- data.frame(
   patientID = 1:4,
   age = c(25,34,28,52),
-  diabetes = c('Type1','Tpye2','Type1','Type1'),
+  diabetes = c('Type1','Type2','Type1','Type1'),
   status = c('Poor','Improved','Excellent','Poor'),
   stringsAsFactors = TRUE
 )
@@ -263,12 +263,6 @@ cut(data$age, c(18, 35, 55, 70), labels = c("Young", "Middle", "Old"))
 | 分组 | `split()`、`tapply()`、`by()`、`aggregate()` |
 | 分箱 / 频数 | `cut(x, breaks, labels)`、`table()` |
 
-::: warning 答案文件里的两个笔误
-`答案/第四周答案` 的 `test0402.R` 中把 `"First"` 写成了 `"Frist"`，
-`test0403.R` 中把 `"Type2"` 写成了 `"Tpye2"`。
-这两处是原始文件里的拼写笔误，**不影响代码运行**，本页答案保持原样未做改动。
-:::
-
 ::: info 关于本页的题目与答案
-题目来自 `原题/第四周原题`，答案来自 `答案/第四周答案`，两处均保持原样未做改动。
+题目来自 `原题/第四周原题`，答案来自 `答案/第四周答案`。
 :::

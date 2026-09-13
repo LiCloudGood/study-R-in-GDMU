@@ -43,8 +43,8 @@ export default defineConfig({
 
   lastUpdated: true,
 
-  // README.md 是仓库说明，不作为网站页面参与构建
-  srcExclude: ['README.md'],
+  // README.md 与 scripts/ 属于仓库说明与工具，不作为网站页面参与构建
+  srcExclude: ['README.md', 'scripts/**', '_backup-summary/**'],
 
   markdown: {
     // 公式交给 VitePress 内置的 math（markdown-it-mathjax3）处理
