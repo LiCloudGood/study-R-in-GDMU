@@ -16,6 +16,12 @@ vioplot(mtcars$wt[mtcars$cyl==4],
         mtcars$wt[mtcars$cyl==8],
         horizontal = TRUE,
         col = 'red')`
+
+const code0107 = `a <- 2
+b <- 5
+c <- -1
+(-b + sqrt(b^2 - 4*a*c)) / (2*a)
+sin(b - a * c) / (3 * a + b * c)`
 </script>
 
 # 软件及其软件包安装和脚本编写
@@ -174,6 +180,23 @@ print(k)
 
 ::: tip 提示
 算术根函数是 `sqrt`，例如 $\sqrt{2}$ 的 R 表示为 `sqrt(2)`。
+:::
+
+<AnswerBlock title="题目七 · 参考答案" :code="code0107" />
+
+::: tip 两个表达式的翻译要点
+| 数学写法 | 翻成 R |
+| --- | --- |
+| $\dfrac{-b+\sqrt{b^{2}-4ac}}{2a}$ | `(-b + sqrt(b^2 - 4*a*c)) / (2*a)` |
+| $\dfrac{\sin(b-ac)}{3a+bc}$ | `sin(b - a*c) / (3*a + b*c)` |
+
+代入 $a=2,\ b=5,\ c=-1$：
+
+- 第一个式子 = $\dfrac{-5+\sqrt{25+8}}{4}=\dfrac{-5+\sqrt{33}}{4}\approx 0.186141$
+- 第二个式子 = $\dfrac{\sin(5-2\times(-1))}{3\times 2+5\times(-1)}=\dfrac{\sin 7}{1}\approx 0.656987$
+
+**分母一定要加括号**：写成 `-b + sqrt(...) / 2*a` 的话，
+除法只作用在 `sqrt(...)` 上，结果就完全错了。
 :::
 
 <style scoped>
