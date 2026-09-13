@@ -15,3 +15,10 @@ Thumbs.db
 
 # 修改前的原件备份
 _backup-summary/
+
+# 公式核对（本地临时产物，核对完可删）
+_fcheck/
+_fcheck-*.mjs
+_omml*.mjs
+_acc-check.mjs
+_frac-check.mjs
