@@ -86,7 +86,7 @@ const enHealthLectures: { text: string; link?: string }[] = [
   { text: '4 Describing Quantitative Data' },
   { text: '5 Describing Qualitative Data' },
   { text: '6 Estimating Population Means and Rates' },
-  { text: '7 Hypothesis Testing' },
+  { text: '7 Hypothesis Testing', link: '/en/Health-statistics/07-hypothesis-testing' },
   { text: '8 t Tests', link: '/en/Health-statistics/08-t-test' },
   { text: '9 Analysis of Variance' },
   { text: '10 Chi-Square Tests' },
