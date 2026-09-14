@@ -83,7 +83,7 @@ const entryGroup = {
 const enHealthLectures: { text: string; link?: string }[] = [
   { text: '1 Introduction', link: '/en/Health-statistics/01-introduction' },
   { text: '3 Experimental and Survey Design' },
-  { text: '4 Describing Quantitative Data' },
+  { text: '4 Describing Quantitative Data', link: '/en/Health-statistics/04-describing-quantitative-data' },
   { text: '5 Describing Qualitative Data' },
   { text: '6 Estimating Population Means and Rates' },
   { text: '7 Hypothesis Testing', link: '/en/Health-statistics/07-hypothesis-testing' },
