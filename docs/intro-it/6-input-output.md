@@ -129,7 +129,7 @@ cat("\\n----------------------------\\n")`
 
 <AnswerBlock
   title="实验二 · 参考答案"
-  description="注意：本实验的 scan() 和 readline() 需要从命令行实时读取输入。网页里的 R 环境没有交互式命令行，直接点「运行」会一直等待输入，建议在本机 RStudio 里练习。"
+  description="注意：本实验的 scan() 和 readline() 要从命令行实时读输入，只能在本机 RStudio 里交互着练 —— 把代码贴进去运行，然后在控制台按提示敲内容。"
   :code="code0602"
 />
 

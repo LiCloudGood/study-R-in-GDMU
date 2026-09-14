@@ -116,7 +116,7 @@ vioplot(mtcars$wt[mtcars$cyl==4],
 
 <AnswerBlock
   title="题目三：安装包 · 参考答案"
-  description="注意：这段代码要读取本地的 vioplot_0.4.0.tar.gz，网页运行环境里没有这个文件，直接点「运行」会报错，属正常现象，请在本机 R 里执行。"
+  description="注意：这段代码要读取本地的 vioplot_0.4.0.tar.gz，得先把那个文件放到工作目录里再跑，否则会在 install.packages() 那一步报错，属正常现象。"
   :code="code0103"
 />
 

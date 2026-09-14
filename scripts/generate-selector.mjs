@@ -42,7 +42,10 @@ const CH = {
   surv: ['第 14 章 生存分析', '/Health-statistics/14-survival-analysis'],
   size: ['第 17 章 样本含量估计', '/Health-statistics/17-sample-size'],
   chart: ['第 19 章 常用统计图表', '/Health-statistics/19-tables-and-charts'],
-  design: ['第 3 章 实验设计与调查设计', '/Health-statistics/03-study-design']
+  design: ['第 3 章 实验设计与调查设计', '/Health-statistics/03-study-design'],
+  // 补充专题（不在课本 19 章里，是本站补的）
+  diag: ['诊断试验评价（ROC 与 AUC）', '/Health-statistics/diagnostic-test'],
+  agree: ['一致性信度（Kappa 与 ICC）', '/Health-statistics/agreement-reliability']
 }
 const ch = ([text, link]) => ({ text, link })
 
@@ -341,6 +344,112 @@ chisq.test(tab)
     read: [],
     pit: ['硬套一个自己熟悉的方法 —— 这是数据分析里最危险的错误'],
     c: CH.design
+  },
+
+  // ── 补充专题：诊断试验评价 ─────────────────────────────
+  diagRoc: {
+    m: 'ROC 曲线与 AUC',
+    why: '有「金标准」的诊断结论，也有一个待评价指标的测量值，要看这个指标**把病人和非病人分开的能力**。',
+    cond: ['每个人都有一个金标准的诊断结论（有病 / 无病）', '同一个人身上还测了待评价的那个指标'],
+    note: '**AUC 的准确含义**：随机抽一个病人和一个非病人，病人那个指标值更高的概率。所以它跟指标的量纲、单位、是否偏态都无关。\n\n**阈值该由临床代价决定，不是由算法决定**：漏诊后果重的病（宫外孕、艾滋病筛查），先把灵敏度钉死再挑阈值。',
+    code: `library(pROC)
+r <- roc(金标准, 指标值, levels = c("无病", "有病"))
+auc(r)          # 判别能力
+ci.auc(r)       # 一定要带可信区间
+
+# 按约登指数选阈值（灵敏度 + 特异度 - 1 最大）
+coords(r, "best", best.method = "youden",
+       ret = c("threshold", "sensitivity", "specificity"))
+plot(r, print.auc = TRUE, print.thres = "best")`,
+    read: ['`AUC` 与它的 95% 可信区间', '选定阈值下的**灵敏度**和**特异度**', '有条件再报 LR+ / LR-（它们两端可比）'],
+    pit: [
+      '**用阳性预测值比较两个试验** —— 它随患病率变，两个人群之间根本不能比',
+      '只报 AUC 不报阈值 —— AUC 是把所有阈值平均了，临床上落不了地',
+      '**在同一批数据上选阈值又报性能** —— 乐观偏倚，阈值要另拿一批数据验证',
+      '把「AUC 0.73」直接说成「判别能力一般」就完事 —— 该说清临床上能不能用'
+    ],
+    c: CH.diag
+  },
+
+  // ── 补充专题：一致性信度 ───────────────────────────────
+  kappa: {
+    m: 'Kappa 系数（分类资料的一致性）',
+    why: '同一批对象被**重复判断**（两次、或两位评定者），判断结果是**没有顺序的类别**，问两次结果一不一致。',
+    cond: ['每个对象都被判断了两次或以上', '判断结果是分类变量，且类别之间**没有大小顺序**'],
+    note: '**Kappa 已经扣掉了「碰巧一致」的部分**，所以它比「一致率」严格得多：观察一致率 90% 时 Kappa 可能只有 0.44。\n\n**报 Kappa 时要连着报观察一致率和边际分布**，否则读者分不清 Kappa 低是真的不一致、还是类别分布太偏斜造成的。',
+    code: `library(irr)
+# 两人之间
+kappa2(d[, c("评定者1", "评定者2")])
+# 多人之间
+kappam.fleiss(d)
+
+# 想看一致率是多少（Kappa 要跟它一起报）
+mean(d$评定者1 == d$评定者2)`,
+    read: ['`Kappa`：扣掉碰巧一致之后的一致性', '`z` 与 `p-value`：Kappa 是不是显著大于 0（**不等于 Kappa 够高**）', '观察一致率 $P_o$'],
+    pit: [
+      '**给无序类别算加权 Kappa** —— 血型、诊断类别没有顺序，强行编号是在制造不存在的信息',
+      '把 Kappa 的分档当成及格线（0.61 以上才算好）—— 原文说得很清楚那只是描述性标签',
+      '只报 Kappa 不报 $P_o$ —— 边际分布很偏时 Kappa 会天然偏低（Kappa 悖论）',
+      '评定者数量不同却直接比 Kappa —— 两人之间和全体之间的 Kappa 不是一回事'
+    ],
+    c: CH.agree
+  },
+  wkappa: {
+    m: '加权 Kappa（有序资料的一致性）',
+    why: '重复判断的结果**有等级顺序**（1~5 级、轻/中/重），这时「差 1 级」和「差 4 级」不该同等看待。',
+    cond: ['每个对象被判断两次或以上', '判断结果是有序分类变量'],
+    note: '加权 Kappa 给不同程度的偏离赋不同权重：**线性权重**按等级差线性递减，**平方权重**对大偏差惩罚更狠、算出来的数通常更大。\n\n**必须写明用了哪种权重** —— 同一批数据线性 0.19、平方 0.30，不说权重就没法比较。',
+    code: `library(irr)
+# irr 里线性权重叫 "equal"，平方权重叫 "squared"
+kappa2(d[, c("评定者1", "评定者2")], weight = "equal")    # 线性
+kappa2(d[, c("评定者1", "评定者2")], weight = "squared")  # 平方`,
+    read: ['加权 `Kappa`（**务必注明是线性还是平方**）', '不加权的 Kappa 一起报，能看出「把等级当无序处理」会低多少', '观察一致率'],
+    pit: [
+      '不写权重种类 —— 线性与平方能差出一倍',
+      '把有序资料当成无序处理 —— Kappa 会被严重低估',
+      '反过来给**无序**类别加权 —— 更严重的错误'
+    ],
+    c: CH.agree
+  },
+  icc: {
+    m: 'ICC 组内相关系数（定量资料的一致性）',
+    why: '同一批对象**重复测量**，测出来的是**具体数值**（两台仪器、两位医生量的同一个量），问测得一不一致。',
+    cond: ['每个对象被测量两次或以上', '测量结果是定量变量'],
+    note: '**ICC 是一族指标，不是一个**。要按三件事选形态并写清楚：**模型**（双向随机 / 双向混合）、**类型**（单次测量 / $k$ 次均值）、**定义**（绝对一致 / 一致性）。\n\n**要判断两台仪器能不能互换，必须用「绝对一致」**：只关心排序的「一致性」定义允许评定者之间有恒定系统偏移（甲永远比乙高 3 分，ICC 仍等于 1）。',
+    code: `library(psych)
+ICC(d)$results[, c("type", "ICC", "lower bound", "upper bound")]
+
+# 或
+library(irr)
+icc(d, model = "twoway", type = "agreement", unit = "single")  # ICC(2,1)
+icc(d, model = "twoway", type = "agreement", unit = "average") # ICC(2,k)`,
+    read: ['`ICC` 点估计**和它的 95% 可信区间**（按区间定档，不是按点估计）', '同一批数据的 ICC(2,1) 与 ICC(2,k) 差多少', '均方 MSR / MSC / MSE —— MSC 比 MSR 大说明「谁在评」比「评的是谁」影响更大'],
+    pit: [
+      '**用 Pearson 相关系数评价一致性** —— 一组数整体加个常数，相关系数纹丝不动，一致性已经没了',
+      '报 ICC 不说清模型/类型/定义 —— 同一批数据能差出好几倍',
+      '只看点估计不看可信区间 —— 点估计 0.93 但区间 0.88~0.97 时只能说「好到很好之间」',
+      '样本小于 30 例、评定者少于 3 位就下结论 —— 这时可信区间宽得没法用'
+    ],
+    c: CH.agree
+  },
+  bland: {
+    m: 'Bland-Altman 一致性分析',
+    why: '想知道两种测量方法**差多少、差得稳不稳**——ICC 只给一个概括的数，看不出偏倚的大小和形态。',
+    cond: ['同一批对象用两种方法（或两次）测量', '测量结果是定量变量'],
+    note: '横轴画两法均值、纵轴画两法差值：**差值均数**就是系统偏倚，**差值均数 ± 1.96×差值标准差**是一致性界限。\n\n**它和 ICC 互补**：ICC 回答「能不能区分对象」，Bland-Altman 回答「差多少、差得稳定吗」。两个一起报最清楚。',
+    code: `m <- (d$方法1 + d$方法2) / 2      # 横轴：两法均值
+diff <- d$方法1 - d$方法2          # 纵轴：两法差值
+plot(m, diff, ylim = c(-1, 1) * max(abs(diff)) * 1.5,
+     xlab = "两法均值", ylab = "两法差值")
+abline(h = mean(diff), col = "blue")             # 偏倚
+abline(h = mean(diff) + c(-1, 1) * 1.96 * sd(diff), col = "red", lty = 2)`,
+    read: ['`mean(diff)`：系统偏倚（理想情况接近 0）', '一致性界限：偏倚 ± 1.96×差值标准差', '散点的形状：有没有随均值变化的趋势（比例偏倚）'],
+    pit: [
+      '只看偏倚是否为 0，不看界限宽不宽 —— 偏倚为 0 但界限很宽，两法照样不能互换',
+      '差值明显不服从正态时硬套 ±1.96×SD —— 界限的覆盖率就不准了',
+      '用相关系数代替它 —— 相关完全看不出系统偏倚'
+    ],
+    c: CH.agree
   }
 }
 
@@ -481,7 +590,9 @@ const designs = [
   ['multiIndependent', '三组及以上不同的对象', '三种剂量组比较'],
   ['repeated', '同一批对象测了三次及以上', '术后 1 个月、3 个月、6 个月各测一次'],
   ['survival', '随访资料', '有「随访多久」和「有没有发生结局」两列'],
-  ['association', '想看两个变量之间的关系', '不分组，就看两个指标之间有没有关系']
+  ['association', '想看两个变量之间的关系', '不分组，就看两个指标之间有没有关系'],
+  ['diagnostic', '手上有个诊断指标，想评价它准不准', '有金标准的诊断结论 + 该指标的测量值，比如 s100b 能不能判断脑损伤'],
+  ['agreement', '同一批对象重复测/重复判，想看看一不一致', '两位医生看同一批片子、两台仪器测同一批样本']
 ]
 
 for (const [key, text, detail] of designs) {
@@ -510,6 +621,60 @@ for (const [key, text, detail] of designs) {
       options: [
         { text: '都是具体数值', detail: '比如身高与体重、年龄与血压', next: associationQQ() },
         { text: '至少一个是分类变量', detail: '比如血型与疾病、性别与疗效', next: pushResult('assoc-cc', R.odds) }
+      ]
+    })
+    designQ.options.push({ text, detail, next: id })
+    continue
+  }
+  if (key === 'diagnostic') {
+    const id = nextId++
+    nodes.push({
+      id,
+      question: '这个指标是拿来干什么的？',
+      hint: '同一个指标，用在不同位置，评价的指标也不一样',
+      options: [
+        {
+          text: '把病人和非病人分开',
+          detail: '有金标准的诊断结论，要看这个指标判别得准不准',
+          next: pushResult('diag-roc', R.diagRoc)
+        },
+        {
+          text: '判断两次测量的结果一不一致',
+          detail: '不是比较差别，而是问重复得好不好 —— 可以选下面这个分支',
+          next: pushResult('diag-agree-hint', R.icc)
+        }
+      ]
+    })
+    designQ.options.push({ text, detail, next: id })
+    continue
+  }
+  if (key === 'agreement') {
+    const id = nextId++
+    nodes.push({
+      id,
+      question: '重复测量/重复判断的结果是什么类型？',
+      hint: '',
+      options: [
+        {
+          text: '没有顺序的类别',
+          detail: '阳性/阴性、几种诊断类别、血型',
+          next: pushResult('agree-nominal', R.kappa)
+        },
+        {
+          text: '有等级顺序',
+          detail: '1~5 级评分、轻/中/重',
+          next: pushResult('agree-ordinal', R.wkappa)
+        },
+        {
+          text: '具体数值',
+          detail: '血压、量表总分、仪器读数',
+          next: pushResult('agree-quant', R.icc)
+        },
+        {
+          text: '具体数值，而且想知道两法差多少、差得稳不稳',
+          detail: '除了概括的一致性，还想看系统偏倚有多大',
+          next: pushResult('agree-bland', R.bland)
+        }
       ]
     })
     designQ.options.push({ text, detail, next: id })
@@ -609,6 +774,10 @@ table.push(row('随访：多因素分析', 'Cox 比例风险回归（看 HR，�
 table.push(row('两个定量变量：看关系', '直线关系 → Pearson 相关；单调非直线 → Spearman 秩相关', CH.biv))
 table.push(row('两个定量变量：做预测', '直线回归（先画残差诊断图）', CH.reg))
 table.push(row('两个分类变量：看关联', '卡方独立性检验 + 优势比 OR / 相对危险度 RR', CH.biv))
+table.push(row('评价一个诊断指标（有金标准）', 'ROC 曲线 + AUC；阈值按临床代价定，报告该阈值下的灵敏度与特异度', CH.diag))
+table.push(row('重复判断：没有顺序的类别', 'Kappa 系数（两人用 Cohen，多人用 Fleiss）；和观察一致率一起报', CH.agree))
+table.push(row('重复判断：有等级顺序', '加权 Kappa（必须注明线性还是平方权重）', CH.agree))
+table.push(row('重复测量：具体数值', 'ICC（写清模型/类型/定义，并报可信区间）；想知道差多少再加 Bland-Altman', CH.agree))
 
 writeOut('_dev/selector-table.md', table.join('\n') + '\n')
 console.log(`✓ _dev/selector-table.md：${table.length - 2} 行决策速查表`)

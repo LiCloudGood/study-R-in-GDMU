@@ -114,6 +114,10 @@ title: 统计方法选择器
 | 两个定量变量：看关系 | 直线关系 → Pearson 相关；单调非直线 → Spearman 秩相关 | [第 12 章 双变量关联性分析](/Health-statistics/12-bivariate-association) |
 | 两个定量变量：做预测 | 直线回归（先画残差诊断图） | [第 13 章 直线回归](/Health-statistics/13-linear-regression) |
 | 两个分类变量：看关联 | 卡方独立性检验 + 优势比 OR / 相对危险度 RR | [第 12 章 双变量关联性分析](/Health-statistics/12-bivariate-association) |
+| 评价一个诊断指标（有金标准） | ROC 曲线 + AUC；阈值按临床代价定，报告该阈值下的灵敏度与特异度 | [诊断试验评价（ROC 与 AUC）](/Health-statistics/diagnostic-test) |
+| 重复判断：没有顺序的类别 | Kappa 系数（两人用 Cohen，多人用 Fleiss）；和观察一致率一起报 | [一致性信度（Kappa 与 ICC）](/Health-statistics/agreement-reliability) |
+| 重复判断：有等级顺序 | 加权 Kappa（必须注明线性还是平方权重） | [一致性信度（Kappa 与 ICC）](/Health-statistics/agreement-reliability) |
+| 重复测量：具体数值 | ICC（写清模型/类型/定义，并报可信区间）；想知道差多少再加 Bland-Altman | [一致性信度（Kappa 与 ICC）](/Health-statistics/agreement-reliability) |
 
 ## 前辈做的同类工具
 

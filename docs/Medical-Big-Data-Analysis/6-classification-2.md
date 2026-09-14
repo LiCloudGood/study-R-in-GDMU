@@ -286,7 +286,15 @@ install.packages(c("caret", "e1071", "pROC", "recipes"))
 :::
 
 ::: tip 想弄懂背后的统计学原理
-这一周做**分类与诊断评价**（ROC、AUC、交叉验证）；同样是「随访结局」，生存分析要处理删失数据，见《卫生统计学》对应的归纳。
+这一周做**分类与诊断评价**（ROC、AUC、交叉验证）。相关的原理归纳在后面几页：
 
-详见 **[《卫生统计学》第 14 章　生存分析](/Health-statistics/14-survival-analysis)**。
+- **[《卫生统计学》诊断试验评价（ROC 与 AUC）](/Health-statistics/diagnostic-test)** ——
+  这一周从**模型**出发画 ROC、比 AUC；那一页从**临床指标**出发讲同一套东西：
+  阈值怎么按临床代价定、阳性预测值为什么随患病率剧变、两个 AUC 怎么用 DeLong 检验比较。
+  两边用的是同一个 `pROC` 包。
+- **[《卫生统计学》一致性信度（Kappa 与 ICC）](/Health-statistics/agreement-reliability)** ——
+  分类模型评价里用到的 Kappa，和「两位医生判得一致不一致」是同一个指标；
+  那一页讲清了它为什么要扣掉碰巧一致、以及为什么相关系数不能当一致性用。
+- **[《卫生统计学》第 14 章　生存分析](/Health-statistics/14-survival-analysis)** ——
+  同样是「随访结局」，生存分析要处理删失数据。
 :::
