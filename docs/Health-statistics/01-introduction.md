@@ -255,8 +255,8 @@ effect
 - **《信息技术基础》第 1 讲 软件及其软件包安装和脚本编写**（[`/intro-it/1-software-install`](/intro-it/1-software-install)）—— 本章讲的「设计、收集、整理、分析」要靠软件落地。那一讲解决 R 与 RStudio 怎么装、脚本怎么写与怎么运行，是本页最后那段示例能跑起来的前提。
 - **《信息技术基础》第 2 讲 向量与矩阵**（[`/intro-it/2-vectors-and-matrices`](/intro-it/2-vectors-and-matrices)）—— 本章说「资料是变量值的集合」，在 R 里这个集合首先就是**向量**。`c()` 建向量、下标取子集、向量化运算都在那一讲；本页的 `faithful$eruptions` 就是一个长度 272 的数值向量。
 - **《信息技术基础》第 4 讲 列表与因子**（[`/intro-it/4-lists-and-factors`](/intro-it/4-lists-and-factors)）—— 对应本章的定性变量与等级变量。那里讲 `factor()` 怎么建、`levels` 怎么定顺序，正好是「分类变量/有序变量」在 R 里的落地形式。
-- **《信息技术基础》第 11 讲 参数估计**（[`/intro-it/11-parameter-estimation`](/intro-it/11-parameter-estimation)）、**第 12 讲 参数假设检验**（[`/intro-it/12-hypothesis-testing`](/intro-it/12-hypothesis-testing)）—— 这两讲是本章「统计推断 = 参数估计 + 假设检验」的具体展开。那边是用 R 手写函数算区间、算 p 值，重点在代码和分布；这里讲的是它们背后的总体与样本、参数与统计量、抽样误差、小概率事件。**先把本章的概念弄清楚，再看那两讲的公式会顺很多。**
-- **《信息技术基础》第 13 讲 同分布检验与列联表检验**（[`/intro-it/13-goodness-of-fit-and-contingency`](/intro-it/13-goodness-of-fit-and-contingency)）—— 本章「资料类型不同，统计方法亦不同」的最直接体现：计数资料清点个数之后，用的就是卡方类方法。
+- **《信息技术基础》第 12 讲 参数估计**（[`/intro-it/12-parameter-estimation`](/intro-it/12-parameter-estimation)）、**第 13 讲 参数假设检验**（[`/intro-it/13-hypothesis-testing`](/intro-it/13-hypothesis-testing)）—— 这两讲是本章「统计推断 = 参数估计 + 假设检验」的具体展开。那边是用 R 手写函数算区间、算 p 值，重点在代码和分布；这里讲的是它们背后的总体与样本、参数与统计量、抽样误差、小概率事件。**先把本章的概念弄清楚，再看那两讲的公式会顺很多。**
+- **《信息技术基础》第 14 讲 同分布检验与列联表检验**（[`/intro-it/14-goodness-of-fit-and-contingency`](/intro-it/14-goodness-of-fit-and-contingency)）—— 本章「资料类型不同，统计方法亦不同」的最直接体现：计数资料清点个数之后，用的就是卡方类方法。
 - **《医学大数据分析与决策》第 1 周 R 的使用及数据获取**（[`/Medical-Big-Data-Analysis/1-r-basics-and-data`](/Medical-Big-Data-Analysis/1-r-basics-and-data)）—— 那一周讲怎么读入外部数据、怎么看数据结构和基本分布，正对应本章「收集资料、整理资料」两步的动手部分；本章补上这两步在统计学上的含义（为什么必须随机、随机化在防什么）。
 - **《医学大数据分析与决策》第 2 周 数据预处理**（[`/Medical-Big-Data-Analysis/2-data-preprocessing`](/Medical-Big-Data-Analysis/2-data-preprocessing)）—— 对应本章「整理资料」：缺失值、异常值、变量类型转换。那里是工程做法，这里解释为什么要先分类、先检查。
 :::
@@ -266,8 +266,8 @@ effect
 - /intro-it/1-software-install 开头「为什么要用脚本」附近，加一句「统计工作的四个步骤（设计、收集、整理、分析）见 卫生统计学 第 1 章」。
 - /intro-it/2-vectors-and-matrices 讲「向量是最基本的数据结构」处，加一句「变量、变量值与资料在统计学里的定义见 卫生统计学 第 1 章」。
 - /intro-it/4-lists-and-factors 讲 factor 处，加一句「定性变量（分类变量、有序变量）的分类见 卫生统计学 第 1 章」。
-- /intro-it/11-parameter-estimation 与 /intro-it/12-hypothesis-testing 的「本讲小结」处，各加一句「总体与样本、参数与统计量、抽样误差、小概率事件的完整归纳见 卫生统计学 第 1 章」。
-- /intro-it/13-goodness-of-fit-and-contingency 开头，加一句「资料类型与统计方法的对应关系见 卫生统计学 第 1 章」。
+- /intro-it/12-parameter-estimation 与 /intro-it/13-hypothesis-testing 的「本讲小结」处，各加一句「总体与样本、参数与统计量、抽样误差、小概率事件的完整归纳见 卫生统计学 第 1 章」。
+- /intro-it/14-goodness-of-fit-and-contingency 开头，加一句「资料类型与统计方法的对应关系见 卫生统计学 第 1 章」。
 - /Medical-Big-Data-Analysis/1-r-basics-and-data 与 /Medical-Big-Data-Analysis/2-data-preprocessing 里「整理资料/预处理」相关处，加一句「统计工作的基本步骤见 卫生统计学 第 1 章」。
 -->
 

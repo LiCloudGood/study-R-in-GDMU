@@ -532,15 +532,15 @@ virginica  6.644464e-32 8.296915e-09
 ## 和别的课怎么对上
 
 ::: tip 相关章节
-- **《信息技术基础》第 12 讲 参数假设检验**（[`/intro-it/12-hypothesis-testing`](/intro-it/12-hypothesis-testing)）—— 那一讲是本章的 R 实操：自定义 `fun1301` 用 `pt()` 算 $P$ 值、用 `qt()` 划出接受域，还给了 `t.test()`、`var.test()`、`binom.test()` 和 `alternative = 'two.sided' / 'greater' / 'less'` 三个方向的写法。本章补上的是原理：$H_0$ 和 $H_1$ 为什么这么设、$P$ 值到底在说什么、单双侧为什么不能事后挑、结论错了会错成哪一种。**那边练「怎么算」，这边讲「算出来怎么讲」。** 那一讲的两阶段流程（先 `var.test()` 看方差齐性，再决定用等方差 $t$ 检验还是 Welch）正好是本章「适用条件」的落地。
-- **《信息技术基础》第 11 讲 参数估计**（[`/intro-it/11-parameter-estimation`](/intro-it/11-parameter-estimation)）—— 区间估计与假设检验是同一枚硬币的两面：同一份资料，$1-\alpha$ 可信区间包含 $\mu_0$ 就等价于 $\alpha$ 水准下不拒绝 $H_0$，反之亦然。那一讲用 `qnorm()`、`qt()`、`qf()`、`qchisq()` 造区间，并用 `t.test(x)$conf.int` 和自定义函数对比验证。本章把这个等价关系讲清楚，并说明可信区间比 $P$ 值多给什么信息：差值的范围，以及这个差有没有临床实际意义。
+- **《信息技术基础》第 13 讲 参数假设检验**（[`/intro-it/13-hypothesis-testing`](/intro-it/13-hypothesis-testing)）—— 那一讲是本章的 R 实操：自定义 `fun1301` 用 `pt()` 算 $P$ 值、用 `qt()` 划出接受域，还给了 `t.test()`、`var.test()`、`binom.test()` 和 `alternative = 'two.sided' / 'greater' / 'less'` 三个方向的写法。本章补上的是原理：$H_0$ 和 $H_1$ 为什么这么设、$P$ 值到底在说什么、单双侧为什么不能事后挑、结论错了会错成哪一种。**那边练「怎么算」，这边讲「算出来怎么讲」。** 那一讲的两阶段流程（先 `var.test()` 看方差齐性，再决定用等方差 $t$ 检验还是 Welch）正好是本章「适用条件」的落地。
+- **《信息技术基础》第 12 讲 参数估计**（[`/intro-it/12-parameter-estimation`](/intro-it/12-parameter-estimation)）—— 区间估计与假设检验是同一枚硬币的两面：同一份资料，$1-\alpha$ 可信区间包含 $\mu_0$ 就等价于 $\alpha$ 水准下不拒绝 $H_0$，反之亦然。那一讲用 `qnorm()`、`qt()`、`qf()`、`qchisq()` 造区间，并用 `t.test(x)$conf.int` 和自定义函数对比验证。本章把这个等价关系讲清楚，并说明可信区间比 $P$ 值多给什么信息：差值的范围，以及这个差有没有临床实际意义。
 - **《医学大数据分析与决策》第 6 周 分类（二）**（[`/Medical-Big-Data-Analysis/6-classification-2`](/Medical-Big-Data-Analysis/6-classification-2)）—— 那一周用 `e1071`、`caret`、`pROC` 做朴素贝叶斯分类和 ROC 分析，输出混淆矩阵、准确率、AUC。**混淆矩阵和本章的两类错误是同一件事的两种叫法**：把「实际有、判成无」记作 FN，对应 Ⅱ 类错误（漏诊）；把「实际无、判成有」记作 FP，对应 Ⅰ 类错误（误报）。AUC 衡量「有差别时能不能检出」，地位相当于本章的检验效能 $1-\beta$。区别在于本章只有一次检验、一个 $P$ 值，那边是把全部预测结果列成表整体评价。
 :::
 
 <!-- 回链建议
 建议在这几页回链过来：
-1. `/intro-it/12-hypothesis-testing` 的「本讲小结」处，加一句「原理与适用条件的完整归纳见 卫生统计学 第 7 章（假设检验）」。
-2. `/intro-it/11-parameter-estimation` 的「本讲小结」处，加一句「可信区间与假设检验的等价关系见 卫生统计学 第 7 章」。
+1. `/intro-it/13-hypothesis-testing` 的「本讲小结」处，加一句「原理与适用条件的完整归纳见 卫生统计学 第 7 章（假设检验）」。
+2. `/intro-it/12-parameter-estimation` 的「本讲小结」处，加一句「可信区间与假设检验的等价关系见 卫生统计学 第 7 章」。
 3. `/Medical-Big-Data-Analysis/6-classification-2` 讲混淆矩阵 / AUC 的位置，加一句「FN、FP 与两类错误的对应关系见 卫生统计学 第 7 章」。
 -->
 

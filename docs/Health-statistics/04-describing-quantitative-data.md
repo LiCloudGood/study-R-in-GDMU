@@ -557,8 +557,8 @@ SPSS 的「探索」会同时输出 Kolmogorov-Smirnov 和 Shapiro-Wilk 两行�
 
 ::: tip 相关章节
 - **《信息技术基础》第 9 讲 高级绘图**（[`/intro-it/9-base-graphics`](/intro-it/9-base-graphics)）—— 那里练的是 `hist()` 的 `breaks`、`labels`、`col` 和 `boxplot()` 的用法，这里讲的是这些图在统计描述里各自回答什么问题：直方图看分布形状与对称性，箱线图看五数概括和离群值。
-- **《信息技术基础》第 10 讲 ggplot2 包**（[`/intro-it/10-ggplot2`](/intro-it/10-ggplot2)）—— `geom_histogram()`、`geom_boxplot()`、`geom_qq()` 是同一批图形的另一套画法，分组比较时比 base R 更好排版。
-- **《信息技术基础》第 11 讲 参数估计**（[`/intro-it/11-parameter-estimation`](/intro-it/11-parameter-estimation)）—— 本章算出的 $\bar x$ 和 $s$ 就是那里的原料：$\bar x$ 是总体均数的点估计，$s$ 进一步变成标准误 $s/\sqrt{n}$ 才能做区间估计。这里讲「怎么描述一批数据」，那里讲「用这批数据能推断总体到什么程度」。
+- **《信息技术基础》第 11 讲 ggplot2 包**（[`/intro-it/11-ggplot2`](/intro-it/11-ggplot2)）—— `geom_histogram()`、`geom_boxplot()`、`geom_qq()` 是同一批图形的另一套画法，分组比较时比 base R 更好排版。
+- **《信息技术基础》第 12 讲 参数估计**（[`/intro-it/12-parameter-estimation`](/intro-it/12-parameter-estimation)）—— 本章算出的 $\bar x$ 和 $s$ 就是那里的原料：$\bar x$ 是总体均数的点估计，$s$ 进一步变成标准误 $s/\sqrt{n}$ 才能做区间估计。这里讲「怎么描述一批数据」，那里讲「用这批数据能推断总体到什么程度」。
 - **《医学大数据分析与决策》第 2 周 数据预处理**（[`/Medical-Big-Data-Analysis/2-data-preprocessing`](/Medical-Big-Data-Analysis/2-data-preprocessing)）—— 同一批指标的工程用法：实验题里的 `mean()/var()/sd()/range()/quantile()/which.max(table())` 就是本章的中心趋势与散度度量（`which.max(table())` 是众数）；等宽分箱＝频数表的等距分组，等频分箱＝按百分位数切点；Z-score 规范化 $z=(x-\bar x)/s$ 就是标准正态变换。区别在于那一周关心「怎么把数据整理成模型能吃的形式」，本章关心「这些数字在统计上意味着什么、该选哪一个」。
 - **《医学大数据分析与决策》第 3 周 回归分析**（[`/Medical-Big-Data-Analysis/3-regression`](/Medical-Big-Data-Analysis/3-regression)）—— 建模前的常规动作「先描述、再画图、后拟合」：先用本章的指标和箱线图找离群值、看变量是否偏态，必要时做对数变换，再进模型。
 :::
@@ -566,8 +566,8 @@ SPSS 的「探索」会同时输出 Kolmogorov-Smirnov 和 Shapiro-Wilk 两行�
 <!-- 回链建议
 建议在这几页回链过来：
 - /intro-it/9-base-graphics 的「实验题 1：hist 函数直方图」与「实验题 6：boxplot 函数绘制箱线图」处，各加一句「这些图在统计描述里各自对应什么，见 卫生统计学 第 4 章」。
-- /intro-it/10-ggplot2 讲到 geom_histogram / geom_boxplot 时，加一句「图形背后的分布特征判读见 卫生统计学 第 4 章」。
-- /intro-it/11-parameter-estimation 的「本讲小结」处，加一句「均数、标准差作为描述性指标的完整用法与选用判据，见 卫生统计学 第 4 章」。
+- /intro-it/11-ggplot2 讲到 geom_histogram / geom_boxplot 时，加一句「图形背后的分布特征判读见 卫生统计学 第 4 章」。
+- /intro-it/12-parameter-estimation 的「本讲小结」处，加一句「均数、标准差作为描述性指标的完整用法与选用判据，见 卫生统计学 第 4 章」。
 - /Medical-Big-Data-Analysis/2-data-preprocessing 的「实验题 1（中心趋势度量与散度度量）」处，加一句「这些函数的统计含义与适用条件见 卫生统计学 第 4 章」；「实验题 7 Z-score 规范化」处，加一句「这就是标准正态变换 z=(x−x̄)/s，见 卫生统计学 第 4 章」。
 -->
 

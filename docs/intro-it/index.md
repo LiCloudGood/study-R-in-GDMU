@@ -27,14 +27,16 @@ const links = [
     link: '/intro-it/8-custom-functions' },
   { title: '高级绘图', desc: '掌握颜色设置及hist、barplot、pie、boxplot、plot五大绘图函数',
     link: '/intro-it/9-base-graphics' },
+  { title: '初级绘图函数', desc: '掌握points、lines、abline、arrow、text、title、mtext与legend等低层绘图函数的用法',
+    link: '/intro-it/10-plot-functions' },
   { title: 'ggplot2包', desc: '掌握par/layout与ggplot2：几何对象、统计变换、分页、标度、主题设置。',
-    link: '/intro-it/10-ggplot2' },
+    link: '/intro-it/11-ggplot2' },
   { title: '参数估计', desc: '掌握正态、0-1与指数三大分布参数的置信区间计算',
-    link: '/intro-it/11-parameter-estimation' },
+    link: '/intro-it/12-parameter-estimation' },
   { title: '参数假设检验', desc: '掌握正态与非正态分布参数检验的P值、临界值计算及对应R函数',
-    link: '/intro-it/12-hypothesis-testing' },
+    link: '/intro-it/13-hypothesis-testing' },
   { title: '同分布检验与列联表检验', desc: '掌握Pearson拟合优度检验、Kolmogorov-Smirnov检验及列联表检验、列联表独立性检验、Fisher精确性检验、McNemar检验和Kappa检验、正态性检验方法',
-    link: '/intro-it/13-goodness-of-fit-and-contingency' }
+    link: '/intro-it/14-goodness-of-fit-and-contingency' }
 ]
 </script>
 
