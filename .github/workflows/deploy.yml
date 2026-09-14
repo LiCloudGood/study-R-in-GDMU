@@ -1,15 +1,9 @@
 name: Deploy VitePress
 
-# ⚠️ 自动部署已暂时关掉：改成只能手动触发（Actions 页面点 Run workflow）。
-# 作者希望先线下审核站点效果，审过了再放行到线上。
-#
-# 要恢复「推到 main 就自动部署」，把下面两个注释掉的行加回来即可：
-#
-# on:
-#   push:
-#     branches: [main]
-#   workflow_dispatch:
+# 推到 main 就自动部署，也留着手动触发（Actions 页面点 Run workflow）。
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:

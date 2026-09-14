@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "study R in GDMU"
   text: "开始你的R语言学习之旅吧！"
-  tagline: 这个文档的题目与背景来源于学校，内容与形式均为个人兴趣爱好，文档中所涉及的内容均为个人理解，如有错误，欢迎指正。欢迎各位同学交流学习。
+  tagline: '这个文档的题目与背景来源于学校，内容与形式均为个人兴趣爱好，文档中所涉及的内容均为个人理解，如有错误，欢迎指正。欢迎各位同学交流学习。<br>欢迎通过 <a href="https://github.com/LiCloudGood" target="_blank" rel="noreferrer">GitHub</a> 与我联系，我将在看到的第一时间回复。'
 
 features:
   - title: Introduction to information technology <br>（信息技术基础）

@@ -11,19 +11,22 @@ title: 'Health statistics（医学统计学）'
 「这一章解决什么问题、核心概念是什么、在 R 里怎么做、容易踩什么坑」，
 并在末尾指向《信息技术基础》和《医学大数据分析与决策》里对应的练习。
 
-## 先选方法
+## 方法选择器
 
 不知道手上的数据该用哪个统计方法？用选择器走一遍三步问答，
 它会告诉你**用什么方法、要满足什么条件、R 里怎么写、输出看哪几个数、容易踩什么坑**：
 
 <div style="margin: 16px 0">
-  <a href="./choice" style="display:inline-block;padding:10px 18px;border-radius:8px;background:var(--vp-c-brand-1);color:#fff;font-weight:600;text-decoration:none">
+  <!--
+    这里写 .html 而不是 ./choice：裸 HTML 的 href 不会被 VitePress 改写，
+    不带扩展名的话，鼠标悬停看到的、以及复制出去的链接在 GitHub Pages 上会 404。
+  -->
+  <a href="./choice.html" style="display:inline-block;padding:10px 18px;border-radius:8px;background:var(--vp-c-brand-1);color:#fff;font-weight:600;text-decoration:none">
     → 打开统计方法选择器
   </a>
 </div>
 
-不想一步步点也行，那一页上还有一张**完整的决策速查表**，
-以及**这个选择器不做什么**的边界说明。
+那一页上还有一张完整的决策速查表，各种情况该用哪个方法都列在上面。
 
 ## 各章知识点
 

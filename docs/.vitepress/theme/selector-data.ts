@@ -1,5 +1,5 @@
 /**
- * 统计方法选择器题库 —— 由 _dev/selector-build.mjs 从规则表生成，请勿手改。
+ * 统计方法选择器题库 —— 由 scripts/generate-selector.mjs 从规则表生成，请勿手改。
  * 改规则请改生成脚本，然后重跑它。
  */
 export interface SelectorOption { text: string; detail?: string; next: number }
@@ -354,7 +354,7 @@ export const selectorTree: { nodes: SelectorNode[] } = {
     {
       "id": 101,
       "result": {
-        "m": "均数 ± 标准差，或 中位数（四分位数间距）",
+        "method": "均数 ± 标准差，或 中位数（四分位数间距）",
         "why": "描述一批定量数据的**平均水平**和**离散程度**。",
         "cond": [
           "指标是定量变量",
@@ -370,16 +370,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "用均数 ± 标准差描述明显偏态的资料 —— 会掩盖真实分布",
           "只报平均数不报离散程度"
         ],
-        "c": [
-          "第 4 章 定量资料的统计描述",
-          "/Health-statistics/04-describing-quantitative-data"
-        ]
+        "c": {
+          "text": "第 4 章 定量资料的统计描述",
+          "link": "/Health-statistics/04-describing-quantitative-data"
+        }
       }
     },
     {
       "id": 102,
       "result": {
-        "m": "频数 + 率（构成比）",
+        "method": "频数 + 率（构成比）",
         "why": "描述一个二分类指标的**发生频率**。",
         "cond": [
           "指标只有两类",
@@ -393,16 +393,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "把构成比当率用 —— 见第 5 章那张「率与构成比」对照表"
         ],
-        "c": [
-          "第 5 章 定性资料的统计描述",
-          "/Health-statistics/05-describing-qualitative-data"
-        ]
+        "c": {
+          "text": "第 5 章 定性资料的统计描述",
+          "link": "/Health-statistics/05-describing-qualitative-data"
+        }
       }
     },
     {
       "id": 103,
       "result": {
-        "m": "频数 + 构成比",
+        "method": "频数 + 构成比",
         "why": "描述一个多分类指标的**各部分占比**。",
         "cond": [
           "指标是分类变量（无序或有序）"
@@ -415,23 +415,23 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "有序分类还应该**按顺序**排列水平，不然看不出轻重趋势"
         ],
-        "c": [
-          "第 5 章 定性资料的统计描述",
-          "/Health-statistics/05-describing-qualitative-data"
-        ]
+        "c": {
+          "text": "第 5 章 定性资料的统计描述",
+          "link": "/Health-statistics/05-describing-qualitative-data"
+        }
       }
     },
     {
       "id": 106,
       "result": {
-        "m": "Wilcoxon 符号秩检验（单样本）",
+        "method": "Wilcoxon 符号秩检验（单样本）",
         "why": "一组定量数据与已知标准值比较，但数据**偏离正态、或有极端值、或样本量很小**。",
         "cond": [
           "只有一组对象",
           "指标是定量变量，但正态性不成立"
         ],
         "note": "不要求正态分布，代价是**检验效能略低**（同样的差别，需要更多样本才能发现）。",
-        "code": "wilcox.test(x, mu = 170)   # 同上，170 换成标准值",
+        "code": "wilcox.test(x, mu = 170)   # 170 换成你要比较的标准值",
         "read": [
           "`V` 是正差值的秩和",
           "`p-value`：与 α 比",
@@ -441,16 +441,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "数据其实接近正态时也用它 —— 白白损失效能",
           "有大量相同数值（结）时 R 会提示，不要当报错"
         ],
-        "c": [
-          "第 11 章 非参数检验与秩和检验",
-          "/Health-statistics/11-nonparametric"
-        ]
+        "c": {
+          "text": "第 11 章 非参数检验与秩和检验",
+          "link": "/Health-statistics/11-nonparametric"
+        }
       }
     },
     {
       "id": 107,
       "result": {
-        "m": "单样本 t 检验",
+        "method": "单样本 t 检验",
         "why": "一组定量数据，和**一个已知的标准值**比平均水平。",
         "cond": [
           "只有一组对象",
@@ -467,16 +467,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "把「不拒绝 H₀」说成「证明两组相等」—— 只能说没找到差别",
           "大样本时 p 值很小可能只是样本量大，要看均数差的实际大小"
         ],
-        "c": [
-          "第 8 章 t 检验",
-          "/Health-statistics/08-t-test"
-        ]
+        "c": {
+          "text": "第 8 章 t 检验",
+          "link": "/Health-statistics/08-t-test"
+        }
       }
     },
     {
       "id": 108,
       "result": {
-        "m": "二项检验",
+        "method": "二项检验",
         "why": "一个二分类指标，和**一个已知的发生率**比。",
         "cond": [
           "指标只有两类",
@@ -490,16 +490,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "样本量小时用正态近似算率的可信区间，可能算出负数下限 —— 应该用精确法"
         ],
-        "c": [
-          "第 6 章 总体均数与总体率的估计",
-          "/Health-statistics/06-estimation"
-        ]
+        "c": {
+          "text": "第 6 章 总体均数与总体率的估计",
+          "link": "/Health-statistics/06-estimation"
+        }
       }
     },
     {
       "id": 109,
       "result": {
-        "m": "拟合优度卡方检验",
+        "method": "拟合优度卡方检验",
         "why": "一个多分类指标，看各类的**实际频数**是否偏离某个理论分布。",
         "cond": [
           "指标是多分类变量",
@@ -513,16 +513,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "理论频数太小还硬算 —— R 会警告，这时要合并类别"
         ],
-        "c": [
-          "第 10 章 卡方检验",
-          "/Health-statistics/10-chi-square"
-        ]
+        "c": {
+          "text": "第 10 章 卡方检验",
+          "link": "/Health-statistics/10-chi-square"
+        }
       }
     },
     {
       "id": 112,
       "result": {
-        "m": "Wilcoxon 符号秩检验（配对）",
+        "method": "Wilcoxon 符号秩检验（配对）",
         "why": "配对数据，但**差值的分布明显不正态**。",
         "cond": [
           "两组数据一一配对",
@@ -536,16 +536,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "和配对 t 检验比，报告时要说明用的是哪一种，别混着写"
         ],
-        "c": [
-          "第 11 章 非参数检验与秩和检验",
-          "/Health-statistics/11-nonparametric"
-        ]
+        "c": {
+          "text": "第 11 章 非参数检验与秩和检验",
+          "link": "/Health-statistics/11-nonparametric"
+        }
       }
     },
     {
       "id": 113,
       "result": {
-        "m": "配对样本 t 检验",
+        "method": "配对样本 t 检验",
         "why": "同一批对象测了两次（或配对的两个部位），比较两次的**差值**是否为 0。",
         "cond": [
           "两组数据一一配对",
@@ -562,16 +562,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "**把配对设计当成组检验** —— 最常见也最伤，p 值会偏大、结论可能反转",
           "用配对 t 检验却没有配对关系"
         ],
-        "c": [
-          "第 8 章 t 检验",
-          "/Health-statistics/08-t-test"
-        ]
+        "c": {
+          "text": "第 8 章 t 检验",
+          "link": "/Health-statistics/08-t-test"
+        }
       }
     },
     {
       "id": 114,
       "result": {
-        "m": "McNemar 检验（配对四格表）",
+        "method": "McNemar 检验（配对四格表）",
         "why": "同一批对象测两次，**每次的结果都是「是/否」两类**，比较两次的阳性率有没有变化。",
         "cond": [
           "配对设计",
@@ -587,34 +587,33 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "配对资料用普通卡方检验 —— 忽略了配对关系，结论可能完全反掉"
         ],
-        "c": [
-          "第 10 章 卡方检验",
-          "/Health-statistics/10-chi-square"
-        ]
+        "c": {
+          "text": "第 10 章 卡方检验",
+          "link": "/Health-statistics/10-chi-square"
+        }
       }
     },
     {
       "id": 115,
       "result": {
-        "m": "本课程没有覆盖到这种情况",
+        "method": "本课程没有覆盖到这种情况",
         "why": "你选的组合超出了本站 17 章的范围。",
         "cond": [],
         "note": "不是没有方法，而是这几种情况在本课程里没展开。**建议先回去把前面的设计类型重新确认一遍**（很多时候是第一步选错了），仍然对不上的话，请咨询任课老师或统计专业人士。",
-        "code": "",
         "read": [],
         "pit": [
           "硬套一个自己熟悉的方法 —— 这是数据分析里最危险的错误"
         ],
-        "c": [
-          "第 3 章 实验设计与调查设计",
-          "/Health-statistics/03-study-design"
-        ]
+        "c": {
+          "text": "第 3 章 实验设计与调查设计",
+          "link": "/Health-statistics/03-study-design"
+        }
       }
     },
     {
       "id": 118,
       "result": {
-        "m": "Mann-Whitney U 检验（Wilcoxon 秩和检验）",
+        "method": "Mann-Whitney U 检验（Wilcoxon 秩和检验）",
         "why": "两组独立对象，比较某定量或**有序分类**指标，但数据不正态、有极端值、或样本量很小。",
         "cond": [
           "两组对象相互独立",
@@ -631,16 +630,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "把 `W` 当成\"差别有多大\"来报",
           "数据其实接近正态还用它 —— 效能白丢"
         ],
-        "c": [
-          "第 11 章 非参数检验与秩和检验",
-          "/Health-statistics/11-nonparametric"
-        ]
+        "c": {
+          "text": "第 11 章 非参数检验与秩和检验",
+          "link": "/Health-statistics/11-nonparametric"
+        }
       }
     },
     {
       "id": 119,
       "result": {
-        "m": "两独立样本 t 检验（Welch）",
+        "method": "两独立样本 t 检验（Welch）",
         "why": "两组**互不相干**的对象，比较某定量指标的平均水平。",
         "cond": [
           "两组对象相互独立（不是同一批人）",
@@ -658,16 +657,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "**把配对设计误做成组检验**",
           "先做方差齐性检验、不齐就放弃 t 检验 —— 直接用 Welch 更简单也更稳"
         ],
-        "c": [
-          "第 8 章 t 检验",
-          "/Health-statistics/08-t-test"
-        ]
+        "c": {
+          "text": "第 8 章 t 检验",
+          "link": "/Health-statistics/08-t-test"
+        }
       }
     },
     {
       "id": 120,
       "result": {
-        "m": "四格表卡方检验（按条件选写法）",
+        "method": "四格表卡方检验（按条件选写法）",
         "why": "两组独立对象，比较一个**二分类**指标的发生率。",
         "cond": [
           "两组对象相互独立",
@@ -699,16 +698,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "看到 R 的近似警告还照用卡方",
           "把率（横向）和构成比（纵向）的百分比算反"
         ],
-        "c": [
-          "第 10 章 卡方检验",
-          "/Health-statistics/10-chi-square"
-        ]
+        "c": {
+          "text": "第 10 章 卡方检验",
+          "link": "/Health-statistics/10-chi-square"
+        }
       }
     },
     {
       "id": 121,
       "result": {
-        "m": "行 × 列表卡方检验",
+        "method": "行 × 列表卡方检验",
         "why": "两组或多组独立对象，比较一个**无序多分类**指标，或行/列超过 2 的列联表。",
         "cond": [
           "各组相互独立",
@@ -724,16 +723,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "显著之后说「各组都不同」—— 只能说不全相同，要具体比较需做两两比较并校正 α"
         ],
-        "c": [
-          "第 10 章 卡方检验",
-          "/Health-statistics/10-chi-square"
-        ]
+        "c": {
+          "text": "第 10 章 卡方检验",
+          "link": "/Health-statistics/10-chi-square"
+        }
       }
     },
     {
       "id": 124,
       "result": {
-        "m": "Kruskal-Wallis H 检验",
+        "method": "Kruskal-Wallis H 检验",
         "why": "三组及以上独立对象，比较某定量（不正态）或**有序分类**指标。",
         "cond": [
           "各组相互独立",
@@ -747,16 +746,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "显著之后直接下结论说哪两组不同 —— 还要做两两比较并校正水准"
         ],
-        "c": [
-          "第 11 章 非参数检验与秩和检验",
-          "/Health-statistics/11-nonparametric"
-        ]
+        "c": {
+          "text": "第 11 章 非参数检验与秩和检验",
+          "link": "/Health-statistics/11-nonparametric"
+        }
       }
     },
     {
       "id": 125,
       "result": {
-        "m": "单因素方差分析 + 两两比较",
+        "method": "单因素方差分析 + 两两比较",
         "why": "三组及以上**互不相干**的对象，比较某定量指标的平均水平。",
         "cond": [
           "各组相互独立",
@@ -774,16 +773,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "整体不显著还去做两两比较",
           "把「不全相同」说成「各组都不同」"
         ],
-        "c": [
-          "第 9 章 方差分析",
-          "/Health-statistics/09-anova"
-        ]
+        "c": {
+          "text": "第 9 章 方差分析",
+          "link": "/Health-statistics/09-anova"
+        }
       }
     },
     {
       "id": 126,
       "result": {
-        "m": "行 × 列表卡方检验",
+        "method": "行 × 列表卡方检验",
         "why": "两组或多组独立对象，比较一个**无序多分类**指标，或行/列超过 2 的列联表。",
         "cond": [
           "各组相互独立",
@@ -799,16 +798,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "显著之后说「各组都不同」—— 只能说不全相同，要具体比较需做两两比较并校正 α"
         ],
-        "c": [
-          "第 10 章 卡方检验",
-          "/Health-statistics/10-chi-square"
-        ]
+        "c": {
+          "text": "第 10 章 卡方检验",
+          "link": "/Health-statistics/10-chi-square"
+        }
       }
     },
     {
       "id": 127,
       "result": {
-        "m": "行 × 列表卡方检验",
+        "method": "行 × 列表卡方检验",
         "why": "两组或多组独立对象，比较一个**无序多分类**指标，或行/列超过 2 的列联表。",
         "cond": [
           "各组相互独立",
@@ -824,16 +823,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "显著之后说「各组都不同」—— 只能说不全相同，要具体比较需做两两比较并校正 α"
         ],
-        "c": [
-          "第 10 章 卡方检验",
-          "/Health-statistics/10-chi-square"
-        ]
+        "c": {
+          "text": "第 10 章 卡方检验",
+          "link": "/Health-statistics/10-chi-square"
+        }
       }
     },
     {
       "id": 129,
       "result": {
-        "m": "重复测量方差分析",
+        "method": "重复测量方差分析",
         "why": "**同一批对象**在不同时间点（或不同条件下）测了三次及以上，比较各次的定量指标。",
         "cond": [
           "同一批对象的多次测量",
@@ -848,34 +847,33 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "把重复测量数据当独立组分析 —— 忽略了相关性，p 值严重偏小"
         ],
-        "c": [
-          "第 9 章 方差分析",
-          "/Health-statistics/09-anova"
-        ]
+        "c": {
+          "text": "第 9 章 方差分析",
+          "link": "/Health-statistics/09-anova"
+        }
       }
     },
     {
       "id": 130,
       "result": {
-        "m": "本课程没有覆盖到这种情况",
+        "method": "本课程没有覆盖到这种情况",
         "why": "你选的组合超出了本站 17 章的范围。",
         "cond": [],
         "note": "不是没有方法，而是这几种情况在本课程里没展开。**建议先回去把前面的设计类型重新确认一遍**（很多时候是第一步选错了），仍然对不上的话，请咨询任课老师或统计专业人士。",
-        "code": "",
         "read": [],
         "pit": [
           "硬套一个自己熟悉的方法 —— 这是数据分析里最危险的错误"
         ],
-        "c": [
-          "第 3 章 实验设计与调查设计",
-          "/Health-statistics/03-study-design"
-        ]
+        "c": {
+          "text": "第 3 章 实验设计与调查设计",
+          "link": "/Health-statistics/03-study-design"
+        }
       }
     },
     {
       "id": 131,
       "result": {
-        "m": "Friedman 检验（随机区组秩检验）",
+        "method": "Friedman 检验（随机区组秩检验）",
         "why": "同一批对象测了三次及以上，但指标是**有序分类**，或定量数据明显不正态。",
         "cond": [
           "同一批对象的多次测量",
@@ -889,16 +887,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "区组（个体）因素没写对 —— 区组变量必须正确标识同一个体"
         ],
-        "c": [
-          "第 11 章 非参数检验与秩和检验",
-          "/Health-statistics/11-nonparametric"
-        ]
+        "c": {
+          "text": "第 11 章 非参数检验与秩和检验",
+          "link": "/Health-statistics/11-nonparametric"
+        }
       }
     },
     {
       "id": 133,
       "result": {
-        "m": "Kaplan-Meier 法估计生存曲线",
+        "method": "Kaplan-Meier 法估计生存曲线",
         "why": "随访资料，要**估计**生存率随时间的变化（并给出中位生存时间）。",
         "cond": [
           "有「随访时间」和「是否发生结局」两列",
@@ -915,16 +913,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "把删失当缺失丢掉 —— 会高估死亡率",
           "两组的随访时间范围差很多时直接比曲线"
         ],
-        "c": [
-          "第 14 章 生存分析",
-          "/Health-statistics/14-survival-analysis"
-        ]
+        "c": {
+          "text": "第 14 章 生存分析",
+          "link": "/Health-statistics/14-survival-analysis"
+        }
       }
     },
     {
       "id": 134,
       "result": {
-        "m": "Log-rank 检验",
+        "method": "Log-rank 检验",
         "why": "随访资料，比较**两组（或多组）的生存曲线**有没有差别。",
         "cond": [
           "两组或多组随访资料",
@@ -938,16 +936,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "曲线明显交叉时用 Log-rank —— 这时它可能查不出差别，要考虑分段或用其它检验"
         ],
-        "c": [
-          "第 14 章 生存分析",
-          "/Health-statistics/14-survival-analysis"
-        ]
+        "c": {
+          "text": "第 14 章 生存分析",
+          "link": "/Health-statistics/14-survival-analysis"
+        }
       }
     },
     {
       "id": 135,
       "result": {
-        "m": "Cox 比例风险回归",
+        "method": "Cox 比例风险回归",
         "why": "随访资料，要看**多个因素一起**对生存时间的影响。",
         "cond": [
           "有随访时间与结局",
@@ -963,16 +961,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "把 HR 当成「生存率之比」—— 它是**风险率**之比",
           "不做比例风险假定检验就直接下结论"
         ],
-        "c": [
-          "第 14 章 生存分析",
-          "/Health-statistics/14-survival-analysis"
-        ]
+        "c": {
+          "text": "第 14 章 生存分析",
+          "link": "/Health-statistics/14-survival-analysis"
+        }
       }
     },
     {
       "id": 138,
       "result": {
-        "m": "Pearson 相关分析",
+        "method": "Pearson 相关分析",
         "why": "两个定量变量，看它们之间有没有**线性**关系、有多强。",
         "cond": [
           "两个变量都是定量",
@@ -989,16 +987,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "不画散点图只看 r —— 安斯库姆四重奏就是反例：四组完全不同的数据 r 都是 0.816",
           "把 r 的绝对值大小直接当\"相关性很强\"的依据"
         ],
-        "c": [
-          "第 12 章 双变量关联性分析",
-          "/Health-statistics/12-bivariate-association"
-        ]
+        "c": {
+          "text": "第 12 章 双变量关联性分析",
+          "link": "/Health-statistics/12-bivariate-association"
+        }
       }
     },
     {
       "id": 139,
       "result": {
-        "m": "Spearman 秩相关",
+        "method": "Spearman 秩相关",
         "why": "两个**至少一个是定量且不正态**、或**有序分类**的变量，看它们有没有**单调**关系。",
         "cond": [
           "两个变量是定量（不正态）或有序分类",
@@ -1012,16 +1010,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
         "pit": [
           "把 r_s 和 Pearson r 混着报告 —— 两者度量的东西不同（一个单调、一个线性）"
         ],
-        "c": [
-          "第 12 章 双变量关联性分析",
-          "/Health-statistics/12-bivariate-association"
-        ]
+        "c": {
+          "text": "第 12 章 双变量关联性分析",
+          "link": "/Health-statistics/12-bivariate-association"
+        }
       }
     },
     {
       "id": 140,
       "result": {
-        "m": "直线回归",
+        "method": "直线回归",
         "why": "一个定量变量要**用另一个定量变量去预测或解释**。",
         "cond": [
           "因变量是定量变量",
@@ -1040,16 +1038,16 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "把 R² 大当成\"预测一定准\"",
           "超出数据范围外推"
         ],
-        "c": [
-          "第 13 章 直线回归",
-          "/Health-statistics/13-linear-regression"
-        ]
+        "c": {
+          "text": "第 13 章 直线回归",
+          "link": "/Health-statistics/13-linear-regression"
+        }
       }
     },
     {
       "id": 141,
       "result": {
-        "m": "卡方独立性检验 + 优势比 OR / 相对危险度 RR",
+        "method": "卡方独立性检验 + 优势比 OR / 相对危险度 RR",
         "why": "两个分类变量，判断它们**有没有关联**，以及关联**有多强**。",
         "cond": [
           "两个变量都是分类变量",
@@ -1066,10 +1064,10 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "把 OR 当 RR 解释",
           "只看 P 值不看 OR —— 样本量大时很小的 OR 也能\"显著\""
         ],
-        "c": [
-          "第 12 章 双变量关联性分析",
-          "/Health-statistics/12-bivariate-association"
-        ]
+        "c": {
+          "text": "第 12 章 双变量关联性分析",
+          "link": "/Health-statistics/12-bivariate-association"
+        }
       }
     }
   ]

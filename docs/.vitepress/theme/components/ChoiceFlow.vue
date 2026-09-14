@@ -34,6 +34,18 @@ const currentId = ref(firstId())
 const current = computed<TreeNode | null>(() => byId.get(currentId.value) ?? null)
 const result = computed(() => current.value?.result ?? null)
 
+/**
+ * 结果页底部那个「想弄懂原理 → 第 X 章」的链接。
+ *
+ * 这里必须兜底：withBase() 内部是 `path.startsWith('/')`，
+ * 传进去 undefined 会直接抛 TypeError；而模板里抛错会把**整块结果**渲染掉，
+ * 页面上就什么也不剩了（之前正是这么"不出答案"的）。
+ */
+const chap = computed(() => ({
+  text: result.value?.c?.text || '《卫生统计学》对应章节',
+  href: withBase(result.value?.c?.link || '/Health-statistics/')
+}))
+
 function choose(opt: { text: string; next: number }) {
   history.value = [...history.value, { question: current.value?.question || '', answer: opt.text }]
   currentId.value = opt.next
@@ -117,8 +129,8 @@ function md(s: string) {
         </div>
 
         <div class="sf-foot">
-          <a class="sf-chapter" :href="withBase(result.c.link)">
-            想弄懂原理 → {{ result.c.text }}
+          <a class="sf-chapter" :href="chap.href">
+            想弄懂原理 → {{ chap.text }}
           </a>
           <button type="button" class="sf-again" @click="restart">↺ 换一组条件重选</button>
         </div>
@@ -143,6 +155,20 @@ function md(s: string) {
         <button v-if="history.length" type="button" class="sf-again sf-again-top" @click="restart">
           ↺ 重新开始
         </button>
+      </div>
+
+      <!--
+        兜底：万一某个选项的 next 指向了不存在的节点（题库改坏了、或者数据没跟上），
+        以前这里是**一片空白**，看着就像坏了又说不出哪坏了。
+        现在至少把话说明白，并把「重新开始」摆出来。
+      -->
+      <div v-else class="sf-ask">
+        <div class="sf-question">这一步没有找到对应的结论</div>
+        <p class="sf-hint">
+          题库里缺了这一条。请点「重新开始」再选一次；如果每次都停在这里，说明是题库的问题，
+          麻烦通过首页的 GitHub 告诉我一声。
+        </p>
+        <button type="button" class="sf-again sf-again-top" @click="restart">↺ 重新开始</button>
       </div>
     </div>
   </ClientOnly>

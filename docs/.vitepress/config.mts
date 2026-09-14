@@ -102,10 +102,9 @@ export default defineConfig({
       ],
       '/Health-statistics/': [
         entryGroup,
-        {
-          text: '先选方法',
-          items: [{ text: '统计方法选择器', link: '/Health-statistics/choice' }]
-        },
+        // 原来这里是个分组「先选方法」，里面只放一条「统计方法选择器」，
+        // 两层名字几乎重复、还多一次折叠。改成平铺的一条，点名字直接进。
+        { text: '方法选择器', link: '/Health-statistics/choice' },
         { text: '卫生统计学', items: healthLectures }
       ]
     },
