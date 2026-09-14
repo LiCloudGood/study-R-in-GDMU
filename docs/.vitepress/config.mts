@@ -81,7 +81,7 @@ const entryGroup = {
  * 所有页面标题的中英对照见 `scripts/术语对照表.md` 最后一节。
  */
 const enHealthLectures: { text: string; link?: string }[] = [
-  { text: '1 Introduction' },
+  { text: '1 Introduction', link: '/en/Health-statistics/01-introduction' },
   { text: '3 Experimental and Survey Design' },
   { text: '4 Describing Quantitative Data' },
   { text: '5 Describing Qualitative Data' },

@@ -220,7 +220,7 @@ n; xbar; s; se
 变量类型决定了能算什么。用 `str()` 看一眼数据结构，是分析前的第一件事：
 
 ```r
-str(faithful)   # 272 obs. of 2 variables：eruptions 是数值型，waiting 是整型
+str(faithful)   # 272 obs. of 2 variables：eruptions 与 waiting 都是数值型（num）
 ```
 
 定性变量和等级变量在 R 里用**因子**（factor）表示；等级变量还要显式说明水平的先后顺序，否则 R 只会把它当无序类别：
