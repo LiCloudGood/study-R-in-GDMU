@@ -209,7 +209,7 @@ export default defineConfig({
               collapsed: false,
               items: [
                 { text: 'Diagnostic Test Evaluation (ROC and AUC)', link: '/en/Health-statistics/diagnostic-test' },
-                { text: 'Agreement and Reliability (Kappa and ICC)' }
+                { text: 'Agreement and Reliability (Kappa and ICC)', link: '/en/Health-statistics/agreement-reliability' }
               ]
             }
           ]
