@@ -20,7 +20,7 @@ code are identical to the original; if the two disagree, **the Chinese page is a
 Medical data come with two built-in difficulties: **individual variation** and **uncertainty**. People
 with the same disease can differ in symptoms, response to treatment, and outcome; conversely,
 identical-looking symptoms may sit on top of entirely different diseases. Every question a researcher
-holds is essentially "given a batch of numbers that vary, how do I reach a judgement?"
+holds is essentially "given a batch of numbers that vary, how do I reach a judgment?"
 
 - To map the prevalence and risk factors of major chronic diseases among adults nationwide, the
   population is far too large and time and funding are limited, so a full census is impossible and
@@ -51,7 +51,7 @@ regularity through the chance and to make scientific inferences from data that v
 ### Statistics and health statistics
 
 **Statistics is the science and art of handling variability in data**; it covers collecting,
-organizing, analysing, interpreting, and presenting data, with the aim of reaching reliable
+organizing, analyzing, interpreting, and presenting data, with the aim of reaching reliable
 conclusions. Applied to different fields it splits into different branches:
 
 | Branch | Field of application | Emphasis |
@@ -67,7 +67,7 @@ course, **health statistics** is defined as:
 > statistics to the collection, organization, and analysis of data on the health status of a
 > population and in the field of health services.
 
-It is an indispensable tool for analysing and solving problems in health-related research, and a basic
+It is an indispensable tool for analyzing and solving problems in health-related research, and a basic
 skill that health professionals must have for research work: reading the literature, applying for
 grants, writing papers, clinical trials of new drugs, and professional and licensing examinations all
 come back to it.
@@ -176,7 +176,7 @@ Correspondingly, data fall into two broad classes:
 
 **The classification of data types is relative, and they can be converted into one another:**
 
-- quantitative → qualitative: a haemoglobin measurement is a number, but split into
+- quantitative → qualitative: a hemoglobin measurement is a number, but split into
   "normal/abnormal" it becomes binary count data, and split into
   "severe/moderate/mild/normal/elevated" it becomes ordinal data;
 - qualitative → quantitative: a health status of "very good, good, fair, poor, very poor" is
@@ -279,7 +279,7 @@ can make the entire study worthless.
 
 Design is the first step and **the most critical one**, determining the success or failure of the
 whole study. It means drawing up a careful research plan, including the overall conception and
-arrangement of the whole process of collecting, sorting, and analysing data; it generally has both a
+arrangement of the whole process of collecting, sorting, and analyzing data; it generally has both a
 subject-matter part and a statistical part, and can be divided into survey design, experimental
 design, and clinical trial design.
 
@@ -308,7 +308,7 @@ reliable raw data**. The sources fall roughly into three kinds:
 ### 3. Sorting data
 
 Raw data are usually messy and need cleaning so that they become systematic and orderly and can be
-analysed further. This involves **checking, designing the grouping, summarizing, and drawing up
+analyzed further. This involves **checking, designing the grouping, summarizing, and drawing up
 summary tables**, generally with the help of computer software. Before entry the data also have to be
 coded, for example using 1 for male and 2 for female, or M and F.
 

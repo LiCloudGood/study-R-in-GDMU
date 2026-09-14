@@ -212,7 +212,7 @@ people**.
 ## Doing it in R
 
 We use the `aSAH` data set shipped with the `pROC` package: 113 patients with aneurysmal
-subarachnoid haemorrhage, outcome Good or Poor (41 Poor, 36.28%), with the biomarkers `s100b` and
+subarachnoid hemorrhage, outcome Good or Poor (41 Poor, 36.28%), with the biomarkers `s100b` and
 `ndka`.
 
 ```r
@@ -341,7 +341,7 @@ bias), the computed sensitivity and specificity are both biased.
 **⑤ Choosing the cutoff and reporting performance on the same data set.**
 Picking the Youden-optimal cutoff on one batch of data and then reporting the sensitivity and
 specificity at that cutoff **is optimistic bias**. The proper approach is to choose the cutoff on one
-part of the data (or on data from another centre) and validate it on another.
+part of the data (or on data from another center) and validate it on another.
 
 **⑥ Back-calculating prevalence from the test's positivity rate.**
 Prevalence has to be estimated by epidemiological survey; it cannot be obtained by dividing the
@@ -386,5 +386,5 @@ translated; for now the Chinese page /Health-statistics/diagnostic-test) from:
 | One number to compare two tests? | Youden index, likelihood ratios, AUC | the Youden index corresponds to the point farthest from the diagonal on the ROC curve |
 | Tested positive — how likely is disease? | positive predictive value $PPV$ | **changes sharply with prevalence**; not comparable across populations |
 | Tested negative — how likely is no disease? | negative predictive value $NPV$ | as above; $NPV$ is naturally high when prevalence is low |
-| Where should the cutoff go? | maximize the Youden index / pin $Se$ or $Sp$ by clinical requirement | **which error is worse is a clinical judgement, not an algorithmic one** |
+| Where should the cutoff go? | maximize the Youden index / pin $Se$ or $Sp$ by clinical requirement | **which error is worse is a clinical judgment, not an algorithmic one** |
 | Which marker has the higher AUC? | DeLong test | a large AUC gap may still be sampling error; equal AUCs may still differ clinically |

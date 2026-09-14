@@ -47,7 +47,7 @@ authoritative**.
 
 ## What this chapter is for
 
-Height, weight, blood pressure, incubation period, antibody titre … every value measured on these
+Height, weight, blood pressure, incubation period, antibody titer … every value measured on these
 indices is a number, with a magnitude and a unit; such data are called **quantitative data**. A survey
 measures the heights of 120 ten-year-old boys and yields 120 numbers; a paper cannot list all 120, and
 readers do not care that the 37th boy is 143.6 cm.
@@ -145,7 +145,7 @@ features and type of the distribution more directly; the two are often given tog
 ### Central tendency (1): the arithmetic mean
 
 The **arithmetic mean**, or simply the **mean**, is the sum of a set of homogeneous observations divided
-by their number, and reflects the average level or centre of the data. The sample mean is written
+by their number, and reflects the average level or center of the data. The sample mean is written
 $\bar x$ and the population mean $\mu$.
 
 With a small sample size the direct method is used:
@@ -163,16 +163,16 @@ $$\bar x = \frac{\sum f_i x_i}{\sum f_i}$$
 where $k$ is the number of classes, $x_i$ the midpoint of the $i$-th class, and $f_i$ its frequency.
 Substituting the height data above: $\bar x = 17202 / 120 = 143.35$ cm.
 
-**Conditions**: the mean suits **symmetric, and especially normal,** data. It then lies at the centre of
-the distribution and represents both the centre and the average magnitude. When the data are clearly
+**Conditions**: the mean suits **symmetric, and especially normal,** data. It then lies at the center of
+the distribution and represents both the center and the average magnitude. When the data are clearly
 skewed the mean is dragged towards the extreme values in the long tail and no longer represents "the
 level of most people".
 
 ### Central tendency (2): the geometric mean
 
-For a set of antibody titres such as 1/4, 1/8, 1/16, 1/32, 1/64, 1/128, 1/256 the values stand in a
+For a set of antibody titers such as 1/4, 1/8, 1/16, 1/32, 1/64, 1/128, 1/256 the values stand in a
 **multiplicative** relationship, the largest being 64 times the smallest. Taking reciprocals and
-computing a plain mean gives 72.5, i.e. a titre of 1/72.5; 5 of the 7 titres are larger than it, showing
+computing a plain mean gives 72.5, i.e. a titer of 1/72.5; 5 of the 7 titers are larger than it, showing
 that this average has been dragged up by the two larger values 128 and 256 and represents the data
 poorly — the mean is too sensitive to individual extreme values.
 
@@ -190,20 +190,20 @@ For tabulated data the weighted method is used:
 
 $$G = \lg^{-1}\!\left(\frac{\sum f_i \lg x_i}{\sum f_i}\right)$$
 
-For the example above: $\lg^{-1}(10.5361/7) = \lg^{-1}(1.5052) = 32$, so the mean titre of the 7 people
-is 1/32. In data on haemagglutination-inhibiting antibody titres of 50 measles-susceptible children
+For the example above: $\lg^{-1}(10.5361/7) = \lg^{-1}(1.5052) = 32$, so the mean titer of the 7 people
+is 1/32. In data on haemagglutination-inhibiting antibody titers of 50 measles-susceptible children
 after vaccination, $\sum f_i \lg x_i = 86.9977$, and the weighted method gives
-$G = \lg^{-1}(86.9977/50) = \lg^{-1}(1.7400) \approx 54.9$, a mean titre of about 1/55.
+$G = \lg^{-1}(86.9977/50) = \lg^{-1}(1.7400) \approx 54.9$, a mean titer of about 1/55.
 
 **Two preconditions** (very important):
 
 1. It suits data with a **log-symmetric distribution (including the log-normal)**, that is, data that
    become symmetric or normal after taking logarithms; it also suits **geometric-progression data**,
-   where the observations change by a multiple or an approximate multiple, such as antibody titres.
+   where the observations change by a multiple or an approximate multiple, such as antibody titers.
 2. The observations **must contain no 0, and must not mix positive and negative values** — 0 has no
    logarithm, and when signs are mixed "the root of the product" has no practical meaning.
 
-Titre data are usually converted by taking reciprocals first, giving 4, 8, 16, 32 …, and the geometric
+Titer data are usually converted by taking reciprocals first, giving 4, 8, 16, 32 …, and the geometric
 mean is computed on those — which is why the example above takes a detour.
 
 ### Central tendency (3): the median and percentiles
@@ -258,7 +258,7 @@ to either end should not be used.
 | --- | --- | --- |
 | symmetric, especially normal | arithmetic mean $\bar x$ | standard deviation $s$ (or variance $s^2$) |
 | skewed; no definite value at one or both ends; distribution unknown | median $M$ | interquartile range $Q$ |
-| log-normal; geometric-progression data (titres, potencies) | geometric mean $G$ | the standard deviation after log transformation, back-transformed (geometric SD) |
+| log-normal; geometric-progression data (titers, potencies) | geometric mean $G$ | the standard deviation after log transformation, back-transformed (geometric SD) |
 
 The order for deciding "which to use" is: look at the plot and the subject-matter background first →
 run a normality test if unclear → for skewed or open-ended data, go straight to median plus
@@ -267,16 +267,16 @@ error.
 
 <ClickAnswer>
 
-**Think about it**: for the antibody titre data (1/4 to 1/256), why is the mean unsuitable? And how
+**Think about it**: for the antibody titer data (1/4 to 1/256), why is the mean unsuitable? And how
 should one choose between the mean, the median, and the geometric mean?
 
-Because the titres stand in a multiplicative relationship, the largest being 64 times the smallest;
+Because the titers stand in a multiplicative relationship, the largest being 64 times the smallest;
 taking reciprocals and averaging gives 72.5, which has been pulled up by the two large values 128 and
 256 (5 of the 7 reciprocals are below it) and represents the data poorly.
 
 After a log transformation these values become $2^2,2^3,\dots,2^8$, which are **equally spaced** on the
 logarithmic scale, i.e. "log-symmetric" — so the geometric mean is the right choice: $G = 32$, a mean
-titre of 1/32, which sits exactly in the middle of the 7 titres.
+titer of 1/32, which sits exactly in the middle of the 7 titers.
 
 The general rule: symmetric/normal uses the mean, skewed uses the median, and a multiplicative
 (log-symmetric) relationship uses the geometric mean.
@@ -391,7 +391,7 @@ still be roughly symmetric (normal) — and it becomes meaningless when the mean
 
 Keep subdividing the heights of the 120 boys: the more people observed, the more classes, and the
 smaller the class width, the narrower the rectangles of the histogram become, and the line joining their
-tops gradually turns into a **smooth bell-shaped curve** — peaking in the centre (at the mean), falling
+tops gradually turns into a **smooth bell-shaped curve** — peaking in the center (at the mean), falling
 symmetrically on both sides, and approaching the horizontal axis without ever touching it. This curve
 describes the **normal distribution** (also called the Gaussian distribution).
 
@@ -451,7 +451,7 @@ To decide whether a set of data can be treated as normal, work through this orde
 
 1. **Look at the frequency table or frequency plot.** A peak in the middle with roughly symmetric sides
    suggests normality; a marked shift to one side indicates skewness.
-2. **Use subject-matter knowledge.** Height, red cell count, haemoglobin, and serum cholesterol in a
+2. **Use subject-matter knowledge.** Height, red cell count, hemoglobin, and serum cholesterol in a
    homogeneous group, and random errors in experiments, are usually normal or near-normal; indices such
    as incubation period, length of hospital stay, and urinary mercury are naturally skewed.
 3. **Make a rough check on the relation between $\bar x$ and $s$.** If $s$ does not exceed one third of
@@ -525,7 +525,7 @@ so the one-sided lower limit.
 ### Two other uses of the normal distribution
 
 - **Quality control.** Random error in experiments follows a normal distribution, so $\bar x \pm 2s$ are
-  used as **warning limits** and $\bar x \pm 3s$ as **control limits**, drawn with a centre line as a
+  used as **warning limits** and $\bar x \pm 3s$ as **control limits**, drawn with a center line as a
   quality control chart. A measured value outside the warning limit, or even outside the control limit,
   suggests the presence of systematic or other non-random error.
 - **As the theoretical basis of many statistical methods.** The $t$, $F$, and $\chi^2$ distributions are
@@ -648,12 +648,12 @@ relative frequency, and draw the histogram. Try it yourself before comparing wit
 ### 3. The geometric mean
 
 ```r
-# the 7 observations obtained by taking reciprocals of antibody titres
+# the 7 observations obtained by taking reciprocals of antibody titers
 titer <- c(4, 8, 16, 32, 64, 128, 256)
 
-exp(mean(log(titer)))                        # geometric mean = 32, i.e. mean titre 1/32
+exp(mean(log(titer)))                        # geometric mean = 32, i.e. mean titer 1/32
 
-f <- c(1, 3, 6, 10, 13, 10, 7)               # number of cases at each titre (tabulated data)
+f <- c(1, 3, 6, 10, 13, 10, 7)               # number of cases at each titer (tabulated data)
 exp(weighted.mean(log(titer), f))            # weighted geometric mean = 54.94819, i.e. 1/54.9
 ```
 
@@ -803,7 +803,7 @@ simply quoting a $P$ value.
   1525.3 g), the coefficient of variation $CV = s/\bar x \times 100\%$ has to be used instead. Conversely,
   the $CV$ is meaningful only when the data are roughly symmetric and the mean is not near 0.
 - **The geometric mean has hard preconditions.** The observations must contain no 0 and must not mix
-  positive and negative values; titre data must have reciprocals taken first (1/4, 1/8 → 4, 8). Note also
+  positive and negative values; titer data must have reciprocals taken first (1/4, 1/8 → 4, 8). Note also
   that it suits only log-symmetric (geometric-progression) data — ordinary skewed data call for the
   median, and it is not the case that "skewed means geometric mean".
 - **Means and standard deviations from a frequency table are only approximations.** The class midpoint
@@ -844,7 +844,7 @@ simply quoting a $P$ value.
   to choose".
 - **Week 3 of *Medical Big Data Analysis and Decision Making*, Regression Analysis** *(Chinese)*
   ([`/Medical-Big-Data-Analysis/3-regression`](/Medical-Big-Data-Analysis/3-regression)) — the routine
-  before modelling, "describe first, plot next, fit last": use this chapter's indices and a boxplot to
+  before modeling, "describe first, plot next, fit last": use this chapter's indices and a boxplot to
   find outliers and see whether variables are skewed, transform logarithmically where necessary, and only
   then enter the model.
 :::
@@ -864,7 +864,7 @@ once translated; for now the Chinese page /Health-statistics/04-describing-quant
   boxplot, QQ plot) + **two families of indices** (central tendency, dispersion). Look at the type of
   distribution first, then decide which family to use.
 - Central tendency is one of three: symmetric/normal uses the **arithmetic mean** $\bar x$; skewed or
-  open-ended data use the **median** $M$; log-normal or geometric-progression data (titres, potencies) use
+  open-ended data use the **median** $M$; log-normal or geometric-progression data (titers, potencies) use
   the **geometric mean** $G$.
 - Dispersion is used **as a pair** with central tendency: the mean goes with the **standard deviation**,
   the median with the **interquartile range**. To compare degrees of variation across different units or

@@ -76,7 +76,7 @@ disagreement".
 
 ::: tip $\kappa$ can be negative
 When two raters agree less than chance would predict, $\kappa$ is negative. It is rare in real data,
-but when it happens it means the two raters' judgements are **systematically opposed**.
+but when it happens it means the two raters' judgments are **systematically opposed**.
 :::
 
 ### Weighted kappa: ordinal data

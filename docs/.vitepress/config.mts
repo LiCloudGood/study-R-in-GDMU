@@ -92,7 +92,7 @@ const enHealthLectures: { text: string; link?: string }[] = [
   { text: '10 Chi-Square Tests' },
   { text: '11 Nonparametric and Rank-Based Tests' },
   { text: '12 Bivariate Association' },
-  { text: '13 Simple Linear Regression' },
+  { text: '13 Simple Linear Regression', link: '/en/Health-statistics/13-linear-regression' },
   { text: '14 Survival Analysis' },
   { text: '16 Meta-Analysis' },
   { text: '17 Sample Size Estimation' },

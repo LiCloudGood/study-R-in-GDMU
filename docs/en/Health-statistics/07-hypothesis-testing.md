@@ -50,10 +50,10 @@ and R code are identical to the original; if the two disagree, **the Chinese pag
 
 ## What this chapter is for
 
-Twenty-five one-year-old infants are randomly drawn in a certain area; their mean haemoglobin
-concentration is 123.5 g/L with a standard deviation of 11.6 g/L, while the average haemoglobin
+Twenty-five one-year-old infants are randomly drawn in a certain area; their mean hemoglobin
+concentration is 123.5 g/L with a standard deviation of 11.6 g/L, while the average hemoglobin
 concentration of normal young children in general is 125 g/L. The two numbers differ — does that
-license the conclusion that "the haemoglobin level of one-year-olds in this area is below the general
+license the conclusion that "the hemoglobin level of one-year-olds in this area is below the general
 level"?
 
 No. The sample was drawn at random, and sampling error is inherent: even if the infants in this area
@@ -115,7 +115,7 @@ Hypotheses come as a pair and must always appear together:
 - **$H_1$ (alternative hypothesis)**: the side opposed to $H_0$, usually written as an inequality,
   joined by $\neq$, $>$, or $<$. It is what the research actually wants to demonstrate.
 
-With the haemoglobin example (writing $\mu$ for the population mean haemoglobin of infants in that
+With the hemoglobin example (writing $\mu$ for the population mean hemoglobin of infants in that
 area):
 
 $$H_0:\ \mu = \mu_0 = 125\ \text{g/L} \qquad H_1:\ \mu \neq 125\ \text{g/L}$$
@@ -155,7 +155,7 @@ other words:
 
 $$P = P\big(\text{the observed result or something more extreme} \mid H_0 \text{ holds}\big)$$
 
-Let us compute it with the haemoglobin example. With $H_0:\mu = 125$, take the test statistic
+Let us compute it with the hemoglobin example. With $H_0:\mu = 125$, take the test statistic
 
 $$t = \frac{\bar{X} - \mu_0}{S/\sqrt{n}} = \frac{123.5 - 125}{11.6/\sqrt{25}} = -0.6466,\qquad \nu = n - 1 = 24$$
 
@@ -228,7 +228,7 @@ this conclusion has a 3% chance of being wrong" is also wrong.
 ### 5. The test statistic: turning "how much" into "how many standard errors"
 
 Looking directly at how much $\bar{X} - \mu_0$ differs does not allow comparison across problems: a
-haemoglobin gap of 1.5 g/L and a pulse gap of 2.2 beats/min — which is more "outlandish"? So the
+hemoglobin gap of 1.5 g/L and a pulse gap of 2.2 beats/min — which is more "outlandish"? So the
 difference has to be divided by its sampling error, converting it into "how many standard errors
 apart":
 
@@ -330,7 +330,7 @@ $$t = \frac{74.2 - 72}{6.0/\sqrt{25}} = 1.833, \qquad \nu = 24$$
 
 The same batch of data, two opposite conclusions. So one-sided versus two-sided **must be decided at
 the design stage on subject-matter grounds and the purpose of the study, and must never be chosen
-subjectively after the $P$ value has been computed** — picking a favourable direction after the fact
+subjectively after the $P$ value has been computed** — picking a favorable direction after the fact
 secretly nearly doubles $\alpha$.
 
 Two relationships (for the same data and the same method):
@@ -366,7 +366,7 @@ Their relationship can be written as one equivalence:
 > Rejecting $H_0:\mu = \mu_0$ at level $\alpha$ holds if and only if the $1-\alpha$ confidence interval
 > does **not contain** $\mu_0$.
 
-Back to the haemoglobin example: the 95% confidence interval for the population mean haemoglobin of
+Back to the hemoglobin example: the 95% confidence interval for the population mean hemoglobin of
 one-year-olds in that area is 118.7 ~ 128.3 g/L, which **contains** 125 g/L, so at $\alpha = 0.05$
 $H_0$ is not rejected — entirely consistent with the earlier $P = 0.524$.
 
@@ -536,7 +536,7 @@ str(sleep)
  $ ID   : Factor w/ 10 levels "1","2","3","4",..: 1 2 3 4 5 6 7 8 9 10 ...
 ```
 
-Analysing it as two independent samples, and trying both one-sided directions:
+Analyzing it as two independent samples, and trying both one-sided directions:
 
 ```r
 t.test(extra ~ group, data = sleep)                                   # two-sided
@@ -575,7 +575,7 @@ cannot be chosen after the fact.
 ### 4. On the same data, the paired analysis gives a much smaller $P$ value
 
 Every `ID` in `sleep` has two records, showing that **each patient used both drugs**; this is a paired
-design and should not be analysed as independent samples:
+design and should not be analyzed as independent samples:
 
 ```r
 extra1 <- sleep$extra[sleep$group == 1]
@@ -732,7 +732,7 @@ Key points:
   $n = 5000$ but only 4.8% at $n = 10$ — the same difference gives completely different $P$ values. At
   the other end, in a lipid-lowering trial with $n = 54$ a difference of 0.35 mmol/L was already
   statistically significant yet fell below the 0.52 mmol/L regarded as clinically meaningful —
-  **statistical significance is not clinical significance**, and judgements such as "marked" or "more
+  **statistical significance is not clinical significance**, and judgments such as "marked" or "more
   pronounced" in a conclusion cannot be supplied by a hypothesis test itself.
 - **Not correcting for multiple comparisons.** Running 10 independent tests at the 0.05 level in one
   study gives a 40% probability of at least one error. With several groups, do not simply run pairwise

@@ -34,7 +34,7 @@ By study design, the chapter covers three basic types: the one-sample $t$ test, 
 $t$ test, and the two-sample $t$ test for independent groups. Each has its own required conditions, and
 when the conditions fail the method has to change — which is where half of this chapter's length goes.
 
-<TrackList :tasks="['Explain why small samples require the t distribution rather than the z distribution', 'Write down the statistics and degrees of freedom for all three t tests', 'Explain why a paired design turns the differences into a one-sample t test', 'Decide from a study scenario whether a paired or an independent-samples t test applies', 'Carry out a test for homogeneity of variance and know what to switch to when variances differ', 'Run one-sample, paired, and two-sample analyses with t.test() and read the output', 'State where the boundary between the t test and the z test lies']" />
+<TrackList :tasks="['Explain why small samples require the t distribution rather than the z distribution', 'Write down the statistics and degrees of freedom for all three t tests', 'Explain why a paired design turns the differences into a one-sample t test', 'Decide from a study scenario whether a paired or an independent-samples t test applies', 'Carry out a test for homogeneity of variance and know what to switch to when variances differ', 'Run one-sample, paired, and two-sample analyzes with t.test() and read the output', 'State where the boundary between the t test and the z test lies']" />
 
 ## Core concepts
 
@@ -57,7 +57,7 @@ The $S$ in the denominator is **an estimate**, and carries random fluctuation of
 uncertainty, coming from the estimation, makes the distribution of $t$ have **heavier tails** than the
 standard normal:
 
-- a unimodal distribution centred on 0 and symmetric about it;
+- a unimodal distribution centered on 0 and symmetric about it;
 - the smaller the degrees of freedom $\nu$, the more spread out the values of $t$, with a lower peak
   and heavier tails;
 - as $\nu$ grows, the $t$ distribution approaches the standard normal, and as $\nu \to \infty$ it *is*
@@ -97,7 +97,7 @@ $P \le \alpha$, otherwise do not reject. The significance level $\alpha$ is usua
 
 In practice a slight departure from the conditions does not matter much: as long as the distribution is
 **unimodal and roughly symmetric**, the effect on the result is limited. What is genuinely fatal is
-marked skewness (antibody titres, length of hospital stay), or a gross disparity between the two
+marked skewness (antibody titers, length of hospital stay), or a gross disparity between the two
 variances — those two cases are handled by the methods described later.
 
 ### 3. The three types at a glance
@@ -127,7 +127,7 @@ error of the difference**.
 
 Note that the choice between one-sided and two-sided has to be made **before looking at the data**, on
 subject-matter grounds. Only when experience rules out the possibility of a value below the standard
-(for instance, haemoglobin in residents of highland areas can only be raised, or certain indices can
+(for instance, hemoglobin in residents of highland areas can only be raised, or certain indices can
 only be lowered) should a one-sided test be used at $\alpha=0.05$ (one-sided); otherwise use two-sided.
 
 ### 5. Comparing means in a paired design: why the differences become a one-sample $t$ test
@@ -202,8 +202,8 @@ mistake the time effect for a treatment effect, and a paired $t$ test is then in
 
 ### 6. When to use a paired test and when to use independent samples
 
-This is a judgement at the design level, far more important than the formulas, and the place students
-most often get it backwards. The judgement takes one sentence:
+This is a judgment at the design level, far more important than the formulas, and the place students
+most often get it backwards. The judgment takes one sentence:
 
 > **Can you find a "partner" for every row of data?** If you can, and that partner was deliberately
 > assigned by the study design, it is paired; if the subjects in the two groups have nothing to do
@@ -232,7 +232,7 @@ A few criteria that are easy to confuse:
   values of a pair are indispensable. If a subject was measured only once, that whole pair has to be
   dropped, or the analysis has to switch to a grouped test.
 
-Get the design judgement wrong and the conclusion can come out exactly reversed. Look at what happens
+Get the design judgment wrong and the conclusion can come out exactly reversed. Look at what happens
 with R's built-in `sleep` data (10 patients, two hypnotics, `extra` being the increase in hours of
 sleep, with the same patients measured on both drugs — a textbook paired design):
 
@@ -241,7 +241,7 @@ sleep, with the same patients measured on both drugs — a textbook paired desig
 | paired $t$ test (correct) | $t=-4.062$ | 9 | 0.0028 | the two drugs differ in hypnotic effect |
 | treated as two independent samples (wrong) | $t=-1.861$ | 17.8 | 0.0794 | cannot yet be considered different |
 
-The same batch of data, and merely from a different design judgement one result is significant and the
+The same batch of data, and merely from a different design judgment one result is significant and the
 other is not. The reason: treated as independent samples, "the individual differences between
 patients" get counted as error, and the treatment effect that really exists is drowned in noise.
 
@@ -390,7 +390,7 @@ to be normally distributed, so this has to be checked before use. The methods fa
   the W test, and the D test. In R the one most often used is the Shapiro–Wilk test
   (`shapiro.test()`).
 
-Add to these **empirical judgement**: if subject-matter knowledge or previous research says that such
+Add to these **empirical judgment**: if subject-matter knowledge or previous research says that such
 an index is roughly normally distributed, it can be used directly.
 
 Two reminders:
@@ -412,7 +412,7 @@ Two reminders:
 | arcsine square root | $x'=\sin^{-1}\sqrt{x}$ | rates or percentages from a binomial distribution, especially when the population rate is below 30% or above 70% |
 
 The cost of a transformation is that **it is less convenient to interpret than the original scale**
-("the mean of the log antibody titre" is no longer something one can state directly), so do not
+("the mean of the log antibody titer" is no longer something one can state directly), so do not
 transform unless necessary, and if you do, say in the report which transformation was used.
 
 ### 11. Where the $t$ test and the $u$ ($z$) test divide
@@ -679,7 +679,7 @@ real papers and student reports.
   Pairing must come from the **design** and cannot be arranged after the fact.
 
 - **Running a $t$ test without checking the conditions.** Using a $t$ test on skewed data (antibody
-  titres, length of stay, concentrations), or using the pooled-variance formula for two independent
+  titers, length of stay, concentrations), or using the pooled-variance formula for two independent
   samples without testing homogeneity — both make the $P$ value untrustworthy. The correct order is
   always: independence → normality (the differences, for a paired design) → homogeneity of variance →
   then choose the test. The way out when conditions fail is an approximate $t$ test, a transformation,
@@ -718,7 +718,7 @@ real papers and student reports.
   chapter's statistics; the Z-score standardization of question 7, $z=(x-\bar{x})/S$, shares its
   numerator and denominator with the $t$ statistic, both being "deviation from the mean ÷ standard
   deviation". In addition, handling missing values and identifying outliers directly affect the
-  normality and homogeneity judgements here — one uncleaned extreme value is enough to blow the
+  normality and homogeneity judgments here — one uncleaned extreme value is enough to blow the
   variance up. → [Open Week 2](/Medical-Big-Data-Analysis/2-data-preprocessing) *(Chinese)*
 - **Week 6 of *Medical Big Data Analysis and Decision Making*, Classification (2)** *(Chinese)* —
   classification tasks are usually preceded by **feature selection**: comparing the difference in means
