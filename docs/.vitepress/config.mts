@@ -69,11 +69,50 @@ const entryGroup = {
   ]
 }
 
+/* ------------------------------------------------------------------ */
+/* 英文版（/en/）                                                       */
+/* ------------------------------------------------------------------ */
+
+/**
+ * 英文版目录：**只给已经翻好的页加 link**，没翻的只写标题、不给链接。
+ * VitePress 会把没有 link 的条目渲染成不可点击的一行 —— 正好当翻译进度表，
+ * 而且绝不会产生 404。翻好一页就把 link 补上。
+ *
+ * 所有页面标题的中英对照见 `scripts/术语对照表.md` 最后一节。
+ */
+const enHealthLectures: { text: string; link?: string }[] = [
+  { text: '1 Introduction' },
+  { text: '3 Experimental and Survey Design' },
+  { text: '4 Describing Quantitative Data' },
+  { text: '5 Describing Qualitative Data' },
+  { text: '6 Estimating Population Means and Rates' },
+  { text: '7 Hypothesis Testing' },
+  { text: '8 t Tests' },
+  { text: '9 Analysis of Variance' },
+  { text: '10 Chi-Square Tests' },
+  { text: '11 Nonparametric and Rank-Based Tests' },
+  { text: '12 Bivariate Association' },
+  { text: '13 Simple Linear Regression' },
+  { text: '14 Survival Analysis' },
+  { text: '16 Meta-Analysis' },
+  { text: '17 Sample Size Estimation' },
+  { text: '18 Vital Statistics' },
+  { text: '19 Statistical Tables and Charts' }
+]
+
+const enEntryGroup = {
+  text: 'Start here',
+  collapsed: false,
+  items: [
+    { text: 'Home', link: '/en/' },
+    { text: 'Health Statistics', link: '/en/Health-statistics/' },
+    { text: 'Download R', link: 'https://www.r-project.org/' },
+    { text: 'Download RStudio', link: 'https://posit.co/download/rstudio-desktop/' }
+  ]
+}
+
 export default defineConfig({
-  lang: 'zh-CN',
   base: '/study-R-in-GDMU/',
-  title: 'study R in GDMU',
-  description: 'gdmu R 语言课程学习站点：原题、答案与知识点汇总',
 
   lastUpdated: true,
 
@@ -86,49 +125,108 @@ export default defineConfig({
     lineNumbers: true
   },
 
-  themeConfig: {
-    nav: [
-      { text: '首页', link: '/' },
-      { text: '信息技术基础', link: '/intro-it/' },
-      { text: '医学大数据分析与决策', link: '/Medical-Big-Data-Analysis/' },
-      { text: '卫生统计学', link: '/Health-statistics/' }
-    ],
+  /**
+   * 中英双语：中文是 root（内容在 docs/ 下），英文在 docs/en/。
+   * 用 locales 而不是复制一份站点，是为了：
+   *   - 自动获得右上角的语言切换器；
+   *   - 英文页可以只翻一部分，没翻的在侧栏留标题不给链接，不会 404；
+   *   - 两份内容各自独立，中文永远是原文（source of truth）。
+   */
+  locales: {
+    root: {
+      label: '简体中文',
+      lang: 'zh-CN',
+      title: 'study R in GDMU',
+      description: 'gdmu R 语言课程学习站点：原题、答案与知识点汇总',
 
-    sidebar: {
-      '/': [],
-      '/intro-it/': [entryGroup, { text: '信息技术基础', items: lectures }],
-      '/Medical-Big-Data-Analysis/': [
-        entryGroup,
-        { text: '医学大数据分析与决策', items: mbdLectures }
-      ],
-      '/Health-statistics/': [
-        entryGroup,
-        // 原来这里是个分组「先选方法」，里面只放一条「统计方法选择器」，
-        // 两层名字几乎重复、还多一次折叠。改成平铺的一条，点名字直接进。
-        { text: '方法选择器', link: '/Health-statistics/choice' },
-        { text: '卫生统计学', items: healthLectures },
-        // 课本 19 章里没有、但临床上常用的两块，本站补成专题
-        {
-          text: '补充专题',
-          collapsed: false,
-          items: [
-            { text: '诊断试验评价（ROC 与 AUC）', link: '/Health-statistics/diagnostic-test' },
-            { text: '一致性信度（Kappa 与 ICC）', link: '/Health-statistics/agreement-reliability' }
+      themeConfig: {
+        nav: [
+          { text: '首页', link: '/' },
+          { text: '信息技术基础', link: '/intro-it/' },
+          { text: '医学大数据分析与决策', link: '/Medical-Big-Data-Analysis/' },
+          { text: '卫生统计学', link: '/Health-statistics/' }
+        ],
+
+        sidebar: {
+          '/': [],
+          '/intro-it/': [entryGroup, { text: '信息技术基础', items: lectures }],
+          '/Medical-Big-Data-Analysis/': [
+            entryGroup,
+            { text: '医学大数据分析与决策', items: mbdLectures }
+          ],
+          '/Health-statistics/': [
+            entryGroup,
+            // 原来这里是个分组「先选方法」，里面只放一条「统计方法选择器」，
+            // 两层名字几乎重复、还多一次折叠。改成平铺的一条，点名字直接进。
+            { text: '方法选择器', link: '/Health-statistics/choice' },
+            { text: '卫生统计学', items: healthLectures },
+            // 课本 19 章里没有、但临床上常用的两块，本站补成专题
+            {
+              text: '补充专题',
+              collapsed: false,
+              items: [
+                { text: '诊断试验评价（ROC 与 AUC）', link: '/Health-statistics/diagnostic-test' },
+                { text: '一致性信度（Kappa 与 ICC）', link: '/Health-statistics/agreement-reliability' }
+              ]
+            }
           ]
+        },
+
+        outline: { level: [2, 3], label: '本页目录' },
+        search: { provider: 'local' },
+        lastUpdated: { text: '最后更新' },
+        docFooter: { prev: '上一讲', next: '下一讲' },
+
+        socialLinks: [{ icon: 'github', link: 'https://github.com/LiCloudGood' }],
+
+        footer: {
+          message: '内容来源于学校课程练习，仅供学习交流使用',
+          copyright: 'Licensed under CC BY-NC-SA 4.0'
         }
-      ]
+      }
     },
 
-    outline: { level: [2, 3], label: '本页目录' },
-    search: { provider: 'local' },
-    lastUpdated: { text: '最后更新' },
-    docFooter: { prev: '上一讲', next: '下一讲' },
+    en: {
+      label: 'English',
+      lang: 'en-US',
+      title: 'study R in GDMU',
+      description:
+        'R and medical statistics course notes from GDMU: exercises, answers, and worked knowledge summaries',
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/LiCloudGood' }],
+      themeConfig: {
+        nav: [
+          { text: 'Home', link: '/en/' },
+          { text: 'Health Statistics', link: '/en/Health-statistics/' }
+        ],
 
-    footer: {
-      message: '内容来源于学校课程练习，仅供学习交流使用',
-      copyright: 'Licensed under CC BY-NC-SA 4.0'
+        sidebar: {
+          '/en/': [],
+          '/en/Health-statistics/': [
+            enEntryGroup,
+            { text: 'Health Statistics', items: enHealthLectures },
+            {
+              text: 'Supplementary topics',
+              collapsed: false,
+              items: [
+                { text: 'Diagnostic Test Evaluation (ROC and AUC)', link: '/en/Health-statistics/diagnostic-test' },
+                { text: 'Agreement and Reliability (Kappa and ICC)' }
+              ]
+            }
+          ]
+        },
+
+        outline: { level: [2, 3], label: 'On this page' },
+        search: { provider: 'local' },
+        lastUpdated: { text: 'Last updated' },
+        docFooter: { prev: 'Previous', next: 'Next' },
+
+        socialLinks: [{ icon: 'github', link: 'https://github.com/LiCloudGood' }],
+
+        footer: {
+          message: 'Course exercises and notes, shared for study purposes only',
+          copyright: 'Licensed under CC BY-NC-SA 4.0'
+        }
+      }
     }
   }
 })

@@ -8,6 +8,10 @@ gdmu 课程的在线讲义，目前包含三门课：
 
 🌐 在线阅读：**<https://licloudgood.github.io/study-R-in-GDMU/>**
 
+🇬🇧 **English edition: <https://licloudgood.github.io/study-R-in-GDMU/en/>** —— 正在逐页翻译中。
+中文版完整且**权威**：两份若有不一致，以中文页为准（每页英文版顶部都写明了这一点）。
+术语按 `scripts/术语对照表.md` 统一，公式、数值、R 代码与原页逐字一致。
+
 ## 怎么用
 
 1. 打开上面的网址，挑一门课，从第 1 讲开始按顺序看；
