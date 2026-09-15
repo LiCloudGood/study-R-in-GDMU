@@ -1,3 +1,8 @@
+---
+layout: doc
+title: 5-分类（一）
+---
+
 <script setup>
 import { withBase } from 'vitepress'
 
@@ -287,10 +292,6 @@ png
 [1] 127`
 </script>
 
----
-layout: doc
-title: 5-分类（一）
----
 
 # 第 5 周　分类（一）
 

@@ -1,3 +1,8 @@
+---
+layout: doc
+title: 2-数据预处理
+---
+
 <script setup>
 import { withBase } from 'vitepress'
 
@@ -208,10 +213,6 @@ attr(,"scaled:scale")
 1.2053 0.1561 0.4925`
 </script>
 
----
-layout: doc
-title: 2-数据预处理
----
 
 # 第 2 周　数据预处理
 

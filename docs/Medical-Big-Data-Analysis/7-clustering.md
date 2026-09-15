@@ -1,3 +1,8 @@
+---
+layout: doc
+title: 7-聚类
+---
+
 <script setup>
 import { withBase } from 'vitepress'
 
@@ -214,10 +219,6 @@ hc <- hclust(dist_mat, method = "ward.D2")
 fviz_dend(hc, k = 2, rect = TRUE, rect_border = "black", cex = 0.7, k_colors = c("red", "green"))`
 </script>
 
----
-layout: doc
-title: 7-聚类
----
 
 # 第 7 周　聚类
 

@@ -1,3 +1,8 @@
+---
+layout: doc
+title: 6-分类（二）
+---
+
 <script setup>
 import { withBase } from 'vitepress'
 
@@ -162,10 +167,6 @@ abline(0, 1, lty = 2, col = "gray")
 text(0.6, 0.2, labels = sprintf("AUC = %.3f", roc_auc), cex = 1.2)`
 </script>
 
----
-layout: doc
-title: 6-分类（二）
----
 
 # 第 6 周　分类（二）
 

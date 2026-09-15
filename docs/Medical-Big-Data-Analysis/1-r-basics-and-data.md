@@ -1,3 +1,8 @@
+---
+layout: doc
+title: 1-R的使用及数据获取
+---
+
 <script setup>
 import { withBase } from 'vitepress'
 
@@ -115,10 +120,6 @@ boxplot(Temp~Month,
         cex.main = 1.5)`
 </script>
 
----
-layout: doc
-title: 1-R的使用及数据获取
----
 
 # 第 1 周　R的使用及数据获取
 

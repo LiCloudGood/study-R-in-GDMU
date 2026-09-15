@@ -1,3 +1,8 @@
+---
+layout: doc
+title: 4-关联规则
+---
+
 <script setup>
 import { withBase } from 'vitepress'
 
@@ -263,10 +268,6 @@ mining info:
  apriori(data = trans3, parameter = list(supp = 0.2, conf = 0.5, minlen = 2))`
 </script>
 
----
-layout: doc
-title: 4-关联规则
----
 
 # 第 4 周　关联规则
 

@@ -1,3 +1,8 @@
+---
+layout: doc
+title: 8-神经网络
+---
+
 <script setup>
 import { withBase } from 'vitepress'
 
@@ -225,10 +230,6 @@ abline(0, 1, col = "red")`
 const out0899____ = `R² = 0.330   RMSE = 0.101`
 </script>
 
----
-layout: doc
-title: 8-神经网络
----
 
 # 第 8 周　神经网络
 

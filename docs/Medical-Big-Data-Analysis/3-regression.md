@@ -1,3 +1,8 @@
+---
+layout: doc
+title: 3-回归分析
+---
+
 <script setup>
 import { withBase } from 'vitepress'
 
@@ -378,10 +383,6 @@ AIC: 1165.4
 Number of Fisher Scoring iterations: 4`
 </script>
 
----
-layout: doc
-title: 3-回归分析
----
 
 # 第 3 周　回归分析
 
