@@ -1,20 +1,17 @@
 ---
 layout: doc
-title: 'Not translated yet — 这一讲搬到第 12 讲了'
+title: 'This lecture moved to Lecture 12'
 head:
   - - meta
-    - name: robots
-      content: noindex
+    - http-equiv: refresh
+      content: '0;url=12-parameter-estimation.html'
 ---
 
-# This page is not translated yet
+# This lecture moved to Lecture 12
 
-The English edition is being translated page by page, and this page has not been reached yet.
+This site filled in Week 10 of *Introduction to Information Technology*, *Low-Level Plotting Functions*,
+so the lectures that used to be 10–13 each shifted down by one, and their URLs moved with them.
 
-**The Chinese original is complete and is the authoritative version** — numbers, formulas, and R code
-there are what everything else is based on:
+This page is now **Lecture 12 — Parameter Estimation**. If your browser does not jump automatically, click here:
 
-[→ Read this page in Chinese](/intro-it/11-parameter-estimation)
-
-Section overview: [Health Statistics in English](/en/Health-statistics/) ·
-[About the translation](/en/)
+[→ Open Lecture 12 — Parameter Estimation](/en/intro-it/12-parameter-estimation)

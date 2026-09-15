@@ -1,20 +1,18 @@
 ---
 layout: doc
-title: 'Not translated yet — 这一讲搬到第 14 讲了'
+title: 'This lecture moved to Lecture 14'
 head:
   - - meta
-    - name: robots
-      content: noindex
+    - http-equiv: refresh
+      content: '0;url=14-goodness-of-fit-and-contingency.html'
 ---
 
-# This page is not translated yet
+# This lecture moved to Lecture 14
 
-The English edition is being translated page by page, and this page has not been reached yet.
+This site filled in Week 10 of *Introduction to Information Technology*, *Low-Level Plotting Functions*,
+so the lectures that used to be 10–13 each shifted down by one, and their URLs moved with them.
 
-**The Chinese original is complete and is the authoritative version** — numbers, formulas, and R code
-there are what everything else is based on:
+This page is now **Lecture 14 — Tests of Homogeneity and Contingency Tables**. If your browser does not jump
+automatically, click here:
 
-[→ Read this page in Chinese](/intro-it/13-goodness-of-fit-and-contingency)
-
-Section overview: [Health Statistics in English](/en/Health-statistics/) ·
-[About the translation](/en/)
+[→ Open Lecture 14 — Tests of Homogeneity and Contingency Tables](/en/intro-it/14-goodness-of-fit-and-contingency)
