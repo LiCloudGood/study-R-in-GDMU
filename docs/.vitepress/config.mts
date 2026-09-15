@@ -120,10 +120,10 @@ const enLectures: { text: string; link?: string }[] = [
 
 /** 《医学大数据分析与决策》8 周，规则同上。 */
 const enMbdLectures: { text: string; link?: string }[] = [
-  { text: '1 Using R and Getting Data' },
-  { text: '2 Data Preprocessing' },
-  { text: '3 Regression Analysis' },
-  { text: '4 Association Rules' },
+  { text: '1 Using R and Getting Data', link: '/en/Medical-Big-Data-Analysis/1-r-basics-and-data' },
+  { text: '2 Data Preprocessing', link: '/en/Medical-Big-Data-Analysis/2-data-preprocessing' },
+  { text: '3 Regression Analysis', link: '/en/Medical-Big-Data-Analysis/3-regression' },
+  { text: '4 Association Rules', link: '/en/Medical-Big-Data-Analysis/4-association-rules' },
   { text: '5 Classification (Part 1)' },
   { text: '6 Classification (Part 2)' },
   { text: '7 Clustering' },
@@ -245,8 +245,8 @@ export default defineConfig({
           ],
           '/en/Health-statistics/': [
             enEntryGroup,
-            // 英文版选择器要等英文规则表重跑生成，先把名字列出来占位，生成好再补 link
-            { text: 'Method Selector' },
+            // 英文版选择器的规则表已双语化（scripts/generate-selector.mjs），页面由生成脚本产出
+            { text: 'Method Selector', link: '/en/Health-statistics/choice' },
             { text: 'Health Statistics', items: enHealthLectures },
             {
               text: 'Supplementary topics',

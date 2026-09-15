@@ -21,7 +21,7 @@ Translated from the [Chinese original](/Medical-Big-Data-Analysis/). Numbers, fo
 | --- | --- | --- | --- |
 | **Week 1** | [Using R and Getting Data](/en/Medical-Big-Data-Analysis/1-r-basics-and-data) | 6 | Base packages, no extra installation needed |
 | **Week 2** | [Data Preprocessing](/en/Medical-Big-Data-Analysis/2-data-preprocessing) | 7 | `corrgram` `infotheo` |
-| **Week 3** | [Regression Analysis](/Medical-Big-Data-Analysis/3-regression) *(Chinese)* | 7 | `epiDisplay` |
+| **Week 3** | [Regression Analysis](/en/Medical-Big-Data-Analysis/3-regression) | 7 | `epiDisplay` |
 | **Week 4** | [Association Rules](/en/Medical-Big-Data-Analysis/4-association-rules) | 3 | `arules` `arulesViz` |
 | **Week 5** | [Classification (Part 1)](/Medical-Big-Data-Analysis/5-classification-1) *(Chinese)* | 3 | `randomForest` `rpart` `rpart.plot` |
 | **Week 6** | [Classification (Part 2)](/Medical-Big-Data-Analysis/6-classification-2) *(Chinese)* | 4 | `caret` `e1071` `pROC` `recipes` |

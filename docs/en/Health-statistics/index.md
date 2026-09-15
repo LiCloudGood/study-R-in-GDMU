@@ -28,14 +28,14 @@ it in R, which numbers to read in the output, and what mistakes to watch out for
 
 <div style="margin: 16px 0">
   <!--
-    Chinese-only for now: the selector is generated from a Chinese rule table, so the English
-    edition of that page has to wait for an English rule table. Deliberately no link here rather
-    than a link to the Chinese page, which would look like a broken promise to English readers.
-    TODO: link once /en/Health-statistics/choice exists.
+    Same reasoning as the Chinese page: write .html rather than ./choice, because raw HTML hrefs are
+    not rewritten by VitePress and an extensionless link would 404 on GitHub Pages.
+    The English rule table is generated from the same single rule table as the Chinese one
+    (scripts/generate-selector.mjs), so the two language editions cannot drift apart in logic.
   -->
-  <span style="display:inline-block;padding:10px 18px;border-radius:8px;background:var(--vp-c-gray-2);color:var(--vp-c-text-2);font-weight:600">
-    Method Selector — English edition in progress
-  </span>
+  <a href="./choice.html" style="display:inline-block;padding:10px 18px;border-radius:8px;background:var(--vp-c-brand-1);color:#fff;font-weight:600;text-decoration:none">
+    → Open the Method Selector
+  </a>
 </div>
 
 That page also carries a complete quick-reference decision table listing which method applies to

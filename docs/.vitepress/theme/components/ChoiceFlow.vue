@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { withBase } from 'vitepress'
-import { selectorTree, type SelectorNode } from '../selector-data'
+import { useData, withBase } from 'vitepress'
+import { selectorTree as selectorTreeZh, type SelectorNode } from '../selector-data'
+import { selectorTree as selectorTreeEn } from '../selector-data-en'
 
 /**
  * 统计方法选择器（StatMed Choice）。
@@ -10,28 +11,85 @@ import { selectorTree, type SelectorNode } from '../selector-data'
  * 最后给出推荐的方法、适用条件、R 代码、该看哪些输出、常见误用，
  * 并跳到《卫生统计学》对应章节。
  *
- * 题库直接 import 进来（`theme/selector-data.ts`，由 _dev/selector-build.mjs
- * 从规则表生成）—— **不走 fetch**，避免异步加载失败时组件卡在「正在加载」。
- * 页面上的「决策速查表」出自同一份规则，两者不会打架。
+ * 题库直接 import 进来（`theme/selector-data.ts` 与 `theme/selector-data-en.ts`，
+ * 由 scripts/generate-selector.mjs 从**同一份规则表**生成）—— **不走 fetch**，
+ * 避免异步加载失败时组件卡在「正在加载」。两份题库的分支结构、跳转编号、
+ * 条件条数完全一一对应（生成脚本里有机器校验），所以不会出现
+ * 「中文这么判、英文那么判」。用哪一份看站点当前语言：中文站 'zh-CN'、英文站 'en-US'。
+ * 页面上的「决策速查表」也出自同一份规则，两者不会打架。
  *
  * 全程不收集任何数据，选择过程只保存在当前页面内存里。
  */
 
+const { lang } = useData()
+
+/** 是不是英文站：'en'、'en-US'、'en-GB' 都算 */
+const isEn = computed(() => /^en\b/i.test(String(lang.value ?? '')))
+
 type TreeNode = SelectorNode
 
-const ALL = selectorTree?.nodes ?? []
-const byId = new Map<number, TreeNode>(ALL.map((n) => [n.id, n]))
+const tree = computed<{ nodes: TreeNode[] } | undefined>(() =>
+  isEn.value ? selectorTreeEn : selectorTreeZh
+)
+const ALL = computed<TreeNode[]>(() => tree.value?.nodes ?? [])
+const byId = computed(() => new Map<number, TreeNode>(ALL.value.map((n) => [n.id, n])))
 
 /** 起始节点：第一个「问题」节点，兜底取列表里第一个 */
-function firstId(): number {
-  return ALL.find((n) => n.question)?.id ?? ALL[0]?.id ?? 0
+function firstId(list: TreeNode[]): number {
+  return list.find((n) => n.question)?.id ?? list[0]?.id ?? 0
 }
+
+/**
+ * 界面上那几行固定的字（不是题库里的内容）。
+ *
+ * 中文那一套就是原来写在模板里的原话，一个字都没改；英文那一套照
+ * scripts/术语对照表.md 的页面固定用语译。不这么做的话，英文页面上会出现
+ * 「推荐方法 / Recommended method」这种半截中文。
+ *
+ * 注意 missingHint 中间那个空格：模板里那句中文原文在源码里分成两行写，
+ * Vue 会把换行折成一个空格，所以这里也得留着 —— 换掉就和中文本来的显示不一样了。
+ */
+const LABELS = {
+  zh: {
+    badge: '推荐方法',
+    cond: '适用条件',
+    thCond: '条件',
+    thHow: '用哪种写法',
+    code: '在 R 里怎么做',
+    read: '输出看这几个数',
+    pit: '容易踩的坑',
+    chapterPrefix: '想弄懂原理 → ',
+    chapterFallback: '《卫生统计学》对应章节',
+    restart: '↺ 换一组条件重选',
+    restartTop: '↺ 重新开始',
+    missingQ: '这一步没有找到对应的结论',
+    missingHint:
+      '题库里缺了这一条。请点「重新开始」再选一次；如果每次都停在这里，说明是题库的问题， 麻烦通过首页的 GitHub 告诉我一声。'
+  },
+  en: {
+    badge: 'Recommended method',
+    cond: 'Applicable conditions',
+    thCond: 'Condition',
+    thHow: 'Which version to use',
+    code: 'Doing it in R',
+    read: 'What to read in the output',
+    pit: 'Common pitfalls',
+    chapterPrefix: 'Want the statistics behind it? → ',
+    chapterFallback: 'the corresponding chapter in Health Statistics',
+    restart: '↺ Start over with different conditions',
+    restartTop: '↺ Start over',
+    missingQ: 'No matching conclusion was found for this step',
+    missingHint:
+      'This entry is missing from the question bank. Click “Start over” and choose again; if it always stops here, the question bank is at fault — please tell me through the GitHub link on the home page.'
+  }
+}
+const L = computed(() => (isEn.value ? LABELS.en : LABELS.zh))
 
 /** 已经回答过的步骤：{问题, 选了什么} */
 const history = ref<{ question: string; answer: string }[]>([])
-const currentId = ref(firstId())
+const currentId = ref(firstId(ALL.value))
 
-const current = computed<TreeNode | null>(() => byId.get(currentId.value) ?? null)
+const current = computed<TreeNode | null>(() => byId.value.get(currentId.value) ?? null)
 const result = computed(() => current.value?.result ?? null)
 
 /**
@@ -42,8 +100,10 @@ const result = computed(() => current.value?.result ?? null)
  * 页面上就什么也不剩了（之前正是这么"不出答案"的）。
  */
 const chap = computed(() => ({
-  text: result.value?.c?.text || '《卫生统计学》对应章节',
-  href: withBase(result.value?.c?.link || '/Health-statistics/')
+  text: result.value?.c?.text || L.value.chapterFallback,
+  href: withBase(
+    result.value?.c?.link || (isEn.value ? '/en/Health-statistics/' : '/Health-statistics/')
+  )
 }))
 
 function choose(opt: { text: string; next: number }) {
@@ -52,7 +112,7 @@ function choose(opt: { text: string; next: number }) {
 }
 
 function restart() {
-  currentId.value = firstId()
+  currentId.value = firstId(ALL.value)
   history.value = []
 }
 
@@ -84,12 +144,12 @@ function md(s: string) {
 
       <!-- 出结果 -->
       <div v-if="result" class="sf-result">
-        <div class="sf-badge">推荐方法</div>
+        <div class="sf-badge">{{ L.badge }}</div>
         <h3 class="sf-method">{{ result.method }}</h3>
         <p class="sf-why" v-html="md(result.why)" />
 
         <div v-if="result.cond && result.cond.length" class="sf-block">
-          <div class="sf-label">适用条件</div>
+          <div class="sf-label">{{ L.cond }}</div>
           <ul>
             <li v-for="(c, i) in result.cond" :key="i" v-html="md(c)" />
           </ul>
@@ -99,7 +159,7 @@ function md(s: string) {
 
         <table v-if="result.criteria" class="sf-criteria">
           <thead>
-            <tr><th>条件</th><th>用哪种写法</th></tr>
+            <tr><th>{{ L.thCond }}</th><th>{{ L.thHow }}</th></tr>
           </thead>
           <tbody>
             <tr v-for="(row, i) in result.criteria" :key="i">
@@ -110,19 +170,19 @@ function md(s: string) {
         </table>
 
         <div v-if="result.code" class="sf-block">
-          <div class="sf-label">在 R 里怎么做</div>
+          <div class="sf-label">{{ L.code }}</div>
           <pre class="sf-code"><code>{{ result.code }}</code></pre>
         </div>
 
         <div v-if="result.read && result.read.length" class="sf-block">
-          <div class="sf-label">输出看这几个数</div>
+          <div class="sf-label">{{ L.read }}</div>
           <ul>
             <li v-for="(r, i) in result.read" :key="i" v-html="md(r)" />
           </ul>
         </div>
 
         <div v-if="result.pit && result.pit.length" class="sf-block sf-pit">
-          <div class="sf-label">容易踩的坑</div>
+          <div class="sf-label">{{ L.pit }}</div>
           <ul>
             <li v-for="(p, i) in result.pit" :key="i" v-html="md(p)" />
           </ul>
@@ -130,9 +190,9 @@ function md(s: string) {
 
         <div class="sf-foot">
           <a class="sf-chapter" :href="chap.href">
-            想弄懂原理 → {{ chap.text }}
+            {{ L.chapterPrefix }}{{ chap.text }}
           </a>
-          <button type="button" class="sf-again" @click="restart">↺ 换一组条件重选</button>
+          <button type="button" class="sf-again" @click="restart">{{ L.restart }}</button>
         </div>
       </div>
 
@@ -153,7 +213,7 @@ function md(s: string) {
           </button>
         </div>
         <button v-if="history.length" type="button" class="sf-again sf-again-top" @click="restart">
-          ↺ 重新开始
+          {{ L.restartTop }}
         </button>
       </div>
 
@@ -163,12 +223,11 @@ function md(s: string) {
         现在至少把话说明白，并把「重新开始」摆出来。
       -->
       <div v-else class="sf-ask">
-        <div class="sf-question">这一步没有找到对应的结论</div>
+        <div class="sf-question">{{ L.missingQ }}</div>
         <p class="sf-hint">
-          题库里缺了这一条。请点「重新开始」再选一次；如果每次都停在这里，说明是题库的问题，
-          麻烦通过首页的 GitHub 告诉我一声。
+          {{ L.missingHint }}
         </p>
-        <button type="button" class="sf-again sf-again-top" @click="restart">↺ 重新开始</button>
+        <button type="button" class="sf-again sf-again-top" @click="restart">{{ L.restartTop }}</button>
       </div>
     </div>
   </ClientOnly>
