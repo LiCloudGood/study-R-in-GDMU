@@ -144,8 +144,9 @@ table(list(age.group,data$income.level))`
 - `sapply(x, FUN)` —— **s**implify apply，返回前会尽量「简化」：
   每个结果长度都是 1 时，直接压成一个**向量**，读起来更清爽。
 
-练习里 `lapply` 会打印成 `<int> 5` / `<dbl> 1` 这样带类型的一列，
-而 `sapply` 则给出不用再拆的 `vector scalar data_frame char` 命名向量。
+练习里 `lapply` 打印出来是**一段一段的列表**（`$vector` 下面一行 `[1] 5`，`$scalar` 下面一行 `[1] 1`……），
+想把它当向量用还得自己 `unlist()`；而 `sapply` 直接给出不用再拆的
+`vector scalar data_frame char` 命名向量，一眼就能看出每个元素有多长。
 
 另外：列表里**删除**一个元素是赋值 `NULL`（`my.list2$matrix <- NULL`），
 这一点和向量用负下标删除不一样。

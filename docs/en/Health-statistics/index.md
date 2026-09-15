@@ -75,7 +75,7 @@ work. They are written here as supplementary topics in the same format as the ot
 | Topic | The question it answers |
 | --- | --- |
 | [Diagnostic Test Evaluation (ROC and AUC)](/en/Health-statistics/diagnostic-test) | How accurate is this diagnostic marker? Where should the cutoff go? Why does the same test perform differently in another department? |
-| Agreement and Reliability (Kappa and ICC) | Two clinicians, two instruments, the same subjects — do they agree? And why is correlation not agreement? |
+| [Agreement and Reliability (Kappa and ICC)](/en/Health-statistics/agreement-reliability) | Two clinicians, two instruments, the same subjects — do they agree? And why is correlation not agreement? |
 
 ## How this relates to the other two courses
 

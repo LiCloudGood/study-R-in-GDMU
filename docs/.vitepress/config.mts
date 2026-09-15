@@ -100,11 +100,43 @@ const enHealthLectures: { text: string; link?: string }[] = [
   { text: '19 Statistical Tables and Charts' }
 ]
 
+/** 《信息技术基础》14 讲，规则同 enHealthLectures：没翻的只写标题、不给链接。 */
+const enLectures: { text: string; link?: string }[] = [
+  { text: '1 Installing R and RStudio, Writing Scripts', link: '/en/intro-it/1-software-install' },
+  { text: '2 Vectors and Matrices', link: '/en/intro-it/2-vectors-and-matrices' },
+  { text: '3 Arrays and Data Frames', link: '/en/intro-it/3-arrays-and-data-frames' },
+  { text: '4 Lists and Factors', link: '/en/intro-it/4-lists-and-factors' },
+  { text: '5 Dates, Strings, and Special Values', link: '/en/intro-it/5-dates-strings-and-special-values' },
+  { text: '6 Input and Output' },
+  { text: '7 Branches and Loops' },
+  { text: '8 User-Defined Functions' },
+  { text: '9 Base Graphics' },
+  { text: '10 Low-Level Plotting Functions' },
+  { text: '11 The ggplot2 Package' },
+  { text: '12 Parameter Estimation' },
+  { text: '13 Parametric Hypothesis Testing' },
+  { text: '14 Tests of Homogeneity and Contingency Tables' }
+]
+
+/** 《医学大数据分析与决策》8 周，规则同上。 */
+const enMbdLectures: { text: string; link?: string }[] = [
+  { text: '1 Using R and Getting Data' },
+  { text: '2 Data Preprocessing' },
+  { text: '3 Regression Analysis' },
+  { text: '4 Association Rules' },
+  { text: '5 Classification (Part 1)' },
+  { text: '6 Classification (Part 2)' },
+  { text: '7 Clustering' },
+  { text: '8 Neural Networks' }
+]
+
 const enEntryGroup = {
   text: 'Start here',
   collapsed: false,
   items: [
     { text: 'Home', link: '/en/' },
+    { text: 'Information Technology', link: '/en/intro-it/' },
+    { text: 'Medical Big Data Analysis', link: '/en/Medical-Big-Data-Analysis/' },
     { text: 'Health Statistics', link: '/en/Health-statistics/' },
     { text: 'Download R', link: 'https://www.r-project.org/' },
     { text: 'Download RStudio', link: 'https://posit.co/download/rstudio-desktop/' }
@@ -196,13 +228,25 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Home', link: '/en/' },
+          { text: 'Information Technology', link: '/en/intro-it/' },
+          { text: 'Medical Big Data Analysis', link: '/en/Medical-Big-Data-Analysis/' },
           { text: 'Health Statistics', link: '/en/Health-statistics/' }
         ],
 
         sidebar: {
           '/en/': [],
+          '/en/intro-it/': [
+            enEntryGroup,
+            { text: 'Introduction to Information Technology', items: enLectures }
+          ],
+          '/en/Medical-Big-Data-Analysis/': [
+            enEntryGroup,
+            { text: 'Medical Big Data Analysis and Decision Making', items: enMbdLectures }
+          ],
           '/en/Health-statistics/': [
             enEntryGroup,
+            // 英文版选择器要等英文规则表重跑生成，先把名字列出来占位，生成好再补 link
+            { text: 'Method Selector' },
             { text: 'Health Statistics', items: enHealthLectures },
             {
               text: 'Supplementary topics',
