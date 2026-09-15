@@ -108,13 +108,13 @@ const enLectures: { text: string; link?: string }[] = [
   { text: '4 Lists and Factors', link: '/en/intro-it/4-lists-and-factors' },
   { text: '5 Dates, Strings, and Special Values', link: '/en/intro-it/5-dates-strings-and-special-values' },
   { text: '6 Input and Output' },
-  { text: '7 Branches and Loops' },
-  { text: '8 User-Defined Functions' },
+  { text: '7 Branches and Loops', link: '/en/intro-it/7-branches-and-loops' },
+  { text: '8 User-Defined Functions', link: '/en/intro-it/8-custom-functions' },
   { text: '9 Base Graphics' },
-  { text: '10 Low-Level Plotting Functions' },
-  { text: '11 The ggplot2 Package' },
-  { text: '12 Parameter Estimation' },
-  { text: '13 Parametric Hypothesis Testing' },
+  { text: '10 Low-Level Plotting Functions', link: '/en/intro-it/10-plot-functions' },
+  { text: '11 The ggplot2 Package', link: '/en/intro-it/11-ggplot2' },
+  { text: '12 Parameter Estimation', link: '/en/intro-it/12-parameter-estimation' },
+  { text: '13 Parametric Hypothesis Testing', link: '/en/intro-it/13-hypothesis-testing' },
   { text: '14 Tests of Homogeneity and Contingency Tables' }
 ]
 
