@@ -82,22 +82,22 @@ const entryGroup = {
  */
 const enHealthLectures: { text: string; link?: string }[] = [
   { text: '1 Introduction', link: '/en/Health-statistics/01-introduction' },
-  { text: '3 Experimental and Survey Design' },
+  { text: '3 Experimental and Survey Design', link: '/en/Health-statistics/03-study-design' },
   { text: '4 Describing Quantitative Data', link: '/en/Health-statistics/04-describing-quantitative-data' },
-  { text: '5 Describing Qualitative Data' },
-  { text: '6 Estimating Population Means and Rates' },
+  { text: '5 Describing Qualitative Data', link: '/en/Health-statistics/05-describing-qualitative-data' },
+  { text: '6 Estimating Population Means and Rates', link: '/en/Health-statistics/06-estimation' },
   { text: '7 Hypothesis Testing', link: '/en/Health-statistics/07-hypothesis-testing' },
   { text: '8 t Tests', link: '/en/Health-statistics/08-t-test' },
-  { text: '9 Analysis of Variance' },
-  { text: '10 Chi-Square Tests' },
-  { text: '11 Nonparametric and Rank-Based Tests' },
-  { text: '12 Bivariate Association' },
+  { text: '9 Analysis of Variance', link: '/en/Health-statistics/09-anova' },
+  { text: '10 Chi-Square Tests', link: '/en/Health-statistics/10-chi-square' },
+  { text: '11 Nonparametric and Rank-Based Tests', link: '/en/Health-statistics/11-nonparametric' },
+  { text: '12 Bivariate Association', link: '/en/Health-statistics/12-bivariate-association' },
   { text: '13 Simple Linear Regression', link: '/en/Health-statistics/13-linear-regression' },
-  { text: '14 Survival Analysis' },
-  { text: '16 Meta-Analysis' },
-  { text: '17 Sample Size Estimation' },
-  { text: '18 Vital Statistics' },
-  { text: '19 Statistical Tables and Charts' }
+  { text: '14 Survival Analysis', link: '/en/Health-statistics/14-survival-analysis' },
+  { text: '16 Meta-Analysis', link: '/en/Health-statistics/16-meta-analysis' },
+  { text: '17 Sample Size Estimation', link: '/en/Health-statistics/17-sample-size' },
+  { text: '18 Vital Statistics', link: '/en/Health-statistics/18-vital-statistics' },
+  { text: '19 Statistical Tables and Charts', link: '/en/Health-statistics/19-tables-and-charts' }
 ]
 
 /** 《信息技术基础》14 讲，规则同 enHealthLectures：没翻的只写标题、不给链接。 */
@@ -107,15 +107,15 @@ const enLectures: { text: string; link?: string }[] = [
   { text: '3 Arrays and Data Frames', link: '/en/intro-it/3-arrays-and-data-frames' },
   { text: '4 Lists and Factors', link: '/en/intro-it/4-lists-and-factors' },
   { text: '5 Dates, Strings, and Special Values', link: '/en/intro-it/5-dates-strings-and-special-values' },
-  { text: '6 Input and Output' },
+  { text: '6 Input and Output', link: '/en/intro-it/6-input-output' },
   { text: '7 Branches and Loops', link: '/en/intro-it/7-branches-and-loops' },
   { text: '8 User-Defined Functions', link: '/en/intro-it/8-custom-functions' },
-  { text: '9 Base Graphics' },
+  { text: '9 Base Graphics', link: '/en/intro-it/9-base-graphics' },
   { text: '10 Low-Level Plotting Functions', link: '/en/intro-it/10-plot-functions' },
   { text: '11 The ggplot2 Package', link: '/en/intro-it/11-ggplot2' },
   { text: '12 Parameter Estimation', link: '/en/intro-it/12-parameter-estimation' },
   { text: '13 Parametric Hypothesis Testing', link: '/en/intro-it/13-hypothesis-testing' },
-  { text: '14 Tests of Homogeneity and Contingency Tables' }
+  { text: '14 Tests of Homogeneity and Contingency Tables', link: '/en/intro-it/14-goodness-of-fit-and-contingency' }
 ]
 
 /** 《医学大数据分析与决策》8 周，规则同上。 */
@@ -124,10 +124,10 @@ const enMbdLectures: { text: string; link?: string }[] = [
   { text: '2 Data Preprocessing', link: '/en/Medical-Big-Data-Analysis/2-data-preprocessing' },
   { text: '3 Regression Analysis', link: '/en/Medical-Big-Data-Analysis/3-regression' },
   { text: '4 Association Rules', link: '/en/Medical-Big-Data-Analysis/4-association-rules' },
-  { text: '5 Classification (Part 1)' },
-  { text: '6 Classification (Part 2)' },
-  { text: '7 Clustering' },
-  { text: '8 Neural Networks' }
+  { text: '5 Classification (Part 1)', link: '/en/Medical-Big-Data-Analysis/5-classification-1' },
+  { text: '6 Classification (Part 2)', link: '/en/Medical-Big-Data-Analysis/6-classification-2' },
+  { text: '7 Clustering', link: '/en/Medical-Big-Data-Analysis/7-clustering' },
+  { text: '8 Neural Networks', link: '/en/Medical-Big-Data-Analysis/8-neural-networks' }
 ]
 
 const enEntryGroup = {
@@ -143,6 +143,80 @@ const enEntryGroup = {
   ]
 }
 
+/**
+ * 修「中文标点紧挨加粗标记时 `**` 原样印在页面上」。
+ *
+ * CommonMark 的 flanking 规则要求：闭合分隔符前面不能是标点，除非它后面是空白或标点。
+ * 中文的书写习惯偏偏是「**实验研究（experimental study）**的……」——
+ * 闭合 `**` 前面是「）」（标点）、后面紧跟「的」（汉字），于是被判定为「不能闭合」，
+ * `**` 就字面印出来了。开始分隔符同理：「以及**「绝对一致」……」」也不行，因为
+ * 开头 `**` 后面是「「」（标点）、前面是「及」（汉字）。
+ *
+ * markdown-it 已经把所有**正常**的加粗处理完了，剩下这些"漏网"的 `**…**` 会留在
+ * text token 的文本里。所以这里加一条 core 规则（在 inline 解析之后运行），
+ * 把 text token 里成对的 `**…**` 直接拆成 strong_open / strong_close 两个标记：
+ *
+ *   - 页面上的**文字一个字都不变**，只是真的加粗了；
+ *   - 不用去改几十处文案，以后新写的内容也不会再犯这个毛病；
+ *   - 成对的 `**` 会**跨越行内代码**（`**注意它默认 \`k.min = 10\`：…**`），
+ *     这时 inline 解析出来是「text + code_inline + text」三段，`**` 分落在首尾两个 text 里，
+ *     所以不能只看单个 token —— 下面按"整段 inline 里 `**` 出现的位置"成对处理。
+ *
+ * 构建产物里的效果可以用 `node scripts/check-site.mjs` 复查。
+ */
+function cjkStrongPlugin(md: any) {
+  md.core.ruler.push('cjk_strong', (state: any) => {
+    for (const token of state.tokens) {
+      if (token.type !== 'inline' || !Array.isArray(token.children)) continue
+
+      // 收集所有还留在 text token 里的 `**`（markdown-it 已经处理掉的那些不在其中）
+      const marks: { i: number; at: number }[] = []
+      token.children.forEach((c: any, i: number) => {
+        if (c.type !== 'text' || !c.content.includes('**')) return
+        for (const m of c.content.matchAll(/\*\*/g)) marks.push({ i, at: m.index! })
+      })
+      // 成对才处理；落单的（作者真的想打两个星号）原样留着，宁缺勿滥
+      if (marks.length === 0 || marks.length % 2 !== 0) continue
+
+      const Token = token.constructor
+      const mkText = (s: string) => {
+        const t = new Token('text', '', 0)
+        t.content = s
+        return t
+      }
+      const out: any[] = []
+      const open = () => out.push(new Token('strong_open', 'strong', 1))
+      const close = () => out.push(new Token('strong_close', 'strong', -1))
+
+      let isOpen = false
+      token.children.forEach((c: any, i: number) => {
+        if (c.type !== 'text') {
+          out.push(c)
+          return
+        }
+        const here = marks.filter((m) => m.i === i)
+        if (here.length === 0) {
+          out.push(c)
+          return
+        }
+        let last = 0
+        for (const m of here) {
+          const before = c.content.slice(last, m.at)
+          if (before) out.push(mkText(before))
+          isOpen ? close() : open()
+          isOpen = !isOpen
+          last = m.at + 2
+        }
+        const rest = c.content.slice(last)
+        if (rest) out.push(mkText(rest))
+      })
+
+      // 走到这里 isOpen 一定是 false（成对处理），否则说明有 `**` 落在非 text token 里
+      if (!isOpen) token.children = out
+    }
+  })
+}
+
 export default defineConfig({
   base: '/study-R-in-GDMU/',
 
@@ -154,7 +228,10 @@ export default defineConfig({
     // 公式交给 VitePress 内置的 math（markdown-it-mathjax3）处理
     math: true,
     // R 代码块显示行号，方便课堂上按行讲解
-    lineNumbers: true
+    lineNumbers: true,
+
+    // 见 cjkStrongPlugin 的说明：修「中文标点紧挨加粗标记导致 ** 原文印出来」
+    config: (md) => md.use(cjkStrongPlugin)
   },
 
   /**

@@ -8,7 +8,7 @@ import { withBase } from 'vitepress'
 
 const code0101 = `x <- rep(c(3, 2, 1), times = c(3, 4, 5))
 A <-matrix(1:16,4)
-B <-matrix(1:16,4,byrow = T) 
+B <-matrix(1:16,4,byrow = T)
 C = A+B
 D = A *B
 E = A%*%B
@@ -166,11 +166,17 @@ so `install.packages()` is not needed. **Packages are only needed from Week 2 on
 
 - Create the R script file test0102.R, and when you have finished the tasks below, save that script file in
   the folder e:/test01.
-  - The function solve() has two uses: solve(A,b) can be used to solve the linear system Ax=b, and solve(A) can be used to find the inverse of a matrix. Let
+  - The function solve() has two uses: solve(A,b) can be used to solve the linear system Ax=b, and solve(A) can be used to find the inverse of a matrix.
+    The coefficient matrix $A$ and the constant vector $b$ given by the exercise are:
+
+```r
+A <- matrix(c(1, 2, 3,
+              4, 5, 6,
+              7, 8, 10), ncol = 3, byrow = TRUE)
+b <- matrix(c(1, 1, 1), ncol = 1)
+```
+
   - Write code to solve the system Ax=b by two different methods.
-
-
-<img :src="withBase('/figures/mbd/1/q-第04页-image1.png')" alt="Figure from page 4" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
 
 
 <AnswerBlock title="Exercise 2 · Reference answer"
@@ -182,13 +188,19 @@ so `install.packages()` is not needed. **Packages are only needed from Week 2 on
 
 - Create the R script file test0103.R, and when you have finished the tasks below, save that script file in
   the folder e:/test01.
-- The heights and weights of 10 students are given in the table below.
+- The heights and weights of 10 students are given below; the data frame given by the exercise is:
+
+```r
+info = data.frame('序号' = 1:10,
+                  '性别' = c(rep('F',5),rep('M',5)),
+                  '年龄' = c(14,16,15,17,15,14,16,14,15,16),
+                  '身高cm' = c(156,158,161,156,153,162,157,159,163,165),
+                  '体重kg' = c(42.3,45.0,48.5,51.5,44.6,48.8,46.7,49.9,50.2,53.7)
+                  )
+```
 
 
-<img :src="withBase('/figures/mbd/1/q-第05页-image2.png')" alt="Figure from page 5" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
-
-
-- Using the table above, do the following:
+- Using the data above, do the following:
   - Create a data frame named info
   - Write that data frame into a plain-text file, and read the data in that file back with read.table()
   - Write that data frame out with write.csv() into a file that Excel can open, and test whether that works.
@@ -215,7 +227,7 @@ so `install.packages()` is not needed. **Packages are only needed from Week 2 on
 <AnswerBlock title="Exercise 4 · Reference answer"
   :code="code0104"
   :output="out0104"
-  :images="['/figures/mbd/1/plot-01.png', '/figures/mbd/1/plot-02.png', '/figures/mbd/1/plot-03.png', '/figures/mbd/1/plot-04.png']" />
+  :images="['/figures/en/mbd/1/plot-01.png', '/figures/en/mbd/1/plot-02.png', '/figures/en/mbd/1/plot-03.png', '/figures/en/mbd/1/plot-04.png']" />
 
 ## Exercise 5 (boxplot)
 
@@ -232,7 +244,7 @@ so `install.packages()` is not needed. **Packages are only needed from Week 2 on
 
 <AnswerBlock title="Exercise 5 · Reference answer"
   :code="code0105"
-  :images="['/figures/mbd/1/plot-04.png', '/figures/mbd/1/plot-05.png']" />
+  :images="['/figures/en/mbd/1/plot-04.png', '/figures/en/mbd/1/plot-05.png']" />
 
 ## Exercise 6
 

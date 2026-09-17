@@ -728,7 +728,7 @@ control limit it has to be handled with a one-sided approach.
 ## How it connects to the other courses
 
 ::: tip Related pages
-- **[Week 3 of *Medical Big Data Analysis and Decision Making*, Regression Analysis](/Medical-Big-Data-Analysis/3-regression)** *(Chinese)* —
+- **[Week 3 of *Medical Big Data Analysis and Decision Making*, Regression Analysis](/en/Medical-Big-Data-Analysis/3-regression)** —
   **the most important correspondence for this chapter**. That week is a whole week of regression
   **practice**: Exercise 1, “simple linear regression”, fits a model with `lm()`, which is exactly this
   chapter's $\hat y = a + bx$; Exercise 2, “multiple linear regression”, extends the independent
@@ -744,25 +744,26 @@ control limit it has to be handled with a one-sided approach.
   just wrapped in a link function. **Recommended order: first get the principles, formulas and residual
   diagnostics clear in this chapter, then go and run the code in that week**, otherwise it is very easy
   to end up “able to type `lm()` but unable to read the output”.
-- **[Lecture 9 of *Introduction to Information Technology*, Base Graphics](/intro-it/9-base-graphics)** *(Chinese)* —
+- **[Lecture 9 of *Introduction to Information Technology*, Base Graphics](/en/intro-it/9-base-graphics)** —
   this chapter keeps insisting “draw the scatterplot first”, and Exercise 8 of that lecture is exactly
   drawing a scatterplot with `plot()` (`pch`, `cex`, `col`, `lwd`, and the font size of the title and
   axis labels), while Exercise 9 also covers overlaying with `par(new = T)` and splitting the plot
   region. This chapter's `plot(Sepal.Length ~ Petal.Length, data = iris)`, `abline(fit)` and
   `par(mfrow = c(2, 2)); plot(fit)` all use the same set of base graphics arguments — **there you learn
   the plotting technique; here you learn what should be plotted and how to read it once it is drawn**.
-- **[Week 2 of *Medical Big Data Analysis and Decision Making*, Data Preprocessing](/Medical-Big-Data-Analysis/2-data-preprocessing)** *(Chinese)* —
+- **[Week 2 of *Medical Big Data Analysis and Decision Making*, Data Preprocessing](/en/Medical-Big-Data-Analysis/2-data-preprocessing)** —
   Exercise 3 of that week, “correlation analysis”, draws a correlation matrix plot with `corrgram()` and
   checks correlation coefficients with `cor()`; it is the hands-on version of the correlation half of
   the “correlation vs regression” table in the first section of this chapter: there $r$ is computed, and
   this chapter tells you how $r$ and $b$ convert into each other ($b = r\sqrt{l_{yy}/l_{xx}}$), why
-  $R^2 = r^2$ in simple regression, and what “using regression to explain correlation” means. Also, the
-  data preprocessing of that week (missing values, outliers) corresponds to point 4 of this chapter's
-  cautions — this chapter says outliers should be **re-checked, corrected or dropped**, and the
-  engineering practice of that falls in that week; even the data sets are shared: Week 2 computed the
+  $R^2 = r^2$ in simple regression, and what “using regression to explain correlation” means. Also,
+  point 4 of this chapter's cautions says outliers should be **re-checked, corrected or dropped** —
+  but how to *identify* an outlier (the 1.5×IQR rule of the boxplot, plus residuals, leverage and
+  Cook's distance) is not what that week covers; see the boxplot section of Chapter 4 and this
+  chapter's residual diagnostics. Even the data sets are shared: Week 2 computed the
   mean of `cars$speed`, and this chapter uses exactly that to demonstrate the consequences of
   extrapolation.
-- **[Week 6 of *Medical Big Data Analysis and Decision Making*, Classification (2)](/Medical-Big-Data-Analysis/6-classification-2)** *(Chinese)* —
+- **[Week 6 of *Medical Big Data Analysis and Decision Making*, Classification (2)](/en/Medical-Big-Data-Analysis/6-classification-2)** —
   that week is about evaluating classifiers: confusion matrices, accuracy, ROC curves and AUC. Put the
   two side by side and they form a neat contrast: this chapter's dependent variable is **continuous**,
   and $R^2$ and $S_{y\cdot x}$ measure “how well it fits and how accurately it predicts”; that week's
@@ -771,8 +772,8 @@ control limit it has to be handled with a one-sided approach.
   index that matches the task**; a high $R^2$ does not mean accurate classification, and a high AUC does
   not show that the residuals of a regression equation satisfy LINE. What links the two is the logistic
   regression of Exercise 7 in Week 3.
-- **[Lecture 12 of *Introduction to Information Technology*, Parameter Estimation](/intro-it/12-parameter-estimation)** *(Chinese)*,
-  **[Lecture 13, Parametric Hypothesis Testing](/intro-it/13-hypothesis-testing)** *(Chinese)* — this
+- **[Lecture 12 of *Introduction to Information Technology*, Parameter Estimation](/en/intro-it/12-parameter-estimation)**,
+  **[Lecture 13, Parametric Hypothesis Testing](/en/intro-it/13-hypothesis-testing)** — this
   chapter's interval estimation and hypothesis testing are those two lectures' methods landing on
   regression: the confidence interval for $\beta$, $b \pm t_{\alpha/2,\nu}S_b$, follows the same routine
   of “statistic ± critical value × standard error”; the confidence interval for the conditional mean and
@@ -783,7 +784,7 @@ control limit it has to be handled with a one-sided approach.
   “comparing a sample regression coefficient with 0”, with the degrees of freedom becoming $\nu = n-2$.
   **Conversely, those chapters teach general principles and R functions; this chapter is one complete
   application of them to bivariate quantitative data.**
-- **[Lecture 11 of *Introduction to Information Technology*, The ggplot2 Package](/intro-it/11-ggplot2)** *(Chinese)* —
+- **[Lecture 11 of *Introduction to Information Technology*, The ggplot2 Package](/en/intro-it/11-ggplot2)** —
   Exercise 6 of that lecture uses `geom_point()` to draw a scatterplot of `Sepal.Length` against
   `Sepal.Width` in `iris`, which is exactly this chapter's object of analysis as it looks in another
   graphics system (this page switches to `Petal.Length` as the independent variable). To add a

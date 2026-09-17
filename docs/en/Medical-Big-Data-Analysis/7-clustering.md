@@ -27,9 +27,9 @@ const out0701 = `[,1]       [,2]       [,3]        [,4]        [,5]        [,6] 
 3  5.506712  8.413823  0.000000  8.579801
 4  9.001795 10.371475  8.579801  0.000000
          1        2        3        4
-1 0.000000                           
-2 1.998232 0.000000                  
-3 1.984322 3.606294 0.000000         
+1 0.000000
+2 1.998232 0.000000
+3 1.984322 3.606294 0.000000
 4 3.562066 3.456987 3.053533 0.000000`
 
 const code0702 = `iris <- iris[1:5,]
@@ -66,8 +66,8 @@ Cluster means:
 3         4.65        3.15          1.4         0.2
 
 Clustering vector:
-1 2 3 4 5 
-2 1 3 3 2 
+1 2 3 4 5
+2 1 3 3 2
 
 Within cluster sum of squares by cluster:
 [1] 0.00 0.01 0.03
@@ -75,8 +75,8 @@ Within cluster sum of squares by cluster:
 
 Available components:
 
-[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss" "betweenss"   
-[7] "size"         "iter"         "ifault"      
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss" "betweenss"
+[7] "size"         "iter"         "ifault"
             Predicted
 Actual       1 2 3
   setosa     1 2 2
@@ -90,8 +90,8 @@ print(iris_cluster.pam$clustering)
 iris$cluster <- iris_cluster.pam$clustering
 table(iris$Species,iris_cluster.pam$clustering,dnn = c('Actual','Predicted'))`
 
-const out0703 = `1 2 3 4 5 
-1 2 3 3 1 
+const out0703 = `1 2 3 4 5
+1 2 3 3 1
             Predicted
 Actual       1 2 3
   setosa     2 1 2
@@ -109,7 +109,7 @@ data_points <- matrix(c(2, 10, 2, 5, 8, 4, 5, 8, 7, 5, 6, 4, 1, 2, 4, 9), ncol =
 colnames(data_points) <- c("x", "y")
 
 
-set.seed(1) 
+set.seed(1)
 kmeans_result <- kmeans(data_points, centers = 3)
 
 pam_result <- pam(data_points, k = 3)
@@ -130,14 +130,14 @@ rect.hclust(hc,k = 3)
 install.packages("factoextra")
 library(factoextra)
 
-fviz_dend(hc, k = 3, 
-          cex = 0.7, 
-          k_colors = c("red", "green", "blue"), 
+fviz_dend(hc, k = 3,
+          cex = 0.7,
+          k_colors = c("red", "green", "blue"),
           color_labels_by_k = TRUE,
-          rect = TRUE, 
-          rect_lty = 5, 
-          rect_border = "black", 
-          lower_rect = -0.5 
+          rect = TRUE,
+          rect_lty = 5,
+          rect_border = "black",
+          lower_rect = -0.5
 )`
 
 const code0706 = `library(factoextra)
@@ -273,7 +273,13 @@ install.packages(c("cluster", "factoextra", "fpc", "ggplot2"))
       (including the diagonal values and excluding the values in the upper triangle).
 
 
-<img :src="withBase('/figures/mbd/7/q-第04页-image1.png')" alt="Figure from page 4" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+The exercise fixes the random seed with `set.seed()` and then generates 28 random numbers from a normal distribution, forming an array of 4 rows and 7 columns (4 data points, each with 7 attribute values):
+
+```r
+set.seed(1)
+x = matrix(rnorm(28), nrow = 4)
+print(x)
+```
 
 
 <AnswerBlock title="Exercise 1 · Reference answer"
@@ -290,16 +296,55 @@ install.packages(c("cluster", "factoextra", "fpc", "ggplot2"))
       function, with k=3.
 
 
-<img :src="withBase('/figures/mbd/7/q-第06页-image2.png')" alt="Figure from page 6" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+The exercise takes the first 5 records of the `iris` data set as the objects to cluster and drops the classification field `Species`; the numeric matrix that is clustered is this 5 × 4 one:
+
+```r
+iris <- iris[1:5,]
+iris_cluster = iris[,1:4]
+```
+
+| No. | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width | Species |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 5.1 | 3.5 | 1.4 | 0.2 | setosa |
+| 2 | 4.9 | 3.0 | 1.4 | 0.2 | setosa |
+| 3 | 4.7 | 3.2 | 1.3 | 0.2 | setosa |
+| 4 | 4.6 | 3.1 | 1.5 | 0.2 | setosa |
+| 5 | 5.0 | 3.6 | 1.4 | 0.2 | setosa |
+
+(The last column `Species` is the true species: it is dropped for the clustering and used afterwards to check the clustering result.)
 
 
-<img :src="withBase('/figures/mbd/7/q-第07页-image3.png')" alt="Figure from page 7" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+`kmeans()` then clusters `iris_cluster` into 3 groups, and the two attribute pairs are drawn as scatter plots, with the points of the different clusters in different colours and shapes and the 3 k-means cluster centres marked with “X”:
+
+```r
+iris.kmeans = kmeans(iris_cluster,3)
+
+plot(iris_cluster$Sepal.Length,
+     iris_cluster$Sepal.Width,
+     col=iris.kmeans$cluster,
+     pch= as.integer(iris.kmeans$cluster))
+points(iris.kmeans$centers[,1],
+       iris.kmeans$centers[,2],
+       pch="X",
+       cex=1,
+       col=4)
+
+plot(iris_cluster$Petal.Length,
+     iris_cluster$Petal.Width,
+     col=iris.kmeans$cluster,
+     pch= as.integer(iris.kmeans$cluster))
+points(iris.kmeans$centers[,3],
+       iris.kmeans$centers[,4],
+       pch="X",
+       cex=1,
+       col=4)
+```
 
 
 <AnswerBlock title="Exercise 2 · Reference answer"
   :code="code0702"
   :output="out0702"
-  :images="['/figures/mbd/7/plot-01.png', '/figures/mbd/7/plot-02.png', '/figures/mbd/7/plot-03.png']" />
+  :images="['/figures/en/mbd/7/plot-01.png', '/figures/en/mbd/7/plot-02.png', '/figures/en/mbd/7/plot-03.png']" />
 
 ## Exercise 3: k-medoids
 
@@ -311,7 +356,15 @@ install.packages(c("cluster", "factoextra", "fpc", "ggplot2"))
       field removed), cluster with the `pam` function, with k=3.
 
 
-<img :src="withBase('/figures/mbd/7/q-第09页-image4.png')" alt="Figure from page 9" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+The same iris subset is then clustered with k-medoids: load the `cluster` package, cluster into 3 groups with `pam()`, and use `table()` to compare the clustering result with the true species:
+
+```r
+library(cluster)
+iris_cluster.pam = pam(iris_cluster,3)
+print(iris_cluster.pam$clustering)
+iris$cluster <- iris_cluster.pam$clustering
+table(iris$Species,iris_cluster.pam$clustering,dnn = c('Actual','Predicted'))
+```
 
 
 <AnswerBlock title="Exercise 3 · Reference answer"
@@ -332,7 +385,7 @@ install.packages(c("cluster", "factoextra", "fpc", "ggplot2"))
 <AnswerBlock title="Exercise 4 · Reference answer"
   description="This exercise needs `fpc`."
   :code="code0704"
-  :images="['/figures/mbd/7/plot-03.png', '/figures/mbd/7/plot-04.png', '/figures/mbd/7/plot-05.png']" />
+  :images="['/figures/en/mbd/7/plot-03.png', '/figures/en/mbd/7/plot-04.png', '/figures/en/mbd/7/plot-05.png']" />
 
 ## Exercise 5: Hierarchical clustering
 
@@ -344,10 +397,33 @@ install.packages(c("cluster", "factoextra", "fpc", "ggplot2"))
     cluster those.
 
 
-<img :src="withBase('/figures/mbd/7/q-第12页-image5.png')" alt="Figure from page 12" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+First 40 records are picked at random from the iris data set (with the classification column removed), `dist()` computes the dissimilarity matrix, and average-linkage hierarchical clustering draws the dendrogram, which is then cut into 3 parts:
+
+```r
+idx = sample(1:150,40)
+iris_hcluster = iris[idx,-5]
+d = dist(iris_hcluster)
+hc = hclust(d,method = 'ave')
+plot(hc,hang = -1)
+rect.hclust(hc,k = 3)
+```
 
 
-<img :src="withBase('/figures/mbd/7/q-第13页-image6.png')" alt="Figure from page 13" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+The same clustering tree is drawn again with `fviz_dend()` from the `factoextra` package, split into 3 clusters, with the labels coloured by cluster and a rectangle around each cluster:
+
+```r
+library(factoextra)
+
+fviz_dend(hc, k = 3,
+          cex = 0.7,
+          k_colors = c("red", "green", "blue"),
+          color_labels_by_k = TRUE,
+          rect = TRUE,
+          rect_lty = 5,
+          rect_border = "black",
+          lower_rect = -0.5
+)
+```
 
 
 <AnswerBlock title="Exercise 5 · Reference answer"
@@ -371,16 +447,37 @@ NA/NaN/Inf in foreign function call (arg 10)
     method and with the dbscan method respectively, compare how well the two cluster, and explain why.
 
 
-<img :src="withBase('/figures/mbd/7/q-第15页-image7.png')" alt="Figure from page 15" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+`multishapes` is a data set that ships with the `factoextra` package (1100 records: the two coordinates `x` and `y` plus a class column `shape`). This exercise uses only the first two columns and first clusters them into 5 groups with k-means:
+
+```r
+library(factoextra)
+library(ggplot2)
+data("multishapes")
+df <- multishapes[, 1:2]
+df0 <- multishapes
+df0$shape <- as.factor(df0$shape)
+ggplot(df0, aes(x=x, y=y, colour=shape)) + geom_point()
+
+set.seed(123)
+km_result <- kmeans(df, 5, nstart = 25)
+fviz_cluster(km_result, df, geom = "point", ellipse = FALSE, show.clust.cent = FALSE, palette = "jco", ggtheme = theme_classic())
+```
 
 
-<img :src="withBase('/figures/mbd/7/q-第16页-image8.png')" alt="Figure from page 16" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+The same coordinates are then clustered with the density-based DBSCAN method (neighbourhood radius `eps = 0.15`, at least `MinPts = 5` points per neighbourhood), so that the result can be compared with that of k-means:
+
+```r
+library("fpc")
+set.seed(123)
+db <- fpc::dbscan(df, eps = 0.15, MinPts = 5)
+fviz_cluster(db, data = df, stand = FALSE, ellipse = FALSE, show.clust.cent = FALSE, geom = "point", palette = "jco", ggtheme = theme_classic())
+```
 
 
 <AnswerBlock title="Exercise 6 · Reference answer"
   description="This exercise needs `factoextra`, `fpc`, `ggplot2`."
   :code="code0706"
-  :images="['/figures/mbd/7/plot-05.png', '/figures/mbd/7/plot-06.png', '/figures/mbd/7/plot-07.png', '/figures/mbd/7/plot-08.png']" />
+  :images="['/figures/en/mbd/7/plot-05.png', '/figures/en/mbd/7/plot-06.png', '/figures/en/mbd/7/plot-07.png', '/figures/en/mbd/7/plot-08.png']" />
 
 ## Exercise 7: Cluster evaluation
 
@@ -394,17 +491,50 @@ NA/NaN/Inf in foreign function call (arg 10)
     rate, diagnostic accordance rate, and successful rescue rate.
 
 
-<img :src="withBase('/figures/mbd/7/q-第18页-image9.png')" alt="Figure from page 18" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+The hospital treatment data is in `treatment.csv` (36 records × 10 columns); read it with `read.csv()` and look at the first 5 rows:
+
+```r
+data <- read.csv("treatment.csv", sep = ",", header = TRUE, na.strings = "?")
+head(data, 5)
+```
+
+| YearMonth | OutpatientNumbers | DischargeNumbers | BedOccupany | BedTurmoverFrequency | AverageHospitalizayionDays. | CureImprovementRate | Mortality | DiagnosyicAccordanceRate | SuccessfulRescueRate |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2018.02 | 4.20 | 302 | 76.00 | 0.850 | 25.70 | 94.31 | 2.69 | 97.94 | 89.40 |
+| 2020.01 | 4.10 | 306 | 78.81 | 0.870 | 25.80 | 94.46 | 2.62 | 95.00 | 87.10 |
+| 2019.02 | 4.21 | 321 | 79.66 | 0.810 | 26.00 | 94.77 | 2.78 | 97.01 | 81.97 |
+| 2018.10 | 4.43 | 321 | 80.00 | 0.822 | 25.40 | 94.00 | 2.81 | 97.02 | 79.07 |
+| 2018.04 | 4.18 | 377 | 82.00 | 0.880 | 26.89 | 93.86 | 2.73 | 98.10 | 86.23 |
+
+(The header row is exactly the column names in `treatment.csv`; the trailing dot in the 6th column, `AverageHospitalizayionDays.`, is added automatically by R when it reads a column name that contains a line break.)
 
 
-<img :src="withBase('/figures/mbd/7/q-第19页-image10.png')" alt="Figure from page 19" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+Before clustering, the first column, the year and month (`YearMonth`), is dropped and the remaining 9 numeric attributes are standardised; the number of clusters is then determined from the average silhouette width (k=2), and k-means and k-medoids are run in turn, each printing its average silhouette width:
+
+```r
+data <- data[, -1]
+data_scale <- scale(data)
+fviz_nbclust(data_scale, kmeans, method = "silhouette")
+set.seed(111)
+
+result_kmeans <- kmeans(data_scale, 2)
+stats_kmean <- cluster.stats(dist(data_scale), result_kmeans$cluster)
+sli_nut_kmeans <- stats_kmean$avg.silwidth
+print(sli_nut_kmeans)
+
+library(cluster)
+result_pam <- pam(data_scale, 2)
+stats_pam <- cluster.stats(dist(data_scale), result_pam$cluster)
+sli_nut_pam <- stats_pam$avg.silwidth
+print(sli_nut_pam)
+```
 
 
 <AnswerBlock title="Exercise 7 · Reference answer"
   description="This exercise needs `cluster`, `factoextra`, `fpc`."
   :code="code0707"
   :output="out0707"
-  :images="['/figures/mbd/7/plot-08.png', '/figures/mbd/7/plot-09.png']" />
+  :images="['/figures/en/mbd/7/plot-08.png', '/figures/en/mbd/7/plot-09.png']" />
 
 ## Exercise 8: Applying hierarchical clustering
 
@@ -448,5 +578,5 @@ This week's clustering results **are read almost entirely off the plots** (the d
 plot, the scatter plot); for the principles of graphing and the common ways charts mislead, see the
 corresponding summary in *Health Statistics*.
 
-See **[Chapter 19 of *Health Statistics*, Statistical Tables and Charts](/Health-statistics/19-tables-and-charts)** *(Chinese)*.
+See **[Chapter 19 of *Health Statistics*, Statistical Tables and Charts](/en/Health-statistics/19-tables-and-charts)**.
 :::

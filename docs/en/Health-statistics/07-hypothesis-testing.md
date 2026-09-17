@@ -28,8 +28,8 @@ alternative hypothesis: true mean is not equal to 6
 95 percent confidence interval:
  5.789306 6.082694
 sample estimates:
-mean of x 
-    5.936 
+mean of x
+    5.936
 
 > t0
 [1] -0.8767409
@@ -458,8 +458,8 @@ alternative hypothesis: true mean is not equal to 1.5
 95 percent confidence interval:
  1.412645 1.511355
 sample estimates:
-mean of x 
-    1.462 
+mean of x
+    1.462
 ```
 
 How to read it:
@@ -563,8 +563,8 @@ alternative hypothesis: true difference in means between group 1 and group 2 is 
 95 percent confidence interval:
  -3.3654832  0.2054832
 sample estimates:
-mean in group 1 mean in group 2 
-           0.75            2.33 
+mean in group 1 mean in group 2
+           0.75            2.33
 ```
 
 The two-sided $P = 0.0794 > 0.05$, so $H_0$ is not rejected; the left-sided $P = 0.0397 < 0.05$, so
@@ -593,8 +593,8 @@ alternative hypothesis: true mean difference is not equal to 0
 95 percent confidence interval:
  -2.4598858 -0.7001142
 sample estimates:
-mean difference 
-          -1.58 
+mean difference
+          -1.58
 ```
 
 After pairing, $P = 0.0028 < 0.05$ and the conclusion is reversed. The reason lies in the standard
@@ -758,8 +758,8 @@ $P$ value is wrong as well.
 ## How it connects to the other courses
 
 ::: tip Related pages
-- **Lecture 13 of *Introduction to Information Technology*, Parametric Hypothesis Testing** *(Chinese)*
-  ([`/intro-it/13-hypothesis-testing`](/intro-it/13-hypothesis-testing)) — that lecture is the R
+- **Lecture 13 of *Introduction to Information Technology*, Parametric Hypothesis Testing**
+  ([`/intro-it/13-hypothesis-testing`](/en/intro-it/13-hypothesis-testing)) — that lecture is the R
   practice for this chapter: a self-written `fun1301` computing $P$ values with `pt()` and marking out
   acceptance regions with `qt()`, plus `t.test()`, `var.test()`, `binom.test()` and the three
   directions of `alternative = 'two.sided' / 'greater' / 'less'`. What this chapter adds is the
@@ -769,16 +769,16 @@ $P$ value is wrong as well.
   The two-stage flow of that lecture (test homogeneity of variance with `var.test()`, then decide
   between the equal-variance $t$ test and Welch) is exactly this chapter's "conditions" put into
   practice.
-- **Lecture 12 of *Introduction to Information Technology*, Parameter Estimation** *(Chinese)*
-  ([`/intro-it/12-parameter-estimation`](/intro-it/12-parameter-estimation)) — interval estimation and
+- **Lecture 12 of *Introduction to Information Technology*, Parameter Estimation**
+  ([`/intro-it/12-parameter-estimation`](/en/intro-it/12-parameter-estimation)) — interval estimation and
   hypothesis testing are two sides of one coin: for the same data, the $1-\alpha$ confidence interval
   containing $\mu_0$ is equivalent to not rejecting $H_0$ at level $\alpha$, and vice versa. That
   lecture builds intervals with `qnorm()`, `qt()`, `qf()`, `qchisq()`, and verifies them against
   `t.test(x)$conf.int` and self-written functions. This chapter makes the equivalence clear and
   explains what a confidence interval gives beyond a $P$ value: the range of the difference, and
   whether that difference is clinically meaningful.
-- **Week 6 of *Medical Big Data Analysis and Decision Making*, Classification (2)** *(Chinese)*
-  ([`/Medical-Big-Data-Analysis/6-classification-2`](/Medical-Big-Data-Analysis/6-classification-2)) —
+- **Week 6 of *Medical Big Data Analysis and Decision Making*, Classification (2)**
+  ([`/Medical-Big-Data-Analysis/6-classification-2`](/en/Medical-Big-Data-Analysis/6-classification-2)) —
   that week uses `e1071`, `caret`, and `pROC` for naive Bayes classification and ROC analysis,
   producing confusion matrices, accuracy, and AUC. **The confusion matrix and this chapter's two types
   of error are two names for the same thing**: "actually present but judged absent" is recorded as FN,

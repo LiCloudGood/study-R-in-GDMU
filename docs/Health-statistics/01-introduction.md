@@ -258,7 +258,7 @@ effect
 - **《信息技术基础》第 12 讲 参数估计**（[`/intro-it/12-parameter-estimation`](/intro-it/12-parameter-estimation)）、**第 13 讲 参数假设检验**（[`/intro-it/13-hypothesis-testing`](/intro-it/13-hypothesis-testing)）—— 这两讲是本章「统计推断 = 参数估计 + 假设检验」的具体展开。那边是用 R 手写函数算区间、算 p 值，重点在代码和分布；这里讲的是它们背后的总体与样本、参数与统计量、抽样误差、小概率事件。**先把本章的概念弄清楚，再看那两讲的公式会顺很多。**
 - **《信息技术基础》第 14 讲 同分布检验与列联表检验**（[`/intro-it/14-goodness-of-fit-and-contingency`](/intro-it/14-goodness-of-fit-and-contingency)）—— 本章「资料类型不同，统计方法亦不同」的最直接体现：计数资料清点个数之后，用的就是卡方类方法。
 - **《医学大数据分析与决策》第 1 周 R 的使用及数据获取**（[`/Medical-Big-Data-Analysis/1-r-basics-and-data`](/Medical-Big-Data-Analysis/1-r-basics-and-data)）—— 那一周讲怎么读入外部数据、怎么看数据结构和基本分布，正对应本章「收集资料、整理资料」两步的动手部分；本章补上这两步在统计学上的含义（为什么必须随机、随机化在防什么）。
-- **《医学大数据分析与决策》第 2 周 数据预处理**（[`/Medical-Big-Data-Analysis/2-data-preprocessing`](/Medical-Big-Data-Analysis/2-data-preprocessing)）—— 对应本章「整理资料」：缺失值、异常值、变量类型转换。那里是工程做法，这里解释为什么要先分类、先检查。
+- **《医学大数据分析与决策》第 2 周 数据预处理**（[`/Medical-Big-Data-Analysis/2-data-preprocessing`](/Medical-Big-Data-Analysis/2-data-preprocessing)）—— 对应本章「整理资料」的工程做法：属性列处理（`subset()` 删列、选择列）、数值变量分箱（等宽/等频）、最小最大规范化与 Z-score 规范化，都是把原始表整理成能分析的样子；这里解释为什么要先分类、先检查。变量类型转换（`factor()`、`levels` 定顺序）在《信息技术基础》第 4 讲；**缺失值**的发现与删除在第 1 周（[打开第 1 周](/Medical-Big-Data-Analysis/1-r-basics-and-data)），**异常值**怎么判读那一周也不讲，见第 4 章箱线图那一节（1.5 倍四分位间距规则）。
 :::
 
 <!-- 回链建议

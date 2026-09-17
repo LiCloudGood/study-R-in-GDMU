@@ -31,16 +31,15 @@ This site is the English edition of a set of course notes originally written in 
 
 ## Translation status
 
-**The English edition is being translated page by page.** The Chinese edition is complete and is the
-authoritative version; where the two disagree, the Chinese page wins.
+**The English edition is complete.** All 50 pages are available in English: the 14 lectures of
+*Introduction to Information Technology*, the 8 weeks of *Medical Big Data Analysis and Decision
+Making*, the 17 chapters of *Health Statistics* with the two supplementary topics, and the
+interactive method selector.
 
-Pages available in English so far:
-
-- [Health Statistics — section overview](/en/Health-statistics/)
-- [Diagnostic Test Evaluation (ROC and AUC)](/en/Health-statistics/diagnostic-test)
-
-Everything else is still Chinese-only. In the sidebar, chapters that have not been translated yet
-appear as plain text without a link — that is a progress list, not a broken link.
+The Chinese edition is the original and stays authoritative — where the two disagree, the Chinese
+page wins, and every English page says so at the top. The translation was done under a fixed
+terminology standard, and the R code on every page was re-run to confirm that each pasted output
+matches real R output; numbers, formulas, and conclusions are carried over unchanged.
 
 ## How to use it
 
@@ -55,5 +54,12 @@ appear as plain text without a link — that is a progress list, not a broken li
 - **Website** — built with [VitePress](https://vitepress.dev/). Page structure, the custom theme
   components, and the typesetting were conceived by Li_CloudGood and implemented together with an
   AI assistant powered by DeepSeek Harness.
-- **Translation** — the English edition is translated from the Chinese originals under a fixed
-  terminology standard; numbers, formulas, and R code are carried over unchanged.
+- **Translation** — the English edition under `/en/` was translated and written page by page by an
+  AI assistant powered by DeepSeek Harness. A fixed terminology standard
+  (`scripts/术语对照表.md`) was laid down first, so terminology, page titles, and cross-page wording
+  stay consistent; formulas, numbers, and R code are carried over from the Chinese originals
+  unchanged. After each batch the R code was lifted out of the finished pages and re-run to confirm
+  that every pasted output matches real R output, and each batch was built, link-checked, and
+  committed before moving on. Where the two editions disagree, **the Chinese page is authoritative**
+  — every English page says so at the top. And thank you to everyone who reads this far and takes the
+  trouble to point out a mistake.

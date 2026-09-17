@@ -103,25 +103,25 @@ distributional assumptions) and tells you how to check back.
 | Situation | Method to use | Chapter |
 | --- | --- | --- |
 | Describing quantitative data | Roughly symmetric → mean ± SD; skewed or with extreme values → median (IQR) | [Chapter 4. Describing Quantitative Data](/en/Health-statistics/04-describing-quantitative-data) |
-| Describing categorical data | Frequency + rate (binary) or proportion (multi-category) | [Chapter 5. Describing Qualitative Data (Chinese)](/Health-statistics/05-describing-qualitative-data) |
+| Describing categorical data | Frequency + rate (binary) or proportion (multi-category) | [Chapter 5. Describing Qualitative Data](/en/Health-statistics/05-describing-qualitative-data) |
 | One group vs a known value (quantitative) | Approximately normal → one-sample t test; otherwise → Wilcoxon signed-rank test | [Chapter 8. t Tests](/en/Health-statistics/08-t-test) |
-| One group vs a known rate (binary) | Binomial test | [Chapter 6. Estimating Population Means and Rates (Chinese)](/Health-statistics/06-estimation) |
-| One multi-category group vs a theoretical distribution | Goodness-of-fit chi-square test | [Chapter 10. Chi-Square Tests (Chinese)](/Health-statistics/10-chi-square) |
+| One group vs a known rate (binary) | Binomial test | [Chapter 6. Estimating Population Means and Rates](/en/Health-statistics/06-estimation) |
+| One multi-category group vs a theoretical distribution | Goodness-of-fit chi-square test | [Chapter 10. Chi-Square Tests](/en/Health-statistics/10-chi-square) |
 | Paired (quantitative) | Differences approximately normal → paired t test; otherwise → Wilcoxon signed-rank test | [Chapter 8. t Tests](/en/Health-statistics/08-t-test) |
-| Paired (binary) | McNemar's test | [Chapter 10. Chi-Square Tests (Chinese)](/Health-statistics/10-chi-square) |
+| Paired (binary) | McNemar's test | [Chapter 10. Chi-Square Tests](/en/Health-statistics/10-chi-square) |
 | Two independent groups (quantitative) | Approximately normal → two-sample t test (Welch's recommended); otherwise → Mann–Whitney U test | [Chapter 8. t Tests](/en/Health-statistics/08-t-test) |
-| Two independent groups (binary) | 2×2 chi-square test: n ≥ 40 and T ≥ 5 uncorrected; 1 ≤ T < 5 corrected; n < 40 or T < 1 use Fisher | [Chapter 10. Chi-Square Tests (Chinese)](/Health-statistics/10-chi-square) |
-| Two or more groups (nominal multi-category) | R×C contingency-table chi-square test (combine categories or use an exact test if the expected frequencies are too small) | [Chapter 10. Chi-Square Tests (Chinese)](/Health-statistics/10-chi-square) |
-| Multiple independent groups (quantitative) | Approximately normal with equal variances → one-way ANOVA + multiple comparisons; unequal variances → Welch's ANOVA; non-normal → Kruskal–Wallis test | [Chapter 9. Analysis of Variance (Chinese)](/Health-statistics/09-anova) |
-| Two or more groups (ordinal) | Mann–Whitney U test (two groups) or Kruskal–Wallis test (more than two) | [Chapter 11. Nonparametric and Rank-Based Tests (Chinese)](/Health-statistics/11-nonparametric) |
-| Repeated measures (quantitative) | Repeated-measures ANOVA (watch sphericity) | [Chapter 9. Analysis of Variance (Chinese)](/Health-statistics/09-anova) |
-| Repeated measures (ordinal) | Friedman test | [Chapter 11. Nonparametric and Rank-Based Tests (Chinese)](/Health-statistics/11-nonparametric) |
-| Follow-up: estimating the survival curve | Kaplan–Meier method | [Chapter 14. Survival Analysis (Chinese)](/Health-statistics/14-survival-analysis) |
-| Follow-up: comparing survival curves | Log-rank test | [Chapter 14. Survival Analysis (Chinese)](/Health-statistics/14-survival-analysis) |
-| Follow-up: multivariable analysis | Cox proportional hazards regression (look at the HR; test the proportional hazards assumption first) | [Chapter 14. Survival Analysis (Chinese)](/Health-statistics/14-survival-analysis) |
-| Two quantitative variables: looking at the relationship | Linear relationship → Pearson correlation; monotone but not linear → Spearman's rank correlation | [Chapter 12. Bivariate Association (Chinese)](/Health-statistics/12-bivariate-association) |
+| Two independent groups (binary) | 2×2 chi-square test: n ≥ 40 and T ≥ 5 uncorrected; 1 ≤ T < 5 corrected; n < 40 or T < 1 use Fisher | [Chapter 10. Chi-Square Tests](/en/Health-statistics/10-chi-square) |
+| Two or more groups (nominal multi-category) | R×C contingency-table chi-square test (combine categories or use an exact test if the expected frequencies are too small) | [Chapter 10. Chi-Square Tests](/en/Health-statistics/10-chi-square) |
+| Multiple independent groups (quantitative) | Approximately normal with equal variances → one-way ANOVA + multiple comparisons; unequal variances → Welch's ANOVA; non-normal → Kruskal–Wallis test | [Chapter 9. Analysis of Variance](/en/Health-statistics/09-anova) |
+| Two or more groups (ordinal) | Mann–Whitney U test (two groups) or Kruskal–Wallis test (more than two) | [Chapter 11. Nonparametric and Rank-Based Tests](/en/Health-statistics/11-nonparametric) |
+| Repeated measures (quantitative) | Repeated-measures ANOVA (watch sphericity) | [Chapter 9. Analysis of Variance](/en/Health-statistics/09-anova) |
+| Repeated measures (ordinal) | Friedman test | [Chapter 11. Nonparametric and Rank-Based Tests](/en/Health-statistics/11-nonparametric) |
+| Follow-up: estimating the survival curve | Kaplan–Meier method | [Chapter 14. Survival Analysis](/en/Health-statistics/14-survival-analysis) |
+| Follow-up: comparing survival curves | Log-rank test | [Chapter 14. Survival Analysis](/en/Health-statistics/14-survival-analysis) |
+| Follow-up: multivariable analysis | Cox proportional hazards regression (look at the HR; test the proportional hazards assumption first) | [Chapter 14. Survival Analysis](/en/Health-statistics/14-survival-analysis) |
+| Two quantitative variables: looking at the relationship | Linear relationship → Pearson correlation; monotone but not linear → Spearman's rank correlation | [Chapter 12. Bivariate Association](/en/Health-statistics/12-bivariate-association) |
 | Two quantitative variables: making predictions | Simple linear regression (draw the residual diagnostic plots first) | [Chapter 13. Simple Linear Regression](/en/Health-statistics/13-linear-regression) |
-| Two categorical variables: looking at association | Chi-square test of independence + odds ratio (OR) / relative risk (RR) | [Chapter 12. Bivariate Association (Chinese)](/Health-statistics/12-bivariate-association) |
+| Two categorical variables: looking at association | Chi-square test of independence + odds ratio (OR) / relative risk (RR) | [Chapter 12. Bivariate Association](/en/Health-statistics/12-bivariate-association) |
 | Evaluating a diagnostic index (with a gold standard) | ROC curve + AUC; set the threshold by clinical cost and report the sensitivity and specificity at that threshold | [Diagnostic Test Evaluation (ROC and AUC)](/en/Health-statistics/diagnostic-test) |
 | Repeated judgments: nominal categories | Kappa coefficient (Cohen's for two raters, Fleiss' for several); report it together with the observed agreement | [Agreement and Reliability (Kappa and ICC)](/en/Health-statistics/agreement-reliability) |
 | Repeated judgments: ordered grades | Weighted kappa (always state whether the weights are linear or quadratic) | [Agreement and Reliability (Kappa and ICC)](/en/Health-statistics/agreement-reliability) |

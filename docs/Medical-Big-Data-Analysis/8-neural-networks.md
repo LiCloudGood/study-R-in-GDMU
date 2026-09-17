@@ -266,10 +266,33 @@ install.packages(c("Metrics", "neuralnet"))
   - 本例采用R语言中neuralnet神经网络包来对乳腺癌的数据进行一个分类操作，主要根据前面10个描述属性（去掉第1列的ID属性）用神经网络产生一个分类模型来判断每个样本是良性肿瘤（Benign Tumor）还是恶性肿瘤（Malignancy Tumor）。
 
 
-<img :src="withBase('/figures/mbd/8/q-第04页-image1.png')" alt="第 4 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+题目给出的训练数据是 `breastCacer2.csv`：699 行、10 列，前 9 列是 9 个描述属性
+（`CT`、`UCSize`、`UCShape`、`MA`、`SECS`、`BN`、`BC`、`NN`、`Mitoses`），
+第 10 列 `Class` 就是该样本的分类标签（`0` = 良性肿瘤，`1` = 恶性肿瘤）。
+读入并查看这份数据：
 
+```r
+bcancer <- read.csv('breastCacer2.csv')
+dim(bcancer)                        # 699 行 × 10 列
+head(bcancer, 10)                   # 前 10 行，见下表
+bcancer2 <- bcancer[complete.cases(bcancer), ]
+dim(bcancer2)                       # 683 行 × 10 列：丢掉 16 行在 BN 列上缺测的记录
+```
 
-<img :src="withBase('/figures/mbd/8/q-第05页-image2.png')" alt="第 5 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+前 10 行长这样：
+
+| 序号 | CT | UCSize | UCShape | MA | SECS | BN | BC | NN | Mitoses | Class |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 5 | 1 | 1 | 1 | 2 | 1 | 3 | 1 | 1 | 0 |
+| 2 | 5 | 4 | 4 | 5 | 7 | 10 | 3 | 2 | 1 | 0 |
+| 3 | 3 | 1 | 1 | 1 | 2 | 2 | 3 | 1 | 1 | 0 |
+| 4 | 6 | 8 | 8 | 1 | 3 | 4 | 3 | 7 | 1 | 0 |
+| 5 | 4 | 1 | 1 | 3 | 2 | 1 | 3 | 1 | 1 | 0 |
+| 6 | 8 | 10 | 10 | 8 | 7 | 10 | 9 | 7 | 1 | 1 |
+| 7 | 1 | 1 | 1 | 1 | 2 | 10 | 3 | 1 | 1 | 0 |
+| 8 | 2 | 1 | 2 | 1 | 2 | 1 | 3 | 1 | 1 | 0 |
+| 9 | 2 | 1 | 1 | 1 | 2 | 1 | 1 | 1 | 5 | 0 |
+| 10 | 4 | 2 | 1 | 1 | 2 | 1 | 2 | 1 | 1 | 0 |
 
 
 <AnswerBlock title="实验题 1 · 参考答案"

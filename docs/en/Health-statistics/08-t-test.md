@@ -152,7 +152,7 @@ groups. Four common situations:
 
 **What pairing is for**
 
-It controls non-treatment factors, improves the balance between groups, and reduces experimental
+It controls non-study factors, improves the balance between groups, and reduces experimental
 error, all of which buy **greater power**. Put plainly: if the subjects in the two groups differ a
 great deal to begin with, and one group happens to consist of people who are "better off" to start
 with, the treatment effect is drowned by individual differences. Pairing removes those differences at
@@ -692,35 +692,35 @@ real papers and student reports.
 
 - **Comparing several groups with repeated pairwise $t$ tests.** Running three $t$ tests among three
   groups at $\alpha=0.05$ each gives a cumulative Type I error probability far above 0.05. With three
-  or more groups and a single treatment factor, analysis of variance should be used (the next chapter),
+  or more groups and a single study factor, analysis of variance should be used (the next chapter),
   with a dedicated multiple-comparison method when pairwise comparisons are needed.
 
 ## How it connects to the other courses
 
 ::: tip Related pages
-- **Lecture 13 of *Introduction to Information Technology*, Parametric Hypothesis Testing** *(Chinese)*
+- **Lecture 13 of *Introduction to Information Technology*, Parametric Hypothesis Testing**
   — that lecture is **writing R for exactly this kind of exercise**: computing $P$ values and
   acceptance regions by hand with `pt()` / `qt()` in a function called `fun1301`, then using
   `t.test()` and `var.test()` for "Exercise 1, one-sample", "Exercise 3, paired", and "Exercise 4,
   test variance homogeneity first and then choose a $t$ test". This chapter covers the **principles and
   conditions** behind those functions: why small samples need the $t$ distribution, why a paired design
   works on differences, and when `var.equal` should be `TRUE`. The two point at each other, and it is
-  worth reading the same exercise from both sides. → [Open Lecture 13](/intro-it/13-hypothesis-testing)
-  *(Chinese)*
-- **Lecture 12 of *Introduction to Information Technology*, Parameter Estimation** *(Chinese)* —
+  worth reading the same exercise from both sides. → [Open Lecture 13](/en/intro-it/13-hypothesis-testing)
+- **Lecture 12 of *Introduction to Information Technology*, Parameter Estimation** —
   interval estimation and hypothesis testing are two sides of one coin. The
   `95 percent confidence interval` printed by `t.test()` **is** the confidence interval:
   **an interval containing $\mu_0$ is equivalent to $P>\alpha$**, and reading a $t$ test through the
-  interval is often more intuitive than reading the $P$ value. → [Open Lecture 12](/intro-it/12-parameter-estimation)
-  *(Chinese)*
-- **Week 2 of *Medical Big Data Analysis and Decision Making*, Data Preprocessing** *(Chinese)* — the
+  interval is often more intuitive than reading the $P$ value. → [Open Lecture 12](/en/intro-it/12-parameter-estimation)
+- **Week 2 of *Medical Big Data Analysis and Decision Making*, Data Preprocessing** — the
   means, variances, standard deviations, and quartiles of that week are the raw material of this
   chapter's statistics; the Z-score standardization of question 7, $z=(x-\bar{x})/S$, shares its
   numerator and denominator with the $t$ statistic, both being "deviation from the mean ÷ standard
-  deviation". In addition, handling missing values and identifying outliers directly affect the
+  deviation". In addition, transforming and standardizing variables directly affect the
   normality and homogeneity judgments here — one uncleaned extreme value is enough to blow the
-  variance up. → [Open Week 2](/Medical-Big-Data-Analysis/2-data-preprocessing) *(Chinese)*
-- **Week 6 of *Medical Big Data Analysis and Decision Making*, Classification (2)** *(Chinese)* —
+  variance up. Finding and removing missing values, on the other hand, belongs to Week 1
+  (→ [Open Week 1](/en/Medical-Big-Data-Analysis/1-r-basics-and-data)).
+  → [Open Week 2](/en/Medical-Big-Data-Analysis/2-data-preprocessing)
+- **Week 6 of *Medical Big Data Analysis and Decision Making*, Classification (2)** —
   classification tasks are usually preceded by **feature selection**: comparing the difference in means
   between two groups (diseased / not diseased) for each continuous variable, for which the two-sample
   $t$ test of this chapter is the most common screen. Conversely, the naive Bayes, ROC/AUC, and `caret`
@@ -728,7 +728,7 @@ real papers and student reports.
   variable is categorical, or what matters is the whole distribution rather than a mean, the $t$ test
   does not apply. Also, the ten accuracy values produced by cross-validation are repeated measurements
   on the same data, so paired structure has to be kept in mind when comparing two models' accuracies.
-  → [Open Week 6](/Medical-Big-Data-Analysis/6-classification-2) *(Chinese)*
+  → [Open Week 6](/en/Medical-Big-Data-Analysis/6-classification-2)
 :::
 
 <!-- Back-link suggestions

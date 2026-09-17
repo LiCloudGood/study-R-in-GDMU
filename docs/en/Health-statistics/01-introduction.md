@@ -429,43 +429,41 @@ general-purpose tools for working with vectors and data frames.
 
 ::: tip Related pages
 - **Lecture 1 of *Introduction to Information Technology*, Installing R and RStudio, Writing
-  Scripts** ([`/intro-it/1-software-install`](/intro-it/1-software-install)) *(Chinese)* — the design,
+  Scripts** ([`/intro-it/1-software-install`](/en/intro-it/1-software-install)) — the design,
   collection, sorting, and analysis described in this chapter have to be carried out in software. That
   lecture covers installing R and RStudio and writing and running scripts, which is what makes the
   example at the end of this page runnable.
 - **Lecture 2 of *Introduction to Information Technology*, Vectors and Matrices**
-  ([`/intro-it/2-vectors-and-matrices`](/intro-it/2-vectors-and-matrices)) *(Chinese)* — this chapter
+  ([`/intro-it/2-vectors-and-matrices`](/en/intro-it/2-vectors-and-matrices)) — this chapter
   says that "data are the collection of values of a variable", and in R that collection is first of
   all a **vector**. Building vectors with `c()`, subsetting with indices, and vectorized operations are
   all in that lecture; `faithful$eruptions` on this page is a numeric vector of length 272.
 - **Lecture 4 of *Introduction to Information Technology*, Lists and Factors**
-  ([`/intro-it/4-lists-and-factors`](/intro-it/4-lists-and-factors)) *(Chinese)* — this corresponds to
+  ([`/intro-it/4-lists-and-factors`](/en/intro-it/4-lists-and-factors)) — this corresponds to
   the qualitative and ordinal variables of this chapter. How to build a `factor()` and how to set the
   order of `levels` are exactly how categorical and ordered variables are represented in R.
 - **Lecture 12 of *Introduction to Information Technology*, Parameter Estimation**
-  ([`/intro-it/12-parameter-estimation`](/intro-it/12-parameter-estimation)) and **Lecture 13,
-  Parametric Hypothesis Testing** ([`/intro-it/13-hypothesis-testing`](/intro-it/13-hypothesis-testing))
-  *(Chinese)* — these two lectures work out in detail the "statistical inference = parameter estimation
+  ([`/intro-it/12-parameter-estimation`](/en/intro-it/12-parameter-estimation)) and **Lecture 13,
+  Parametric Hypothesis Testing** ([`/intro-it/13-hypothesis-testing`](/en/intro-it/13-hypothesis-testing)) — these two lectures work out in detail the "statistical inference = parameter estimation
   + hypothesis testing" of this chapter. There, intervals and $P$ values are computed with
   hand-written R functions, and the emphasis is on code and distributions; here we cover the population
   and sample, parameter and statistic, sampling error, and small-probability events behind them.
   **Get this chapter's concepts clear first, and the formulas in those lectures will come much more
   easily.**
 - **Lecture 14 of *Introduction to Information Technology*, Tests of Homogeneity and Contingency
-  Tables** ([`/intro-it/14-goodness-of-fit-and-contingency`](/intro-it/14-goodness-of-fit-and-contingency))
-  *(Chinese)* — the most direct embodiment of "different data types, different statistical methods":
+  Tables** ([`/intro-it/14-goodness-of-fit-and-contingency`](/en/intro-it/14-goodness-of-fit-and-contingency)) — the most direct embodiment of "different data types, different statistical methods":
   once count data have been tallied, the chi-square family of methods is what gets used.
 - **Week 1 of *Medical Big Data Analysis and Decision Making*, Using R and Getting Data**
-  ([`/Medical-Big-Data-Analysis/1-r-basics-and-data`](/Medical-Big-Data-Analysis/1-r-basics-and-data))
-  *(Chinese)* — that week covers reading in external data and inspecting data structures and basic
+  ([`/Medical-Big-Data-Analysis/1-r-basics-and-data`](/en/Medical-Big-Data-Analysis/1-r-basics-and-data)) — that week covers reading in external data and inspecting data structures and basic
   distributions, which corresponds to the hands-on part of "collecting data, sorting data" here; this
   chapter supplies the statistical meaning of those two steps (why randomization is required, and what
   it protects against).
-- **Week 2 of *Medical Big Data Analysis and Decision Making*, Data Preprocessing**
-  ([`/Medical-Big-Data-Analysis/2-data-preprocessing`](/Medical-Big-Data-Analysis/2-data-preprocessing))
-  *(Chinese)* — corresponds to "sorting data" in this chapter: missing values, outliers, and type
-  conversion. There it is the engineering practice; here we explain why classification and checking
-  come first.
+- **[Week 2 of *Medical Big Data Analysis and Decision Making*, Data Preprocessing](/en/Medical-Big-Data-Analysis/2-data-preprocessing)**
+  — corresponds to the engineering side of "sorting data" in this chapter: handling attribute columns
+  (dropping and selecting them with `subset()`), binning numeric variables (equal width / equal
+  frequency), and min-max and Z-score standardization. Finding and removing **missing values** is
+  Week 1's topic instead, and **outliers** are not covered by that course at all — see the boxplot
+  section of Chapter 4 of this course for the 1.5×IQR rule.
 :::
 
 <!-- Back-link suggestions

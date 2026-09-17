@@ -23,10 +23,10 @@ Translated from the [Chinese original](/Medical-Big-Data-Analysis/). Numbers, fo
 | **Week 2** | [Data Preprocessing](/en/Medical-Big-Data-Analysis/2-data-preprocessing) | 7 | `corrgram` `infotheo` |
 | **Week 3** | [Regression Analysis](/en/Medical-Big-Data-Analysis/3-regression) | 7 | `epiDisplay` |
 | **Week 4** | [Association Rules](/en/Medical-Big-Data-Analysis/4-association-rules) | 3 | `arules` `arulesViz` |
-| **Week 5** | [Classification (Part 1)](/Medical-Big-Data-Analysis/5-classification-1) *(Chinese)* | 3 | `randomForest` `rpart` `rpart.plot` |
-| **Week 6** | [Classification (Part 2)](/Medical-Big-Data-Analysis/6-classification-2) *(Chinese)* | 4 | `caret` `e1071` `pROC` `recipes` |
-| **Week 7** | [Clustering](/Medical-Big-Data-Analysis/7-clustering) *(Chinese)* | 8 | `cluster` `factoextra` `fpc` `ggplot2` |
-| **Week 8** | [Neural Networks](/Medical-Big-Data-Analysis/8-neural-networks) *(Chinese)* | 4 | `Metrics` `neuralnet` |
+| **Week 5** | [Classification (Part 1)](/en/Medical-Big-Data-Analysis/5-classification-1) | 3 | `randomForest` `rpart` `rpart.plot` |
+| **Week 6** | [Classification (Part 2)](/en/Medical-Big-Data-Analysis/6-classification-2) | 4 | `caret` `e1071` `pROC` `recipes` |
+| **Week 7** | [Clustering](/en/Medical-Big-Data-Analysis/7-clustering) | 8 | `cluster` `factoextra` `fpc` `ggplot2` |
+| **Week 8** | [Neural Networks](/en/Medical-Big-Data-Analysis/8-neural-networks) | 4 | `Metrics` `neuralnet` |
 
 ## Before you start: install the packages first
 

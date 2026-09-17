@@ -18,9 +18,9 @@ hist(x$Sepal.Width,main = 'Histogram of x$Sepal.Width', ylab = 'Frequency',borde
 box()
 plot(x$Petal.Length,x$Petal.Width)
 box()
-hist(x$Petal.Length,main = 'Histogram of x$Petal.Length',ylab = 'Frequency',border = 'black')     
+hist(x$Petal.Length,main = 'Histogram of x$Petal.Length',ylab = 'Frequency',border = 'black')
 box()
-hist(x$Petal.Width,main = 'Histogram of x$Petal.Width',ylab = 'Frequency',border = 'black')     
+hist(x$Petal.Width,main = 'Histogram of x$Petal.Width',ylab = 'Frequency',border = 'black')
 box()
 par(mfrow = c(1,1))
 
@@ -51,18 +51,18 @@ ggplot(
 const code1104 = `library(ggplot2)
 x = mtcars[,c('hp','disp','cyl')]
 
-ggplot(x,aes(hp,disp)) + 
+ggplot(x,aes(hp,disp)) +
   geom_point(size = 3,color = 'blue3') +
   geom_text(
     aes(label = mtcars$cyl, color = mtcars$cyl),
-    size = 6, nudge_x = 8) +  
+    size = 6, nudge_x = 8) +
   scale_color_gradientn(colors = rainbow(20), name = "Number of Cylinders") +
   theme(
-    legend.title = element_text(size = 18),  
-    legend.text = element_text(size = 16),  
-    axis.title.x = element_text(size = 18),  
-    axis.title.y = element_text(size = 18),  
-    axis.text = element_text(size = 16)  
+    legend.title = element_text(size = 18),
+    legend.text = element_text(size = 16),
+    axis.title.x = element_text(size = 18),
+    axis.title.y = element_text(size = 18),
+    axis.text = element_text(size = 16)
   )`
 
 const code1105 = `# Load the ggplot2 package
@@ -114,16 +114,16 @@ ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
     'Sepal Length',
     limits = c(4,8),
     breaks = c(4,4.5,5,5.5,6,6.5,7,7.5,8)
-  ) + 
+  ) +
   scale_y_continuous(
     'Sepal Width',
     limits = c(2,4.4),
     breaks = seq(2,4.4,by=0.4)
-  ) + 
+  ) +
   labs(
     title = 'Scatter Plot of Iris Sepal Length and Width') +
   scale_fill_brewer(
-    'Species',palette = 'Set1') + 
+    'Species',palette = 'Set1') +
   theme(
     plot.title = element_text(
       size = 20,
@@ -202,17 +202,25 @@ Open the script file **test1101.R** and complete the tasks below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/11-question/fig01.png')" alt="Figure 1" loading="lazy" />
-    <figcaption>Figure 1</figcaption>
+    <img :src="withBase('/figures/11-question/fig01.png')" alt="Six iris plots in a 2 by 3 grid made with par(mfrow)" loading="lazy" />
+    <figcaption>Figure 1. The figure Exercise 1, question 1 asks for: the canvas cut into 2 rows and 3 columns
+      with par(mfrow = c(2, 3)) and filled row by row with six plots of iris[101:150] — the sepal length against
+      the sepal width and the petal length against the petal width as scatter plots, and a histogram of each of
+      the four variables. Every panel is given an outer frame with box(). (The axis labels and the titles inside
+      the image are in the original Chinese; the English wording of this exercise is above.)</figcaption>
   </figure>
   <figure>
-    <img :src="withBase('/figures/11-question/fig02.png')" alt="Figure 2" loading="lazy" />
-    <figcaption>Figure 2</figcaption>
+    <img :src="withBase('/figures/11-question/fig02.png')" alt="The same iris plots arranged by the layout function instead of par" loading="lazy" />
+    <figcaption>Figure 2. The figure Exercise 1, question 2 asks for: the same iris plots arranged with the layout
+      function instead of par, so that the panels can be given different proportions. The exercise asks for a
+      canvas of 2 rows and 2 columns with widths 0.6 and 0.4 and heights 0.5 and 0.5; the layout matrix that comes
+      with the answer script leaves two panels, the sepal scatter on top and the histogram of sepal length
+      below.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock title="Exercise 1 · Reference answer" :code="code1101"
-  :images="['/figures/11-ggplot2/unnamed-chunk-7-1.png', '/figures/11-ggplot2/unnamed-chunk-7-2.png', '/figures/11-ggplot2/unnamed-chunk-7-3.png']"
+  :images="['/figures/en/11-ggplot2/unnamed-chunk-7-1.png', '/figures/en/11-ggplot2/unnamed-chunk-7-2.png', '/figures/en/11-ggplot2/unnamed-chunk-7-3.png']"
 />
 
 ::: tip How par(mfrow) and layout divide the work
@@ -251,8 +259,11 @@ Open **test1102.R** and complete the tasks below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/11-question/fig03.png')" alt="Figure 3" loading="lazy" />
-    <figcaption>Figure 3</figcaption>
+    <img :src="withBase('/figures/11-question/fig03.png')" alt="Three coloured rectangles drawn with geom_rect" loading="lazy" />
+    <figcaption>Figure 3. The tile plot Exercise 2 asks for: the three rows of the data frame df (x = 3, 1, 5 and
+      y = 5, 7, 9) drawn with geom_rect, each tile running from x to x+2 horizontally and from y-1 to y+1
+      vertically. The fill colour is mapped to x, so the three tiles have three different colours; the legend and
+      the axis labels are hidden, and the tick labels are set to size 20.</figcaption>
   </figure>
 </div>
 
@@ -260,7 +271,7 @@ Open **test1102.R** and complete the tasks below.
   title="Exercise 2 · Reference answer"
   description="This exercise needs library(ggplot2) first."
   :code="code1102"
-  :images="['/figures/11-ggplot2/unnamed-chunk-8-1.png']"
+  :images="['/figures/en/11-ggplot2/unnamed-chunk-8-1.png']"
 />
 
 ::: tip The “grammar of layers” in ggplot2
@@ -301,13 +312,16 @@ Open **test1104.R** and complete the tasks below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/11-question/fig04.png')" alt="Figure 4" loading="lazy" />
-    <figcaption>Figure 4</figcaption>
+    <img :src="withBase('/figures/11-question/fig04.png')" alt="Scatter plot of mtcars horsepower against displacement, labelled with the number of cylinders" loading="lazy" />
+    <figcaption>Figure 4. The scatter plot Exercise 3 asks for: the horsepower (hp) of each car on the x-axis
+      against its displacement (disp) on the y-axis, from mtcars, drawn as blue3 points of size 3. Each point also
+      carries the number of cylinders as a text label moved 8 units along the x axis, the colour of the label is
+      mapped to the number of cylinders through a 20-colour rainbow ramp, and the legend explains it.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock title="Exercise 3 · Reference answer" :code="code1104"
-  :images="['/figures/11-ggplot2/unnamed-chunk-9-1.png']"
+  :images="['/figures/en/11-ggplot2/unnamed-chunk-9-1.png']"
 />
 
 ::: tip nudge_x in geom_text and scale transformations
@@ -342,13 +356,17 @@ Open **test1105.R** and complete the operations below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/11-question/fig05.png')" alt="Figure 5" loading="lazy" />
-    <figcaption>Figure 5</figcaption>
+    <img :src="withBase('/figures/11-question/fig05.png')" alt="Heat map and red contour lines of the faithfuld two-dimensional density" loading="lazy" />
+    <figcaption>Figure 5. The plot Exercise 4 asks for: the two-dimensional kernel density of the Old Faithful
+      geyser data (faithfuld) as a heat map. The length of the eruption is on the x-axis and the waiting time to
+      the next eruption on the y-axis, the fill colour shows the estimated density, and red contour lines join the
+      places where the density is the same. The panel background is lightblue with the grid lines
+      removed.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock title="Exercise 4 · Reference answer" :code="code1105"
-  :images="['/figures/11-ggplot2/unnamed-chunk-10-1.png']"
+  :images="['/figures/en/11-ggplot2/unnamed-chunk-10-1.png']"
 />
 
 ::: tip Drawing the “third dimension” on a flat plane
@@ -387,13 +405,16 @@ Open **test1106.R** and complete the operations below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/11-question/fig06.png')" alt="Figure 6" loading="lazy" />
-    <figcaption>Figure 6</figcaption>
+    <img :src="withBase('/figures/11-question/fig06.png')" alt="Histogram of diamond prices, filled by the computed density" loading="lazy" />
+    <figcaption>Figure 6. The histogram Exercise 5 asks for: the price of the diamonds in the diamonds data set,
+      with the price on the x-axis and the count on the y-axis, in bins 1000 dollars wide. The bars are not filled
+      by the raw price but by the density computed by the statistical transformation, so the fill runs from green
+      at the low end to blue at the high end, and a centred title sits above the plot.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock title="Exercise 5 · Reference answer" :code="code1106"
-  :images="['/figures/11-ggplot2/unnamed-chunk-11-1.png']"
+  :images="['/figures/en/11-ggplot2/unnamed-chunk-11-1.png']"
 />
 
 ::: tip What `..density..` is: mapping the “result of a statistical transformation”
@@ -433,13 +454,17 @@ the number of bins**, because it does not change with the range of the data.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/11-question/fig07.png')" alt="Figure 7" loading="lazy" />
-    <figcaption>Figure 7</figcaption>
+    <img :src="withBase('/figures/11-question/fig07.png')" alt="Scatter plot of iris sepal length against sepal width, filled by species" loading="lazy" />
+    <figcaption>Figure 7. The scatter plot Exercise 6 asks for: the sepal length on the x-axis against the sepal
+      width on the y-axis for the 150 iris flowers, drawn as large semi-transparent circles (shape 21, size 5)
+      filled by species. The two axes are fixed by scale_x_continuous and scale_y_continuous, and the theme sets a
+      centred bold blue title, bold brown axis labels, red tick labels and a legend on a grey90 background with a
+      red border.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock title="Exercise 6 · Reference answer" :code="code1107"
-  :images="['/figures/11-ggplot2/unnamed-chunk-12-1.png']"
+  :images="['/figures/en/11-ggplot2/unnamed-chunk-12-1.png']"
 />
 
 ::: tip The naming rule behind theme — two rules are enough to remember
@@ -498,5 +523,5 @@ This lecture is about **how to draw with the grammar of layers**; for the princi
 statistical chart and the common ways charts mislead, see the corresponding summary in
 *Health Statistics*.
 
-See **[Chapter 19 of *Health Statistics*, Statistical Tables and Charts](/Health-statistics/19-tables-and-charts)** *(Chinese)*.
+See **[Chapter 19 of *Health Statistics*, Statistical Tables and Charts](/en/Health-statistics/19-tables-and-charts)**.
 :::

@@ -504,7 +504,7 @@ pie(eye, labels = paste0(names(eye), " ", pct, "%"),
 - **[《信息技术基础》第 9 讲 高级绘图](/intro-it/9-base-graphics)**—— 本章的 `barplot()`、`pie()` 在那一讲有完整参数（颜色、图例、标签、字号）。那里解决「怎么画」，本章解决「该画频数还是构成比、饼图为什么不能画率」。
 - **[《信息技术基础》第 11 讲 ggplot2 包](/intro-it/11-ggplot2)**—— 用 `geom_bar(position = "fill")` 或 `coord_polar()` 画构成比条形图、饼图更省事，也更适合放进论文。
 - **[《信息技术基础》第 12 讲 参数估计](/intro-it/12-parameter-estimation)**—— 例数少时本章要求「给出率的置信区间」，区间怎么算就在那一讲（总体率的估计也是本课程第 6 章的内容）。
-- **[《医学大数据分析与决策》第 2 周 数据预处理](/Medical-Big-Data-Analysis/2-data-preprocessing)**—— 医院原始数据里性别、科室、诊断这些列往往又乱又有缺失，先要把它们整成规矩的分类变量（重编码、合并类别、处理缺失值），本章的列联表才算得出来。
+- **[《医学大数据分析与决策》第 2 周 数据预处理](/Medical-Big-Data-Analysis/2-data-preprocessing)**—— 医院原始数据里性别、科室、诊断这些列往往又乱又杂，先要把它们整成规矩的分类变量，本章的列联表才算得出来。那一周管的是其中的工程步骤：属性列处理（`subset()` 删掉不需要的列、选出要用的列），以及把连续变量按等宽或等频**分箱**成有限的类别（分箱之后才有「组」可以列联表）。而**把变量变成因子、用 `levels` 定好顺序**是《信息技术基础》第 4 讲的内容（见上一条），**缺失值的发现与删除**在第 1 周 R 的使用及数据获取（[打开第 1 周](/Medical-Big-Data-Analysis/1-r-basics-and-data)）。
 - **[《医学大数据分析与决策》第 5 周 分类（一）](/Medical-Big-Data-Analysis/5-classification-1)**—— 混淆矩阵里的敏感度、特异度、准确率，本质上都是在列联表上按不同分母算出的条件率，和本章「率与构成比只差一个分母」是同一套思维。区别在于：那里关心「模型预测得准不准」，这里关心「描述得对不对」。
 :::
 
@@ -514,7 +514,7 @@ pie(eye, labels = paste0(names(eye), " ", pct, "%"),
 - /intro-it/14-goodness-of-fit-and-contingency 的「本讲小结」处，加一句「列联表的描述性指标（率、构成比）与相对数的注意事项见 卫生统计学 第 5 章：先描述，再检验」。
 - /intro-it/9-base-graphics 讲 barplot/pie 处，加一句「频数图与构成比图的区别、饼图为什么不能画率，见 卫生统计学 第 5 章」。
 - /intro-it/3-arrays-and-data-frames 讲多维数组下标处，加一句「列联表上的 margin.table/prop.table 用法见 卫生统计学 第 5 章」。
-- /Medical-Big-Data-Analysis/2-data-preprocessing 讲分类变量编码处，加一句「分类变量的统计描述指标见 卫生统计学 第 5 章」。
+- /intro-it/4-lists-and-factors 讲 `factor()` 与分类变量编码处，加一句「分类变量的统计描述指标见 卫生统计学 第 5 章」。
 - /Health-statistics/01-introduction 讲「用构成比代替率」那个坑处，加一句「完整的判断方法见 卫生统计学 第 5 章」。
 -->
 

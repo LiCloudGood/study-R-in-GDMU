@@ -56,7 +56,7 @@ diff(y.time)
 
 dt1 = "2025-3-24 8:30:15"
 dt2 = "2025-3-24 10:30:15"
-difftime(strptime(dt2, format = "%Y-%m-%d %H:%M:%S"), 
+difftime(strptime(dt2, format = "%Y-%m-%d %H:%M:%S"),
          strptime(dt1, format = "%Y-%m-%d %H:%M:%S"), units = "hours")
 
 dt1.time <- strptime(dt1, format = "%Y-%m-%d %H:%M:%S")

@@ -21,7 +21,7 @@ const out0201 = `[1] 15.4
 [1] 21
 [1] 27.95918
 [1] 5.287644
-  0%  25%  50%  75% 100% 
+  0%  25%  50%  75% 100%
    4   12   15   19   25`
 
 const code0202 = `set.seed(1234)
@@ -41,11 +41,11 @@ const out0202 = `[1] 73.59
 [1] 81.72
 [1] 9.04
 [1] 44.05
- 75% 
-12.3 
-53.8887206763359 
-               1 
-   0%   25%   50%   75%  100% 
+ 75%
+12.3
+53.8887206763359
+               1
+   0%   25%   50%   75%  100%
 53.89 66.94 71.54 79.24 97.94`
 
 const code0203 = `install.packages('corrgram')
@@ -206,10 +206,10 @@ const out0207 = `b1      b2       b3
  [9,] -0.30256  0.5683  1.80035
 [10,]  1.69723 -0.5606 -0.35527
 attr(,"scaled:center")
-      b1       b2       b3 
-  0.3589 100.0264  30.1056 
+      b1       b2       b3
+  0.3589 100.0264  30.1056
 attr(,"scaled:scale")
-    b1     b2     b3 
+    b1     b2     b3
 1.2053 0.1561 0.4925`
 </script>
 
@@ -289,7 +289,7 @@ install.packages(c("corrgram", "infotheo"))
 <AnswerBlock title="Exercise 2 · Reference answer"
   :code="code0202"
   :output="out0202"
-  :images="['/figures/mbd/2/plot-01.png', '/figures/mbd/2/plot-02.png']" />
+  :images="['/figures/en/mbd/2/plot-01.png', '/figures/en/mbd/2/plot-02.png']" />
 
 ## Exercise 3: Correlation analysis
 
@@ -327,7 +327,7 @@ install.packages(c("corrgram", "infotheo"))
   description="This exercise needs `corrgram`."
   :code="code0203"
   :output="out0203"
-  :images="['/figures/mbd/2/plot-02.png', '/figures/mbd/2/plot-03.png']" />
+  :images="['/figures/en/mbd/2/plot-02.png', '/figures/en/mbd/2/plot-03.png']" />
 
 ## Exercise 4: Handling attribute columns
 

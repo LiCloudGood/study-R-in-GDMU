@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useData } from 'vitepress'
 
 /**
  * 参考答案卡片（静态版）。
@@ -15,7 +16,40 @@ import { computed, ref } from 'vue'
  *   output      事先跑出来的文字输出（原样显示，保留换行）
  *   images      事先跑出来的图，public/ 下的路径，如 ['/figures/09/a.png']
  *   defaultOpen 是否默认展开（默认收起，让学生先自己做）
+ *
+ * 界面上的固定文字（按钮、小标题、图片替代文本）**按站点语言切换**：
+ * 中文站用原来那套原话，英文站用英文 —— 否则英文页上会冒出
+ * 「👀 查看参考答案」这种半截中文（组件里写死的字，页面正文翻不到它）。
+ * 判断方式与 ChoiceFlow.vue 一致：lang 以 en 开头就是英文站。
  */
+const { lang } = useData()
+const isEn = computed(() => /^en\b/i.test(String(lang.value ?? '')))
+
+/** 中文那一套就是原来写在模板里的原话，一个字没改 */
+const L = computed(() =>
+  isEn.value
+    ? {
+        title: 'Reference answer',
+        showAnswer: '👀 Show the answer',
+        hideAnswer: '🙈 Hide the answer',
+        copy: '📋 Copy',
+        copied: '✅ Copied',
+        output: 'Output',
+        figures: 'Figures',
+        figureAlt: (i: number) => `Output figure ${i}`
+      }
+    : {
+        title: '参考答案',
+        showAnswer: '👀 查看参考答案',
+        hideAnswer: '🙈 收起答案',
+        copy: '📋 复制',
+        copied: '✅ 已复制',
+        output: '运行结果',
+        figures: '输出图形',
+        figureAlt: (i: number) => `输出图 ${i}`
+      }
+)
+
 const props = withDefaults(
   defineProps<{
     code?: string
@@ -23,14 +57,25 @@ const props = withDefaults(
     description?: string
     output?: string
     images?: string[]
+    /**
+     * 与 images 一一对应的图注。
+     *
+     * 用途：有些图是课程原始素材（题面里的图），**图内文字是中文、改不了**
+     * （重画就等于换图）。这种情况下与其让英文读者对着中文图猜，
+     * 不如在图下用英文说清「这张图画的是什么、坐标轴是什么、看什么」。
+     * 只给需要说明的那几张写即可，没写的就不显示。
+     */
+    captions?: string[]
     defaultOpen?: boolean
   }>(),
   {
     code: '',
-    title: '参考答案',
+    // 留空则用 L.title（按语言给「参考答案 / Reference answer」），见上面 L 的说明
+    title: '',
     description: '',
     output: '',
     images: () => [],
+    captions: () => [],
     defaultOpen: false
   }
 )
@@ -67,7 +112,7 @@ async function copyCode() {
     <div class="answer-header">
       <div class="answer-title">
         <span class="answer-icon">📘</span>
-        <span class="answer-title-text">{{ title }}</span>
+        <span class="answer-title-text">{{ title || L.title }}</span>
       </div>
       <div class="answer-actions">
         <button
@@ -76,10 +121,10 @@ async function copyCode() {
           :aria-expanded="isOpen"
           @click="isOpen = !isOpen"
         >
-          {{ isOpen ? '🙈 收起答案' : '👀 查看参考答案' }}
+          {{ isOpen ? L.hideAnswer : L.showAnswer }}
         </button>
         <button v-if="isOpen" type="button" class="action-btn" @click="copyCode">
-          {{ copied ? '✅ 已复制' : '📋 复制' }}
+          {{ copied ? L.copied : L.copy }}
         </button>
       </div>
     </div>
@@ -90,14 +135,15 @@ async function copyCode() {
       <pre class="answer-code"><code>{{ code }}</code></pre>
 
       <div v-if="output" class="answer-output">
-        <div class="output-header">运行结果</div>
+        <div class="output-header">{{ L.output }}</div>
         <pre class="output-text">{{ output }}</pre>
       </div>
 
       <div v-if="imageUrls.length" class="answer-figures">
-        <div class="output-header">输出图形</div>
+        <div class="output-header">{{ L.figures }}</div>
         <figure v-for="(src, i) in imageUrls" :key="src + i">
-          <img :src="src" :alt="`输出图 ${i + 1}`" loading="lazy" />
+          <img :src="src" :alt="captions[i] || L.figureAlt(i + 1)" loading="lazy" />
+          <figcaption v-if="captions[i]">{{ captions[i] }}</figcaption>
         </figure>
       </div>
     </div>
@@ -254,6 +300,20 @@ async function copyCode() {
   border: 1px solid var(--ra-border);
   border-radius: 6px;
   background: #fff;
+}
+
+/* 图注：有些图是课程原始素材、图内文字是中文且改不了，
+   就用这里用英文说清这张图画的是什么（见 captions 属性的说明） */
+.answer-figures figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--vp-c-text-2);
+}
+
+.answer-figures figcaption::before {
+  content: '▲ ';
+  color: var(--vp-c-text-3);
 }
 
 @media (max-width: 768px) {

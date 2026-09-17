@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { useData } from 'vitepress'
 
 /**
  * 可折叠的「显示解答」按钮。
@@ -9,7 +10,21 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
  * 这里写解答内容，支持 Markdown 与公式。
  * </ClickAnswer>
  * ```
+ *
+ * 按钮文字**按站点语言给默认值**：页面没传 showText/hideText 时，
+ * 中文站用「▼ 显示解答 / ▲ 隐藏解答」，英文站用英文。
+ * 之前这里写死中文，英文页面上就冒出「▼ 显示解答」这种半截中文
+ * —— 组件里的字，页面正文翻不到它。判断方式与 ChoiceFlow.vue 一致。
  */
+const { lang } = useData()
+const isEn = computed(() => /^en\b/i.test(String(lang.value ?? '')))
+
+/** 中文那一套就是原来写在默认值里的原话，一个字没改 */
+const DEFAULT_TEXT = computed(() =>
+  isEn.value
+    ? { showText: '▼ Show the answer', hideText: '▲ Hide the answer' }
+    : { showText: '▼ 显示解答', hideText: '▲ 隐藏解答' }
+)
 const props = withDefaults(
   defineProps<{
     /** 初始是否展开 */
@@ -35,8 +50,9 @@ const props = withDefaults(
   }>(),
   {
     initiallyOpen: false,
-    showText: '▼ 显示解答',
-    hideText: '▲ 隐藏解答',
+    // 留空则按站点语言取 DEFAULT_TEXT，见上面的说明
+    showText: '',
+    hideText: '',
     iconPosition: 'left',
     showIcon: '💡',
     hideIcon: '📋',
@@ -54,7 +70,11 @@ const contentId = `${uid}-content`
 const isOpen = ref(props.initiallyOpen)
 const isMounted = ref(false)
 
-const buttonText = computed(() => (isOpen.value ? props.hideText : props.showText))
+const buttonText = computed(() =>
+  isOpen.value
+    ? props.hideText || DEFAULT_TEXT.value.hideText
+    : props.showText || DEFAULT_TEXT.value.showText
+)
 const buttonIcon = computed(() => (isOpen.value ? props.hideIcon : props.showIcon))
 const themeClass = computed(() => `theme-${props.theme}`)
 const animationClass = computed(() => (props.animation === 'none' ? '' : `transition-${props.animation}`))

@@ -819,22 +819,25 @@ simply quoting a $P$ value.
 ## How it connects to the other courses
 
 ::: tip Related pages
-- **Lecture 9 of *Introduction to Information Technology*, Base Graphics** *(Chinese)*
-  ([`/intro-it/9-base-graphics`](/intro-it/9-base-graphics)) — there the practice is with the `breaks`,
+- **Lecture 9 of *Introduction to Information Technology*, Base Graphics**
+  ([`/intro-it/9-base-graphics`](/en/intro-it/9-base-graphics)) — there the practice is with the `breaks`,
   `labels`, and `col` arguments of `hist()` and with `boxplot()`; here we discuss what each of these plots
   answers in a statistical description: the histogram shows the shape and symmetry of the distribution,
   the boxplot the five-number summary and outliers.
-- **Lecture 11 of *Introduction to Information Technology*, The ggplot2 Package** *(Chinese)*
-  ([`/intro-it/11-ggplot2`](/intro-it/11-ggplot2)) — `geom_histogram()`, `geom_boxplot()`, and `geom_qq()`
-  are another way to draw the same plots, and are easier to lay out for grouped comparisons than base R.
-- **Lecture 12 of *Introduction to Information Technology*, Parameter Estimation** *(Chinese)*
-  ([`/intro-it/12-parameter-estimation`](/intro-it/12-parameter-estimation)) — the $\bar x$ and $s$
+- **Lecture 11 of *Introduction to Information Technology*, The ggplot2 Package**
+  ([`/intro-it/11-ggplot2`](/en/intro-it/11-ggplot2)) — its `geom_histogram()` and `geom_point()` are another
+  way to draw the same plots, and its `scale_*()` color scales and themes make grouped comparisons
+  easier to lay out than base R. The **boxplot** of this chapter is drawn in Chapter 19, Common
+  Statistical Charts
+  ([`/Health-statistics/19-tables-and-charts`](/en/Health-statistics/19-tables-and-charts)).
+- **Lecture 12 of *Introduction to Information Technology*, Parameter Estimation**
+  ([`/intro-it/12-parameter-estimation`](/en/intro-it/12-parameter-estimation)) — the $\bar x$ and $s$
   computed here are the raw material there: $\bar x$ is the point estimate of the population mean, and
   $s$ has to become the standard error $s/\sqrt{n}$ before interval estimation can be done. Here we
   discuss "how to describe a batch of data"; there, "how far this batch of data can infer the
   population".
-- **Week 2 of *Medical Big Data Analysis and Decision Making*, Data Preprocessing** *(Chinese)*
-  ([`/Medical-Big-Data-Analysis/2-data-preprocessing`](/Medical-Big-Data-Analysis/2-data-preprocessing)) —
+- **Week 2 of *Medical Big Data Analysis and Decision Making*, Data Preprocessing**
+  ([`/Medical-Big-Data-Analysis/2-data-preprocessing`](/en/Medical-Big-Data-Analysis/2-data-preprocessing)) —
   the engineering use of the same indices: `mean()/var()/sd()/range()/quantile()/which.max(table())` in
   the exercises are this chapter's measures of central tendency and dispersion (`which.max(table())` is
   the mode); equal-width binning is the equal-interval grouping of a frequency table, and equal-frequency
@@ -842,8 +845,8 @@ simply quoting a $P$ value.
   normal transformation. The difference is that that week cares about "how to get the data into a form a
   model can consume", while this chapter cares about "what these numbers mean statistically and which one
   to choose".
-- **Week 3 of *Medical Big Data Analysis and Decision Making*, Regression Analysis** *(Chinese)*
-  ([`/Medical-Big-Data-Analysis/3-regression`](/Medical-Big-Data-Analysis/3-regression)) — the routine
+- **Week 3 of *Medical Big Data Analysis and Decision Making*, Regression Analysis**
+  ([`/Medical-Big-Data-Analysis/3-regression`](/en/Medical-Big-Data-Analysis/3-regression)) — the routine
   before modeling, "describe first, plot next, fit last": use this chapter's indices and a boxplot to
   find outliers and see whether variables are skewed, transform logarithmically where necessary, and only
   then enter the model.
@@ -853,7 +856,7 @@ simply quoting a $P$ value.
 Suggest linking back to this page (which should point at /en/Health-statistics/04-describing-quantitative-data
 once translated; for now the Chinese page /Health-statistics/04-describing-quantitative-data) from:
 - /intro-it/9-base-graphics, at the hist and boxplot exercises.
-- /intro-it/11-ggplot2, where geom_histogram / geom_boxplot are discussed.
+- /intro-it/11-ggplot2, where geom_histogram is discussed (geom_boxplot belongs to Chapter 19).
 - /intro-it/12-parameter-estimation, in its summary.
 - /Medical-Big-Data-Analysis/2-data-preprocessing, at "Exercise 1" and "Exercise 7 Z-score standardization".
 -->

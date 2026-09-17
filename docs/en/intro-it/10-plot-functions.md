@@ -348,8 +348,13 @@ compare melanoma thickness grouped by `ulc` and `sex`.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/10-question/fig01.png')" alt="Sample figure 1" loading="lazy" />
-    <figcaption>Sample figure 1</figcaption>
+    <img :src="withBase('/figures/10-question/fig01.png')" alt="Violin plots of melanoma thickness for the four ulceration and sex groups" loading="lazy" />
+    <figcaption>Sample figure 1. The violin plot Exercise 1 asks for: the melanoma thickness (the variable thick
+      in melanom.csv) split into the four groups formed by ulceration and sex — ulcerated and not ulcerated,
+      female and male. The four group labels are on the x-axis and the thickness on the y-axis; each violin shows
+      the shape of the distribution of one group, with a boxplot drawn inside it, and the class labels have
+      ulceration first and sex second. (The axis labels and the title inside the image are in the original
+      Chinese; the English wording of this exercise is above.)</figcaption>
   </figure>
 </div>
 
@@ -357,7 +362,7 @@ compare melanoma thickness grouped by `ulc` and `sex`.
   title="Exercise 1 · Reference answer"
   description="Requires the vioplot package (install.packages('vioplot')); the data are in melanom.csv."
   :code="code1001"
-  :images="['/figures/10-base-graphics/q01.png']"
+  :images="['/figures/en/10-base-graphics/q01.png']"
 />
 
 ::: tip Three traps in this exercise
@@ -389,8 +394,12 @@ Open the script file **test1002.R** and complete the operations below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/10-question/fig02.png')" alt="Sample figure 2" loading="lazy" />
-    <figcaption>Sample figure 2</figcaption>
+    <img :src="withBase('/figures/10-question/fig02.png')" alt="Violin plots of the four random samples x.1 to x.4 in the data frame x" loading="lazy" />
+    <figcaption>Sample figure 2. The violin plot Exercise 2 asks for: the four variables x.1 to x.4 of the data
+      frame x side by side — two samples from the normal distribution, one from the Poisson distribution and one
+      from the binomial distribution, 200 values each. The four variables are on the x-axis and their values on
+      the y-axis, the violins have different fill and border colours, and the title is red with blue tick
+      labels.</figcaption>
   </figure>
 </div>
 
@@ -398,7 +407,7 @@ Open the script file **test1002.R** and complete the operations below.
   title="Exercise 2 · Reference answer"
   description="Pass the data frame straight to vioplot() and it treats every column as one group."
   :code="code1002"
-  :images="['/figures/10-base-graphics/q02.png']"
+  :images="['/figures/en/10-base-graphics/q02.png']"
 />
 
 ::: tip What kinds of input `vioplot()` accepts
@@ -429,8 +438,12 @@ Open the script file **test1003.R** and complete the tasks below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/10-question/fig03.png')" alt="Sample figure 3" loading="lazy" />
-    <figcaption>Sample figure 3</figcaption>
+    <img :src="withBase('/figures/10-question/fig03.png')" alt="Normal Q-Q plot of the variable c0, with a reference line" loading="lazy" />
+    <figcaption>Sample figure 3. The normal Q–Q plot Exercise 3 asks for: the variable c0 of alkfos.csv against
+      the quantiles of the normal distribution, worked out with qqnorm. The theoretical quantiles are on the
+      x-axis and the sorted values of c0 on the y-axis; the points are split into the two groups of grp, each with
+      its own shape, border colour and fill colour, and a red straight line is drawn through them as the
+      reference.</figcaption>
   </figure>
 </div>
 
@@ -438,7 +451,7 @@ Open the script file **test1003.R** and complete the tasks below.
   title="Exercise 3 · Reference answer"
   description="The two groups of points need different styles, so take the coordinates with qqnorm(plot.it = FALSE) first and plot them yourself."
   :code="code1003"
-  :images="['/figures/10-base-graphics/q03.png']"
+  :images="['/figures/en/10-base-graphics/q03.png']"
 />
 
 ::: tip Why `plot.it = FALSE`
@@ -474,8 +487,11 @@ Open the script file **test1004.R** and complete the tasks below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/10-question/fig04.png')" alt="Sample figure 4" loading="lazy" />
-    <figcaption>Sample figure 4</figcaption>
+    <img :src="withBase('/figures/10-question/fig04.png')" alt="Q-Q plot of x against a random sample from a t distribution with 35 degrees of freedom" loading="lazy" />
+    <figcaption>Sample figure 4. The Q–Q plot Exercise 4 asks for: the 100 random numbers x (rnorm(100, 2))
+      plotted against a sample of the same size drawn from a t distribution with 35 degrees of freedom. The
+      theoretical quantiles of t(35) are on the x-axis and the observed values of x on the y-axis, with a straight
+      reference line; if the points gather around the line, x may be taken to approximately follow t(35).</figcaption>
   </figure>
 </div>
 
@@ -483,7 +499,7 @@ Open the script file **test1004.R** and complete the tasks below.
   title="Exercise 4 · Reference answer"
   description="Note that qqline() needs its reference distribution specified, or it draws the line for a normal distribution."
   :code="code1004"
-  :images="['/figures/10-base-graphics/q04.png']"
+  :images="['/figures/en/10-base-graphics/q04.png']"
 />
 
 ::: tip By default `qqline()` compares against the normal distribution
@@ -534,8 +550,11 @@ Open the script file **test1005.R** and complete the operations below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/10-question/fig05.png')" alt="Sample figure 5" loading="lazy" />
-    <figcaption>Sample figure 5</figcaption>
+    <img :src="withBase('/figures/10-question/fig05.png')" alt="Scatter plot of c0 against c12 for the two groups, drawn in two layers of points" loading="lazy" />
+    <figcaption>Sample figure 5. The scatter plot Exercise 5 asks for: c0 on the x-axis against c12 on the
+      y-axis, from alkfos.csv, with the two groups of grp drawn as different shapes and colours. Two layers of
+      points are drawn at the same coordinates — first a large layer with thick borders, then a smaller layer on
+      top of it.</figcaption>
   </figure>
 </div>
 
@@ -543,7 +562,7 @@ Open the script file **test1005.R** and complete the operations below.
   title="Exercise 5 · Reference answer"
   description="The starter script has already drawn the empty coordinate system, so the points can simply be added."
   :code="code1005"
-  :images="['/figures/10-base-graphics/q05.png']"
+  :images="['/figures/en/10-base-graphics/q05.png']"
 />
 
 ::: tip `type = "n"` means “draw the coordinate system only, not the points”
@@ -576,8 +595,12 @@ Open the script file **test1006.R** and complete the operations below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/10-question/fig06.png')" alt="Sample figure 6" loading="lazy" />
-    <figcaption>Sample figure 6</figcaption>
+    <img :src="withBase('/figures/10-question/fig06.png')" alt="Three curves, y=sin(2x+1), y=cos(4x-3) and y=0.4x-0.2, with their formulas labelled" loading="lazy" />
+    <figcaption>Sample figure 6. The plot Exercise 6 asks for: three curves overlaid on one canvas — y = sin(2x+1)
+      in red, y = cos(4x-3) in blue and y = 0.4x - 0.2 in green — with t running from 0 to pi. The x-axis is t and
+      the y-axis is y; each curve is labelled with its own formula in the colour of that curve, the plot carries a
+      main title and a subtitle, and the current system date is written down the right-hand edge in
+      gold.</figcaption>
   </figure>
 </div>
 
@@ -585,7 +608,7 @@ Open the script file **test1006.R** and complete the operations below.
   title="Exercise 6 · Reference answer"
   description="The three curves are overlaid with par(new = TRUE), and then the title, the labels, and the marginal note are added on top of them."
   :code="code1006"
-  :images="['/figures/10-base-graphics/q06.png']"
+  :images="['/figures/en/10-base-graphics/q06.png']"
 />
 
 ::: tip `par(new = TRUE)` means “keep drawing on the same plot”
@@ -629,8 +652,11 @@ Open the script file **test1007.R** and complete the tasks below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/10-question/fig07.png')" alt="Sample figure 7" loading="lazy" />
-    <figcaption>Sample figure 7</figcaption>
+    <img :src="withBase('/figures/10-question/fig07.png')" alt="Grouped bar chart of the hair and eye colour counts of the men in HairEyeColor, with a legend" loading="lazy" />
+    <figcaption>Sample figure 7. The bar chart Exercise 7 asks for: the hair and eye colour counts of the men in
+      HairEyeColor, with the four eye colours along the x-axis and the number of men on the y-axis over the range 0
+      to 65. Each eye colour is a group of four bars, one for each hair colour, drawn with different hatching
+      densities and angles, and the legend that this exercise is about sits at the top of the plot.</figcaption>
   </figure>
 </div>
 
@@ -638,7 +664,7 @@ Open the script file **test1007.R** and complete the tasks below.
   title="Exercise 7 · Reference answer"
   description="Every part of the legend has its own parameters; keep the three sets fill / lty / pch apart."
   :code="code1007"
-  :images="['/figures/10-base-graphics/q07.png']"
+  :images="['/figures/en/10-base-graphics/q07.png']"
 />
 
 ::: tip The parameters of `legend()` are divided up by part
@@ -676,8 +702,11 @@ Open the script file **test1008.R** and complete the tasks below.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/10-question/fig08.png')" alt="Sample figure 8" loading="lazy" />
-    <figcaption>Sample figure 8</figcaption>
+    <img :src="withBase('/figures/10-question/fig08.png')" alt="Scatter plot of iris petal length against petal width with a fitted line and a density curve" loading="lazy" />
+    <figcaption>Sample figure 8. The plot Exercise 8 asks for: the petal length on the x-axis against the petal
+      width on the y-axis for all 150 iris flowers, drawn as large points in many colours. Four things are then
+      added on top of it: a red fitted straight line, a blue dashed normal density curve stretched three times
+      taller, a blue arrow pointing at that curve, and the text that names it.</figcaption>
   </figure>
 </div>
 
@@ -685,7 +714,7 @@ Open the script file **test1008.R** and complete the tasks below.
   title="Exercise 8 · Reference answer"
   description="abline for a straight line, lines for a curve, arrows for an arrow, text for a label — all four ways of “adding to a plot” used at once."
   :code="code1008"
-  :images="['/figures/10-base-graphics/q08.png']"
+  :images="['/figures/en/10-base-graphics/q08.png']"
 />
 
 ::: tip What `abline()`, `lines()`, and `arrows()` each do
@@ -746,6 +775,6 @@ Which data deserve which plot, and when a plot stops misleading its reader (trun
 axes, whether to use a pie chart), are summarized in *Health Statistics*; ready-made higher-level
 plotting functions (`hist`, `boxplot`, `plot`) are in Lecture 9.
 
-- **[Chapter 19 of *Health Statistics*, Statistical Tables and Charts](/Health-statistics/19-tables-and-charts)** *(Chinese)*
-- **[Lecture 9 of *Introduction to Information Technology*, Base Graphics](/intro-it/9-base-graphics)** *(Chinese)*
+- **[Chapter 19 of *Health Statistics*, Statistical Tables and Charts](/en/Health-statistics/19-tables-and-charts)**
+- **[Lecture 9 of *Introduction to Information Technology*, Base Graphics](/en/intro-it/9-base-graphics)**
 :::

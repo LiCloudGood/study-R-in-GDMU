@@ -975,7 +975,7 @@ Suggest linking back to this page (all pointing at /Health-statistics/06-estimat
 - /intro-it/9-base-graphics, where hist() / distribution curve plotting is discussed: add a sentence
   "Using it to draw sampling distributions, t distribution curves, and schematic 95% confidence
   intervals is in Chapter 6 of Health Statistics".
-- /Medical-Big-Data-Analysis/2-data-preprocessing, at missing value handling: add a sentence "The effect
+- /Medical-Big-Data-Analysis/1-r-basics-and-data, at the `na.omit()` missing-value handling: add a sentence "The effect
   of missing values on the sample size, the standard error, and the confidence interval is in Chapter 6
   of Health Statistics".
 -->

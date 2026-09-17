@@ -449,8 +449,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Using a proportion as if it were a rate — see the “rate versus proportion” comparison table in Chapter 5"
         ],
         "c": {
-          "text": "Chapter 5. Describing Qualitative Data (Chinese)",
-          "link": "/Health-statistics/05-describing-qualitative-data"
+          "text": "Chapter 5. Describing Qualitative Data",
+          "link": "/en/Health-statistics/05-describing-qualitative-data"
         }
       }
     },
@@ -471,8 +471,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "For ordinal data the levels should also be arranged **in order**, otherwise the trend from mild to severe is invisible"
         ],
         "c": {
-          "text": "Chapter 5. Describing Qualitative Data (Chinese)",
-          "link": "/Health-statistics/05-describing-qualitative-data"
+          "text": "Chapter 5. Describing Qualitative Data",
+          "link": "/en/Health-statistics/05-describing-qualitative-data"
         }
       }
     },
@@ -497,8 +497,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "When there are many tied values R prints a warning; do not read it as an error"
         ],
         "c": {
-          "text": "Chapter 11. Nonparametric and Rank-Based Tests (Chinese)",
-          "link": "/Health-statistics/11-nonparametric"
+          "text": "Chapter 11. Nonparametric and Rank-Based Tests",
+          "link": "/en/Health-statistics/11-nonparametric"
         }
       }
     },
@@ -546,8 +546,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Using the normal approximation for the confidence interval of a rate with a small sample can give a negative lower limit — the exact method should be used"
         ],
         "c": {
-          "text": "Chapter 6. Estimating Population Means and Rates (Chinese)",
-          "link": "/Health-statistics/06-estimation"
+          "text": "Chapter 6. Estimating Population Means and Rates",
+          "link": "/en/Health-statistics/06-estimation"
         }
       }
     },
@@ -569,8 +569,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Forcing the calculation when the expected frequencies are too small — R warns, and the categories then have to be combined"
         ],
         "c": {
-          "text": "Chapter 10. Chi-Square Tests (Chinese)",
-          "link": "/Health-statistics/10-chi-square"
+          "text": "Chapter 10. Chi-Square Tests",
+          "link": "/en/Health-statistics/10-chi-square"
         }
       }
     },
@@ -592,8 +592,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "When it is compared with the paired t test, the write-up must say which of the two was used rather than mixing them"
         ],
         "c": {
-          "text": "Chapter 11. Nonparametric and Rank-Based Tests (Chinese)",
-          "link": "/Health-statistics/11-nonparametric"
+          "text": "Chapter 11. Nonparametric and Rank-Based Tests",
+          "link": "/en/Health-statistics/11-nonparametric"
         }
       }
     },
@@ -643,8 +643,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Using an ordinary chi-square test on paired data — this ignores the pairing and the conclusion may come out completely reversed"
         ],
         "c": {
-          "text": "Chapter 10. Chi-Square Tests (Chinese)",
-          "link": "/Health-statistics/10-chi-square"
+          "text": "Chapter 10. Chi-Square Tests",
+          "link": "/en/Health-statistics/10-chi-square"
         }
       }
     },
@@ -660,8 +660,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Forcing the data into a method you happen to know — the most dangerous mistake in data analysis"
         ],
         "c": {
-          "text": "Chapter 3. Experimental and Survey Design (Chinese)",
-          "link": "/Health-statistics/03-study-design"
+          "text": "Chapter 3. Experimental and Survey Design",
+          "link": "/en/Health-statistics/03-study-design"
         }
       }
     },
@@ -686,8 +686,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Using it when the data are in fact close to normal — power is lost for nothing"
         ],
         "c": {
-          "text": "Chapter 11. Nonparametric and Rank-Based Tests (Chinese)",
-          "link": "/Health-statistics/11-nonparametric"
+          "text": "Chapter 11. Nonparametric and Rank-Based Tests",
+          "link": "/en/Health-statistics/11-nonparametric"
         }
       }
     },
@@ -754,8 +754,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Working out the percentages the wrong way round — rates (across rows) and proportions (down columns)"
         ],
         "c": {
-          "text": "Chapter 10. Chi-Square Tests (Chinese)",
-          "link": "/Health-statistics/10-chi-square"
+          "text": "Chapter 10. Chi-Square Tests",
+          "link": "/en/Health-statistics/10-chi-square"
         }
       }
     },
@@ -779,8 +779,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Saying “all the groups differ” after a significant result — the result only says they are not all the same; specific comparisons need multiple comparisons with an adjusted α"
         ],
         "c": {
-          "text": "Chapter 10. Chi-Square Tests (Chinese)",
-          "link": "/Health-statistics/10-chi-square"
+          "text": "Chapter 10. Chi-Square Tests",
+          "link": "/en/Health-statistics/10-chi-square"
         }
       }
     },
@@ -802,8 +802,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Concluding straight after a significant result which two groups differ — multiple comparisons with an adjusted level are still needed"
         ],
         "c": {
-          "text": "Chapter 11. Nonparametric and Rank-Based Tests (Chinese)",
-          "link": "/Health-statistics/11-nonparametric"
+          "text": "Chapter 11. Nonparametric and Rank-Based Tests",
+          "link": "/en/Health-statistics/11-nonparametric"
         }
       }
     },
@@ -829,8 +829,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Saying “all the groups differ” when the result only says they are not all the same"
         ],
         "c": {
-          "text": "Chapter 9. Analysis of Variance (Chinese)",
-          "link": "/Health-statistics/09-anova"
+          "text": "Chapter 9. Analysis of Variance",
+          "link": "/en/Health-statistics/09-anova"
         }
       }
     },
@@ -854,8 +854,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Saying “all the groups differ” after a significant result — the result only says they are not all the same; specific comparisons need multiple comparisons with an adjusted α"
         ],
         "c": {
-          "text": "Chapter 10. Chi-Square Tests (Chinese)",
-          "link": "/Health-statistics/10-chi-square"
+          "text": "Chapter 10. Chi-Square Tests",
+          "link": "/en/Health-statistics/10-chi-square"
         }
       }
     },
@@ -879,8 +879,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Saying “all the groups differ” after a significant result — the result only says they are not all the same; specific comparisons need multiple comparisons with an adjusted α"
         ],
         "c": {
-          "text": "Chapter 10. Chi-Square Tests (Chinese)",
-          "link": "/Health-statistics/10-chi-square"
+          "text": "Chapter 10. Chi-Square Tests",
+          "link": "/en/Health-statistics/10-chi-square"
         }
       }
     },
@@ -903,8 +903,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Analyzing repeated-measures data as independent groups — this ignores the correlation and makes the p value far too small"
         ],
         "c": {
-          "text": "Chapter 9. Analysis of Variance (Chinese)",
-          "link": "/Health-statistics/09-anova"
+          "text": "Chapter 9. Analysis of Variance",
+          "link": "/en/Health-statistics/09-anova"
         }
       }
     },
@@ -920,8 +920,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Forcing the data into a method you happen to know — the most dangerous mistake in data analysis"
         ],
         "c": {
-          "text": "Chapter 3. Experimental and Survey Design (Chinese)",
-          "link": "/Health-statistics/03-study-design"
+          "text": "Chapter 3. Experimental and Survey Design",
+          "link": "/en/Health-statistics/03-study-design"
         }
       }
     },
@@ -943,8 +943,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Getting the block (individual) factor wrong — the block variable must correctly identify the same individual"
         ],
         "c": {
-          "text": "Chapter 11. Nonparametric and Rank-Based Tests (Chinese)",
-          "link": "/Health-statistics/11-nonparametric"
+          "text": "Chapter 11. Nonparametric and Rank-Based Tests",
+          "link": "/en/Health-statistics/11-nonparametric"
         }
       }
     },
@@ -969,8 +969,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Comparing the curves directly when the two groups have very different follow-up ranges"
         ],
         "c": {
-          "text": "Chapter 14. Survival Analysis (Chinese)",
-          "link": "/Health-statistics/14-survival-analysis"
+          "text": "Chapter 14. Survival Analysis",
+          "link": "/en/Health-statistics/14-survival-analysis"
         }
       }
     },
@@ -992,8 +992,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Using the log-rank test when the curves clearly cross — it may fail to detect a difference, so consider splitting the time axis or using another test"
         ],
         "c": {
-          "text": "Chapter 14. Survival Analysis (Chinese)",
-          "link": "/Health-statistics/14-survival-analysis"
+          "text": "Chapter 14. Survival Analysis",
+          "link": "/en/Health-statistics/14-survival-analysis"
         }
       }
     },
@@ -1017,8 +1017,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Drawing conclusions without testing the proportional hazards assumption"
         ],
         "c": {
-          "text": "Chapter 14. Survival Analysis (Chinese)",
-          "link": "/Health-statistics/14-survival-analysis"
+          "text": "Chapter 14. Survival Analysis",
+          "link": "/en/Health-statistics/14-survival-analysis"
         }
       }
     },
@@ -1043,8 +1043,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Taking a large absolute value of r as proof that the correlation is “very strong”"
         ],
         "c": {
-          "text": "Chapter 12. Bivariate Association (Chinese)",
-          "link": "/Health-statistics/12-bivariate-association"
+          "text": "Chapter 12. Bivariate Association",
+          "link": "/en/Health-statistics/12-bivariate-association"
         }
       }
     },
@@ -1066,8 +1066,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Reporting r_s and the Pearson r interchangeably — they measure different things (one monotone, one linear)"
         ],
         "c": {
-          "text": "Chapter 12. Bivariate Association (Chinese)",
-          "link": "/Health-statistics/12-bivariate-association"
+          "text": "Chapter 12. Bivariate Association",
+          "link": "/en/Health-statistics/12-bivariate-association"
         }
       }
     },
@@ -1120,8 +1120,8 @@ export const selectorTree: { nodes: SelectorNode[] } = {
           "Looking only at the P value and not at the OR — with a large sample even a very small OR can be “significant”"
         ],
         "c": {
-          "text": "Chapter 12. Bivariate Association (Chinese)",
-          "link": "/Health-statistics/12-bivariate-association"
+          "text": "Chapter 12. Bivariate Association",
+          "link": "/en/Health-statistics/12-bivariate-association"
         }
       }
     },

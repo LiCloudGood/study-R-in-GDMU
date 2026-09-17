@@ -422,7 +422,33 @@ install.packages(c("epiDisplay"))
   - （1）某地方病研究机构关于大骨节病患儿开展了一项调查研究，数据在L5-1UCR.rdata中，其中肌酐含量为24小时测得的尿肌酐（单位为mmol）。试建立患儿年龄与尿肌酐含量之间的线性回归模型。
 
 
-<img :src="withBase('/figures/mbd/3/q-第04页-image1.png')" alt="第 4 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+题目给出的数据是 18 名大骨节病患儿的年龄与尿肌酐含量，存放在数据文件 `L5-1UCR.rdata` 中：
+
+```r
+load('L5-1UCR.rdata')
+UCR
+```
+
+| 序号 | age（年龄，岁） | ucr（尿肌酐，mmol） | group |
+| --- | --- | --- | --- |
+| 1 | 13 | 3.54 | 0 |
+| 2 | 11 | 3.01 | 0 |
+| 3 | 9 | 3.09 | 0 |
+| 4 | 6 | 2.48 | 0 |
+| 5 | 8 | 2.56 | 0 |
+| 6 | 10 | 3.36 | 0 |
+| 7 | 12 | 3.18 | 0 |
+| 8 | 7 | 2.65 | 0 |
+| 9 | 10 | 3.01 | 1 |
+| 10 | 9 | 2.83 | 1 |
+| 11 | 11 | 2.92 | 1 |
+| 12 | 12 | 3.09 | 1 |
+| 13 | 15 | 3.98 | 1 |
+| 14 | 16 | 3.89 | 1 |
+| 15 | 8 | 2.21 | 1 |
+| 16 | 7 | 2.39 | 1 |
+| 17 | 10 | 2.74 | 1 |
+| 18 | 15 | 3.36 | 1 |
 
 
 <AnswerBlock title="实验题 1 · 参考答案"
@@ -437,7 +463,42 @@ install.packages(c("epiDisplay"))
   - （2）27名糖尿病人的血清总胆固醇、甘油三酯、空腹胰岛素、糖化血红蛋白、空腹血糖的测量值在L5-2BG.rdata中，试建立血糖与其他几项指标的多元线性回归方程。
 
 
-<img :src="withBase('/figures/mbd/3/q-第06页-image2.png')" alt="第 6 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+题目给出的数据是 27 名糖尿病人的血清总胆固醇（TC）、甘油三酯（TG）、空腹胰岛素（Insulin）、糖化血红蛋白（GHb）与空腹血糖（Glu），存放在数据文件 `L5-2BG.rdata` 中：
+
+```r
+load('L5-2BG.rdata')   # 与答案脚本里的 load('BG.rdata') 是同一份数据
+BG
+```
+
+| 序号 | TC | TG | Insulin | GHb | Glu |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 5.68 | 1.90 | 4.53 | 8.2 | 11.2 |
+| 2 | 3.79 | 1.64 | 7.32 | 6.9 | 8.8 |
+| 3 | 6.02 | 3.56 | 6.95 | 10.8 | 12.3 |
+| 4 | 4.85 | 1.07 | 5.88 | 8.3 | 11.6 |
+| 5 | 4.60 | 2.32 | 4.05 | 7.5 | 13.4 |
+| 6 | 6.05 | 0.64 | 1.42 | 13.6 | 18.3 |
+| 7 | 4.90 | 8.50 | 12.60 | 8.5 | 11.1 |
+| 8 | 7.08 | 3.00 | 6.75 | 11.5 | 12.1 |
+| 9 | 3.85 | 2.11 | 16.28 | 7.9 | 9.6 |
+| 10 | 4.65 | 0.63 | 6.59 | 7.1 | 8.4 |
+| 11 | 4.59 | 1.97 | 3.61 | 8.7 | 9.3 |
+| 12 | 4.29 | 1.97 | 6.61 | 7.8 | 10.6 |
+| 13 | 7.97 | 1.93 | 7.57 | 9.9 | 8.4 |
+| 14 | 6.19 | 1.18 | 1.42 | 6.9 | 9.6 |
+| 15 | 6.13 | 2.06 | 10.35 | 10.5 | 10.9 |
+| 16 | 5.71 | 1.78 | 8.53 | 8.0 | 10.1 |
+| 17 | 6.40 | 2.40 | 4.53 | 10.3 | 14.8 |
+| 18 | 6.06 | 3.67 | 12.79 | 7.1 | 9.1 |
+| 19 | 5.09 | 1.03 | 2.53 | 8.9 | 10.8 |
+| 20 | 6.13 | 1.71 | 5.28 | 9.9 | 10.2 |
+| 21 | 5.78 | 3.36 | 2.96 | 8.0 | 13.6 |
+| 22 | 5.43 | 1.13 | 4.31 | 11.3 | 14.9 |
+| 23 | 6.50 | 6.21 | 3.47 | 12.3 | 16.0 |
+| 24 | 7.98 | 7.92 | 3.37 | 9.8 | 13.2 |
+| 25 | 11.54 | 10.89 | 1.20 | 10.5 | 20.0 |
+| 26 | 5.84 | 0.92 | 8.61 | 6.4 | 13.3 |
+| 27 | 3.84 | 1.20 | 6.45 | 9.6 | 10.4 |
 
 
 <AnswerBlock title="实验题 2 · 参考答案"
@@ -464,7 +525,23 @@ install.packages(c("epiDisplay"))
   - （4）某医科大学微生物学教研室以已知浓度X的免疫球蛋白A(IgA，μg/ml)作火箭电泳，测得火箭高度Y(mm) 数据见文件L5_4.csv。试拟合Y关于X的非线性回归方程。
 
 
-<img :src="withBase('/figures/mbd/3/q-第09页-image3.png')" alt="第 9 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+题目给出的数据是 8 个已知 IgA 浓度 X（μg/ml）与测得的火箭电泳高度 Y（mm），存放在数据文件 `L5_4.csv` 中：
+
+```r
+L5_4 <- read.csv('L5_4.csv')
+L5_4
+```
+
+| 序号 | X（IgA，μg/ml） | Y（火箭高度，mm） |
+| --- | --- | --- |
+| 1 | 0.2 | 7.6 |
+| 2 | 0.4 | 12.3 |
+| 3 | 0.6 | 15.7 |
+| 4 | 0.8 | 18.2 |
+| 5 | 1.0 | 18.7 |
+| 6 | 1.2 | 21.4 |
+| 7 | 1.4 | 22.6 |
+| 8 | 1.6 | 23.8 |
 
 
 <AnswerBlock title="实验题 4 · 参考答案"
@@ -478,10 +555,39 @@ install.packages(c("epiDisplay"))
   - （5）现有15名重伤病人的住院天数X与预后指标数据Y，具体见表L5_5.csv，试用线性化方法与最小二乘法分别拟合Y关于X的非线性回归方程。
 
 
-<img :src="withBase('/figures/mbd/3/q-第11页-image5.png')" alt="第 11 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+题目给出的数据是 15 名重伤病人的住院天数 X 与预后指标 Y，存放在数据文件 `L5_5.csv` 中：
+
+```r
+L5_5 <- read.csv('L5_5.csv')
+L5_5
+```
+
+| 序号 | X（住院天数） | Y（预后指标） |
+| --- | --- | --- |
+| 1 | 2 | 54 |
+| 2 | 5 | 50 |
+| 3 | 7 | 45 |
+| 4 | 10 | 37 |
+| 5 | 14 | 35 |
+| 6 | 19 | 25 |
+| 7 | 26 | 20 |
+| 8 | 31 | 16 |
+| 9 | 34 | 18 |
+| 10 | 38 | 13 |
+| 11 | 45 | 8 |
+| 12 | 52 | 11 |
+| 13 | 53 | 8 |
+| 14 | 60 | 4 |
+| 15 | 65 | 6 |
 
 
-<img :src="withBase('/figures/mbd/3/q-第11页-image4.png')" alt="第 11 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+这道题要用二种方法拟合 Y 关于 X 的非线性回归方程：先把曲线直线化（对 Y 取自然对数，再作直线回归），然后用最小二乘法直接拟合。曲线直线化要用的变量变换是：
+
+```r
+X <- L5_5$X
+Y <- L5_5$Y
+lnY <- log(Y)
+```
 
 
 <AnswerBlock title="实验题 5 · 参考答案"
@@ -495,10 +601,40 @@ install.packages(c("epiDisplay"))
   - （6）为了分析X射线的杀菌作用，用200千伏的X射线来照射细菌，每次照射6分钟用平板计数法估计尚存活的细菌数，照射次数记为t，照射后的细菌数为y，数据见表L5_6.csv，试求y与t的二次多项式回归模型及nls函数创建的非线性回归模型。
 
 
-<img :src="withBase('/figures/mbd/3/q-第13页-image6.png')" alt="第 13 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+题目给出的数据是 X 射线的照射次数 t 与照射后尚存活的细菌数 y，存放在数据文件 `L5_6.csv` 中：
+
+```r
+L5_6 <- read.csv('L5_6.csv')
+L5_6
+```
+
+| 序号 | t（照射次数） | y（残留细菌数） |
+| --- | --- | --- |
+| 1 | 1 | 352 |
+| 2 | 2 | 211 |
+| 3 | 3 | 197 |
+| 4 | 4 | 160 |
+| 5 | 5 | 142 |
+| 6 | 6 | 106 |
+| 7 | 7 | 104 |
+| 8 | 8 | 60 |
+| 9 | 9 | 56 |
+| 10 | 10 | 38 |
+| 11 | 11 | 36 |
+| 12 | 12 | 32 |
+| 13 | 13 | 21 |
+| 14 | 14 | 19 |
+| 15 | 15 | 15 |
 
 
-<img :src="withBase('/figures/mbd/3/q-第14页-image7.png')" alt="第 14 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+这道题要求拟合二种模型：y 关于 t 的二次多项式回归模型，以及用 `nls()` 创建的非线性回归模型，即
+
+```r
+t <- L5_6$t
+y <- L5_6$y
+bacteria.model1 <- lm(y ~ poly(t, 2))    # 二次多项式回归模型
+bacteria.model2 <- nls(y ~ a*exp(b*t), start = list(a = 148, b = -0.2))    # 用 nls 创建的非线性回归模型
+```
 
 
 <AnswerBlock title="实验题 6 · 参考答案"
@@ -513,7 +649,17 @@ install.packages(c("epiDisplay"))
   - （7）本例是一个研究饮酒（X1）、吸烟（X2）与食道癌（Y）关系的病例-对照资料，试作logistic回归分析。
 
 
-<img :src="withBase('/figures/mbd/3/q-第16页-image8.png')" alt="第 16 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+题目给出的病例-对照资料是吸烟（smoke）、饮酒（drink）与食道癌（outcome）的三维列联表，各格子的频数如下：
+
+```r
+dat.array = array(c(136, 57, 107, 151, 63, 44, 63, 265),
+                  dim = c(2, 2, 2),
+                  dimnames = list(smoke = c('no', 'yes'),
+                                  drink = c('no', 'yes'),
+                                  outcome = c('control', 'case')))
+data.table = as.table(dat.array)
+data.table
+```
 
 
 <AnswerBlock title="实验题 7 · 参考答案"

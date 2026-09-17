@@ -203,10 +203,45 @@ install.packages(c("caret", "e1071", "pROC", "recipes"))
   - （1）朴素贝叶斯分类算法实例——乳腺癌患病预测。安装并加载包“e1071”，读取源数据集BreastCancerProcessed.txt，将Class作为因变量，其余属性作为自变量构建朴素贝叶斯分类模型，输出混淆矩阵，并计算模型的准确率。
 
 
-<img :src="withBase('/figures/mbd/6/q-第04页-image1.png')" alt="第 4 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+题目给出的数据文件是 `BreastCancerProcessed.txt`：277 条记录、9 个属性，逗号分隔、带表头。
+文件开头 5 条记录是：
 
+| Age | Menopause | TumorSize | InvNodes | NodeCaps | DegMalig | BreastQuad | Irradiat | Class |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| A4 | M3 | T4 | IN1 | N1 | D3 | BQ1 | IR0 | C1 |
+| A5 | M2 | T4 | IN1 | N0 | D1 | BQ5 | IR0 | C0 |
+| A5 | M2 | T8 | IN1 | N0 | D2 | BQ2 | IR0 | C1 |
+| A4 | M3 | T8 | IN1 | N1 | D3 | BQ2 | IR1 | C1 |
+| A4 | M3 | T7 | IN2 | N1 | D2 | BQ3 | IR0 | C1 |
 
-<img :src="withBase('/figures/mbd/6/q-第05页-image2.png')" alt="第 5 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+先把数据读进来，用 `set.seed(101)` 固定随机种子、按 7:3 划分训练集与测试集，
+再以 `Class` 为因变量、其余属性为自变量建朴素贝叶斯模型并打印出来：
+
+```r
+library(e1071)
+
+data = read.table('BreastCancerProcessed.txt',header = T,sep = ',')
+
+set.seed(101)
+train = sample(nrow(data),0.7*nrow(data))
+tdata = data[train,]
+vdata = data[-train,]
+
+data_naiveBayes = naiveBayes(as.factor(tdata$Class)~.,data = tdata)
+print(data_naiveBayes)
+```
+
+模型建好后，用它在测试集上预测，输出真实值与预测值的混淆矩阵，再用对角线上判对的个数
+除以总数算出准确率：
+
+```r
+data_predict = predict(data_naiveBayes,newdata = vdata)
+
+confusion_mx = table(vdata$Class,data_predict,dnn = c('真实值','预测值'))
+print(confusion_mx)
+accuracy = (sum(diag(confusion_mx))/sum(confusion_mx))
+print(accuracy)
+```
 
 
 <AnswerBlock title="实验题 1 · 参考答案"
@@ -221,10 +256,37 @@ install.packages(c("caret", "e1071", "pROC", "recipes"))
   - （1）安装并加载包“caret”及加载包“e1071 ”，读取源数据集BreastCancerProcessed.txt，将朴素贝叶斯分类算法进行10-折交叉验证，并输出10次模型的准确率。
 
 
-<img :src="withBase('/figures/mbd/6/q-第07页-image3.png')" alt="第 7 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+这一题用的还是 `BreastCancerProcessed.txt`。先用 `caret` 的 `createFolds()` 把 277 条记录随机分成 10 折
+（`folds` 里存的就是每一折的记录行号），再用一个空向量 `ay` 记录每折的准确率：
 
+```r
+library('caret')
+library(e1071)
 
-<img :src="withBase('/figures/mbd/6/q-第08页-image4.png')" alt="第 8 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+data = read.table('BreastCancerProcessed.txt',header = T,sep = ',')
+n = nrow(data)
+
+folds = createFolds(seq(1,n),k=10)
+ay = {}
+```
+
+接着循环 10 次：每次取一折当测试集、其余 9 折当训练集，建朴素贝叶斯模型、预测，
+算出这一折的准确率并追加到 `ay` 里；10 次跑完后打印这 10 个准确率，再取平均：
+
+```r
+for (i in 1:10) {
+  tdata = data[-unlist(folds[i]),]
+  vdata = data[unlist(folds[i]),]
+  data_naiveBayes = naiveBayes(as.factor(tdata$Class)~.,data = tdata)
+  data_predict = predict(data_naiveBayes,newdata = vdata)
+  obs_p_ran = data.frame(prob = data_predict,obs = vdata$Class)
+  confusion_mx = table(vdata$Class,data_predict,dnn = c('真实值','预测值'))
+  accuracy = (sum(diag(confusion_mx))/sum(confusion_mx))
+  ay = c(ay,accuracy)
+}
+print(ay)
+mean(ay)
+```
 
 
 <AnswerBlock title="实验题 2 · 参考答案"
@@ -239,10 +301,57 @@ install.packages(c("caret", "e1071", "pROC", "recipes"))
   - （1）安装并加载包“pROC ”，使用pROC包自带的aSAH数据集来绘制ROC曲线。该数据集包括了113例动脉瘤蛛网膜下腔出血患者的临床和实验室资料，在pROC包中，使用roc()函数来建立ROC对象。默认情况下roc()函数会输出AUC的值。
 
 
-<img :src="withBase('/figures/mbd/6/q-第10页-image5.png')" alt="第 10 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+题目用的数据是 `pROC` 自带的 `aSAH`：113 例患者、7 个变量，其中 `s100b` 是实验室指标、
+`outcome` 是结局（Good / Poor），也就是这一题要拿 `s100b` 去预测的对象。
+`head(aSAH)` 打出来的前 6 条记录是（第一列是 `aSAH` 自带的行名，所以不是从 1 开始）：
 
+| 行名 | gos6 | outcome | gender | age | wfns | s100b | ndka |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 29 | 5 | Good | Female | 42 | 1 | 0.13 | 3.01 |
+| 30 | 5 | Good | Female | 37 | 1 | 0.14 | 8.54 |
+| 31 | 5 | Good | Female | 42 | 1 | 0.10 | 8.09 |
+| 32 | 5 | Good | Female | 27 | 1 | 0.04 | 10.42 |
+| 33 | 1 | Poor | Female | 42 | 3 | 0.13 | 17.40 |
+| 34 | 1 | Poor | Male | 48 | 2 | 0.10 | 12.75 |
 
-<img :src="withBase('/figures/mbd/6/q-第11页-image6.png')" alt="第 11 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+先把数据加载进来，用 `roc()` 把 `s100b` 建成一条 ROC 对象（`smooth = T` 平滑曲线、`ci = T` 顺带算 95% 置信区间、
+`auc = T` 返回 AUC）；再拿一组和 `outcome` 毫无关系、由 `rnorm()` 生成的随机数建第二条 ROC，
+让它当「瞎猜」的对照：
+
+```r
+library('pROC')
+data('aSAH')
+head(aSAH)#在aSAH数据集中s100b是对outcome的预测值
+set.seed(103)
+R1 = roc(aSAH$outcome,
+         aSAH$s100b,
+         smooth = T,
+         ci = T,
+         auc = T)
+R2 = roc(aSAH$outcome,
+         rnorm(nrow(aSAH)),
+         smooth =T,
+         ci = T,
+         auc = T)
+```
+
+两条 ROC 都画出来：第一条用红色、AUC 标在 (0.3, 0.3) 处；第二条用蓝色、AUC 标在 (0.5, 0.5) 处。
+`legacy.axes = T` 让横轴按「1 − 特异度」这个习惯口径标注。最后打印两条曲线的 AUC：
+
+```r
+plot(R1,col = 'red',
+     print.auc = T,
+     print.auc.x = 0.3,
+     print.auc.y = 0.3,
+     legacy.axes = T)
+plot(R2,col = 'blue',
+     print.auc = T,
+     print.auc.x = 0.5,
+     print.auc.y = 0.5,
+     legacy.axes = T)
+auc(R1)
+auc(R2)
+```
 
 
 <AnswerBlock title="实验题 3 · 参考答案"
@@ -257,18 +366,18 @@ install.packages(c("caret", "e1071", "pROC", "recipes"))
 - 创建R脚本文件test0604.R，完成下面任务后把该脚本文件保存在e:/test06文件夹下。
   - （1）根据下面的数据(如下图)，参照实验3的代码，绘制ROC图。
 
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="zh-CN" altLang="en-US" sz="2100" u="none" strike="noStrike" dirty="0"><a:effectLst/></a:rPr><a:t>元组编号 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="zh-CN" altLang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>类 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="zh-CN" altLang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>概率 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>TP | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>FP | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>TN | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>FN | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>TPR | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>FPR |
+| 元组编号 | 类 | 概率 | TP | FP | TN | FN | TPR | FPR |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>P | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.90 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>5 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.2 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.0 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>2 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>P | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.80 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>2 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>5 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>3 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike" dirty="0"><a:effectLst/></a:rPr><a:t>0.0 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>3 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>N | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.70 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>2 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>3 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.2 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>P | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.60 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>3 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>2 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.6 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.2 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>5 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>P | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.55 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.8 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.2 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>6 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>N | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.54 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>2 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>3 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.8 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.4 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>7 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>N | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.53 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>3 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>2 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.8 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.6 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>8 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>N | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.51 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.8 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.8 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>9 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>P | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.50 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>5 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>4 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1.0 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.8 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>10 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>N | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0.40 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>5 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>5 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>0 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"><a:effectLst/></a:rPr><a:t>1.0 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="r" fontAlgn="b"/><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike" dirty="0"><a:effectLst/></a:rPr><a:t>1.0 |
+| 1 | P | 0.90 | 1 | 0 | 5 | 4 | 0.2 | 0.0 |
+| 2 | P | 0.80 | 2 | 0 | 5 | 3 | 0.4 | 0.0 |
+| 3 | N | 0.70 | 2 | 1 | 4 | 3 | 0.4 | 0.2 |
+| 4 | P | 0.60 | 3 | 1 | 4 | 2 | 0.6 | 0.2 |
+| 5 | P | 0.55 | 4 | 1 | 4 | 1 | 0.8 | 0.2 |
+| 6 | N | 0.54 | 4 | 2 | 3 | 1 | 0.8 | 0.4 |
+| 7 | N | 0.53 | 4 | 3 | 2 | 1 | 0.8 | 0.6 |
+| 8 | N | 0.51 | 4 | 4 | 1 | 1 | 0.8 | 0.8 |
+| 9 | P | 0.50 | 5 | 4 | 1 | 0 | 1.0 | 0.8 |
+| 10 | N | 0.40 | 5 | 5 | 0 | 0 | 1.0 | 1.0 |
 
 
 <AnswerBlock title="实验题 4 · 参考答案"

@@ -523,7 +523,7 @@ Residuals   12  185.3   15.44
 ```r
 str(ChickWeight)     # weight、Time、Chick（个体）、Diet（处理）
 
-# 先只保留 12 个时点都测全的个体：缺失值处理见《医学大数据分析与决策》第 2 周
+# 先只保留 12 个时点都测全的个体：缺失值处理见《医学大数据分析与决策》第 1 周
 tab   <- table(ChickWeight$Chick)
 chick <- subset(ChickWeight, Chick %in% names(tab)[tab == 12])
 chick$Time <- factor(chick$Time)      # 时点必须当因子，才能作为因素进模型
@@ -580,9 +580,10 @@ TukeyHSD(aov(Sepal.Length ~ Species, data = iris))  # 三对比较全部显著
 
 ::: tip 相关章节
 - **[《信息技术基础》第 13 讲 参数假设检验](/intro-it/13-hypothesis-testing)**—— **本章就是那一讲的推广：两组 → 多组。** 那一讲从单个正态均值和两个均数的比较出发，用 `t.test()`、`var.test()` 一步步搭出参数检验的流程；本章把比较对象扩到 $k$ 个均数，用一次方差分析代替多次 t 检验，再用 Tukey/SNK/LSD 收尾。对应关系很直接：那一讲实验题 4 的「先做方差齐性检验，再根据结果选 t 检验」的两阶段流程，到本章就是「先 `car::leveneTest()`，再决定用方差分析、Welch 还是 Kruskal-Wallis」。**先把那一讲的抽样分布、P 值、Ⅰ 类错误弄明白，再学本章的 $F$ 检验会顺很多。**
-- **[《信息技术基础》第 11 讲 ggplot2 包](/intro-it/11-ggplot2)**—— 分组箱线图是方差分析前的必备动作：箱体位置不同提示处理可能有效应，箱体高度相差悬殊提示方差齐性可能不成立。用 `geom_boxplot()` 按分组变量着色，比基础图形更容易加上分组标签和均值标记。想做基础图形版本，见第 9 讲 高级绘图（[打开这一讲](/intro-it/9-base-graphics)）里 `boxplot(y ~ g, data = ...)` 的写法——那里讲的是「一次画多组」，正是本章的入口图。
-- **[《医学大数据分析与决策》第 2 周 数据预处理](/Medical-Big-Data-Analysis/2-data-preprocessing)**—— 那一周讲的分组中心趋势与离散度度量，就是本章方差分析表的原料（各组的 $n_i$、$\bar{x}_i$、$S_i$）；而异常值与缺失值处理直接决定本章的结论能不能用：一个极端离群值就能把 $MS_{组内}$ 拉大，让本该显著的差别变成不显著。本页 `ChickWeight` 例子先剔掉测量不全的个体，就是那一周的内容在统计方法里的体现。
-- **[《信息技术基础》第 4 讲 列表与因子](/intro-it/4-lists-and-factors)**—— 方差分析要求分组变量是**因子**。`aov(weight ~ group)` 里的 `group` 若存成字符串，R 会替你转成因子，但水平的顺序和**参照组**会直接影响输出，尤其是 `contrast(..., ref = "ctrl")` 和回归系数表里的比较对象。用 `factor()` 定水平、用 `relevel()` 换参照组，都是那一讲的内容。
+- **[《信息技术基础》第 11 讲 ggplot2 包](/intro-it/11-ggplot2)**—— 分组箱线图是方差分析前的必备动作：箱体位置不同提示处理可能有效应，箱体高度相差悬殊提示方差齐性可能不成立。那一讲练的是 `geom_point()`、`geom_histogram()`、`geom_rect()` 这些图层，以及 `scale_*()` 颜色标度和主题参数；**分组箱线图不在那一讲**，它的 ggplot2 画法见第 19 章 常用统计图表（[打开这一章](/Health-statistics/19-tables-and-charts)）里 `geom_boxplot()` 的用法，比基础图形更容易加上分组标签和均值标记。想做基础图形版本，见第 9 讲 高级绘图（[打开这一讲](/intro-it/9-base-graphics)）里 `boxplot(y ~ g, data = ...)` 的写法——那里讲的是「一次画多组」，正是本章的入口图。
+- **[《医学大数据分析与决策》第 2 周 数据预处理](/Medical-Big-Data-Analysis/2-data-preprocessing)**—— 那一周对 `cars$speed` 这一列算的均数、中位数、方差、标准差、四分位数，就是本章方差分析表的原料——各组的 $n_i$、$\bar{x}_i$、$S_i$ 不过是同一批函数按组各算一遍（按组汇总的写法见下一条）；那里的等宽/等频分箱与最小最大、Z-score 规范化则把原始测量整理成可分析的形式。一个极端离群值就能把 $MS_{组内}$ 拉大，让本该显著的差别变成不显著，所以进模型之前要先检查有没有这种点。
+- **[《医学大数据分析与决策》第 1 周 R的使用及数据获取](/Medical-Big-Data-Analysis/1-r-basics-and-data)**—— 本页 `ChickWeight` 例子先剔掉测量不全的个体，用的就是那一周 `na.omit()` 处理缺失值的思路（`airquality` 那个例子）：先看清哪些观测缺了、再决定删还是补，而删掉多少个观测会直接改变本章的例数和自由度。
+- **[《信息技术基础》第 4 讲 列表与因子](/intro-it/4-lists-and-factors)**—— 方差分析要求分组变量是**因子**。`aov(weight ~ group)` 里的 `group` 若存成字符串，R 会替你转成因子，但水平的顺序和**参照组**会直接影响输出，尤其是 `contrast(..., ref = "ctrl")` 和回归系数表里的比较对象。用 `factor(x, levels = )` 定水平是那一讲的内容；那一讲的实验四、实验五还专门练了 `tapply()`、`by()`、`aggregate()` 三个**分组统计**函数，正是本章「按组算 $n_i$、$\bar{x}_i$、$S_i$」的动手版本。换参照组要用的 `relevel()` 那一讲没有讲，需要时查 `?relevel`。
 - **[《医学大数据分析与决策》第 3 周 回归分析](/Medical-Big-Data-Analysis/3-regression)**—— 方差分析与回归是同一个线性模型的两副面孔：`aov()` 的输出等同于 `summary(lm(...))` 里那个 $F$ 检验，分组变量编码成哑变量之后，系数检验与「各处理组对参照组」的比较是相通的。想彻底理解 `summary(fit)` 那张表为什么长这样，看回归那一周的线性模型部分会有帮助。
 :::
 
@@ -590,10 +591,10 @@ TukeyHSD(aov(Sepal.Length ~ Species, data = iris))  # 三对比较全部显著
 建议在这几页回链过来（都指向 /Health-statistics/09-anova）：
 - /intro-it/13-hypothesis-testing 的「本讲小结」处，加一句「三组及以上均数的比较、以及为什么不能反复用 t 检验，见 卫生统计学 第 9 章」；
   同一页实验题 4（方差齐性检验与均值检验）附近，加一句「方差齐性检验的其它选择与方差不齐时的对策见 卫生统计学 第 9 章」。
-- /intro-it/11-ggplot2 讲 geom_boxplot 的地方，加一句「分组箱线图在方差分析前的用途见 卫生统计学 第 9 章」。
+- /Health-statistics/19-tables-and-charts 讲 geom_boxplot 的地方，加一句「分组箱线图在方差分析前的用途见 卫生统计学 第 9 章」。
 - /intro-it/9-base-graphics 讲 boxplot 函数的地方（实验题 6、实验题 7 附近），加一句同上。
-- /intro-it/4-lists-and-factors 讲 factor/relevel 的地方，加一句「分组变量必须是因子，理由见 卫生统计学 第 9 章」。
-- /Medical-Big-Data-Analysis/2-data-preprocessing 讲分组统计量（中心趋势与散度）和异常值处理的地方，加一句「这些量在方差分析中的角色见 卫生统计学 第 9 章」。
+- /intro-it/4-lists-and-factors 讲 factor 的地方（实验四、实验五的分组统计也可以挂同一句），加一句「分组变量必须是因子，理由见 卫生统计学 第 9 章」。
+- /Medical-Big-Data-Analysis/2-data-preprocessing 讲中心趋势与散度度量、分箱与规范化的地方，加一句「这些量在方差分析中的角色见 卫生统计学 第 9 章」。
 - /Medical-Big-Data-Analysis/3-regression 讲线性模型的地方，加一句「单因素方差分析是线性模型的特例，见 卫生统计学 第 9 章」。
 -->
 

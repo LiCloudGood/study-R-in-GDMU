@@ -350,22 +350,19 @@ positivity rate of an instrument by anything — that number still carries $Se$ 
 
 ## How it connects to the other courses
 
-- **[Week 6 of *Medical Big Data Analysis and Decision Making*, Classification (2)](/Medical-Big-Data-Analysis/6-classification-2)**
-  *(Chinese)* — that week approaches ROC and diagnostic evaluation **from a model**: confusion
+- **[Week 6 of *Medical Big Data Analysis and Decision Making*, Classification (2)](/en/Medical-Big-Data-Analysis/6-classification-2)** — that week approaches ROC and diagnostic evaluation **from a model**: confusion
   matrices, drawing curves with `pROC`, choosing a model by AUC. This topic approaches the same
   material **from a clinical marker**: how the cutoff is set by clinical cost, and why predictive
   values move with prevalence. Both use `pROC`; only the entry point differs.
-- **[Week 5 of *Medical Big Data Analysis and Decision Making*, Classification (1)](/Medical-Big-Data-Analysis/5-classification-1)**
-  *(Chinese)* — the confusion matrix, accuracy, and kappa all appear there. **Evaluating a
+- **[Week 5 of *Medical Big Data Analysis and Decision Making*, Classification (1)](/en/Medical-Big-Data-Analysis/5-classification-1)** — the confusion matrix, accuracy, and kappa all appear there. **Evaluating a
   classification model and evaluating a diagnostic test are the same exercise**; that course calls the
   gold standard the true label.
-- **[Lecture 14 of *Introduction to Information Technology*, Tests of Homogeneity and Contingency Tables](/intro-it/14-goodness-of-fit-and-contingency)**
-  *(Chinese)* — building contingency tables, using `table()`, and the assumptions of the chi-square
+- **[Lecture 14 of *Introduction to Information Technology*, Tests of Homogeneity and Contingency Tables](/en/intro-it/14-goodness-of-fit-and-contingency)** — building contingency tables, using `table()`, and the assumptions of the chi-square
   test are all worked through there; the diagnostic 2×2 table is just a $2\times2$ contingency table.
-- **[Chapter 10, Chi-Square Tests](/Health-statistics/10-chi-square)** *(Chinese)* — constructing
+- **[Chapter 10, Chi-Square Tests](/en/Health-statistics/10-chi-square)** — constructing
   2×2 tables, expected frequencies, and assumptions. Comparing the positivity rates of two diagnostic
   tests uses the tests from that chapter.
-- **[Chapter 6, Estimating Population Means and Rates](/Health-statistics/06-estimation)** *(Chinese)* —
+- **[Chapter 6, Estimating Population Means and Rates](/en/Health-statistics/06-estimation)** —
   sensitivity and specificity are both **rates**, so both should be reported with confidence
   intervals. The same goes for the AUC.
 

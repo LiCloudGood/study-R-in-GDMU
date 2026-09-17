@@ -55,7 +55,7 @@ fun1202(x,y,2,1)
 fun1202(x,y,2,1,alt = 'greater')
 fun1202(x,y,2,1,alt = 'less')`
 
-const code1203 = `fun1203 = function(x, y, mu1, mu2, 
+const code1203 = `fun1203 = function(x, y, mu1, mu2,
                    alpha = 0.05, alt = 'two.sided'){
   m = length(x)
   n = length(y)
@@ -326,6 +326,5 @@ This lecture **works interval estimation out in R**; for the sampling error, the
 confidence interval means, and the difference between two populations behind it, see the corresponding
 summary in *Health Statistics*.
 
-See **[Chapter 6 of *Health Statistics*, Estimating Population Means and Rates](/Health-statistics/06-estimation)**
-*(Chinese)*.
+See **[Chapter 6 of *Health Statistics*, Estimating Population Means and Rates](/en/Health-statistics/06-estimation)**.
 :::

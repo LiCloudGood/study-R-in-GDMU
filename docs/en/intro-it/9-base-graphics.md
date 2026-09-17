@@ -8,15 +8,15 @@ import { withBase } from 'vitepress'
 const code0901 = `install.packages('ISwR')
 library(ISwR)
 head(nickel.expand)
-hist(nickel.expand$age1st, 
-     breaks = 20,  
-     col = "blue",  
-     border = "red",  
-     density = 20,  
-     angle = -60,  
-     xlim = c(10, 50),  
-     ylim = c(0, 600),  
-     main = "Histogram of age at first nickel exposure",  
+hist(nickel.expand$age1st,
+     breaks = 20,
+     col = "blue",
+     border = "red",
+     density = 20,
+     angle = -60,
+     xlim = c(10, 50),
+     ylim = c(0, 600),
+     main = "Histogram of age at first nickel exposure",
      xlab = "Age",
      ylab = "Number of people"
 )
@@ -89,17 +89,17 @@ barplot(VADeaths_t,
 data("UCBAdmissions")
 df <- as.data.frame(UCBAdmissions)
 df.m <- subset(df, Gender == "Male")
-barplot(Freq ~ Admit + Dept, 
-        data = df.m, 
-        col = c("blue", "green"),  
-        legend = c("Admitted", "Not admitted"),  
-        args.legend = list(x = "topright", cex = 1.2), 
-        ylab = "Number of people", 
+barplot(Freq ~ Admit + Dept,
+        data = df.m,
+        col = c("blue", "green"),
+        legend = c("Admitted", "Not admitted"),
+        args.legend = list(x = "topright", cex = 1.2),
+        ylab = "Number of people",
         xlab = "Department code",
-        main = "Admissions at Berkeley",  
-        cex.main = 1.5,  
-        cex.lab = 1.2,  
-        cex.axis = 1.2,  
+        main = "Admissions at Berkeley",
+        cex.main = 1.5,
+        cex.lab = 1.2,
+        cex.axis = 1.2,
         ylim = c(0, 600),
         beside = T
 )`
@@ -134,35 +134,35 @@ df <- as.data.frame(UCBAdmissions)
 df_admitted <- subset(df, Admit == "Admitted")
 admitted_summary <- aggregate(Freq ~ Dept, data = df_admitted, sum)
 x <- admitted_summary$Freq
-pie(x, 
-    col = 11:16,  
-    density = 50,  
-    border = "red",  
-    labels = paste(admitted_summary$Dept, "(", round(x / sum(x) * 100, 2), "%)", sep = ""),  
-    main = "Percentage of total admissions by department",  
-    cex.main = 1.5  
+pie(x,
+    col = 11:16,
+    density = 50,
+    border = "red",
+    labels = paste(admitted_summary$Dept, "(", round(x / sum(x) * 100, 2), "%)", sep = ""),
+    main = "Percentage of total admissions by department",
+    cex.main = 1.5
 )`
 
 const code0906 = `data("airquality")
 x <- na.omit(airquality)
 x <- subset(x, Month %in% c(5, 6, 7, 8, 9))
 colors <- rainbow(5, s = 0.5, alpha = 0.7)
-boxplot(Temp ~ Month, 
-        data = x, 
-        col = colors,  
-        width = c(1, 2, 3, 4, 5),  
-        range = 0.8,  
-        staplewex = 0.8,  
-        main = "New York temperatures in 1973 (May-September)", 
-        cex.main = 1.5,   
-        xlab = "Month", 
+boxplot(Temp ~ Month,
+        data = x,
+        col = colors,
+        width = c(1, 2, 3, 4, 5),
+        range = 0.8,
+        staplewex = 0.8,
+        main = "New York temperatures in 1973 (May-September)",
+        cex.main = 1.5,
+        xlab = "Month",
         ylab = "Temperature",
         names =  c("May", "June", "July", "August", "September")
 )
 
 airquality_clean <- na.omit(airquality)
-boxplot(Wind ~ Month, 
-        data = airquality_clean, 
+boxplot(Wind ~ Month,
+        data = airquality_clean,
         notch = T,
         width = rep(0.5, 5),
         horizontal = T,
@@ -182,13 +182,13 @@ melanom$ulc <- factor(melanom$ulc, levels = c(1, 2), labels = c("yes", "no"))
 melanom$group <- interaction(melanom$status, melanom$ulc, sep = "--")
 desired_order <- c("1--no", "1--yes", "2--no", "2--yes", "3--no", "3--yes")
 melanom$group <- ordered(melanom$group, levels = desired_order)
-boxplot(thick ~ group, 
-        data = melanom, 
+boxplot(thick ~ group,
+        data = melanom,
         col = rainbow(6,v=0.8,alpha = 0.6),
-        main = "Comparison of melanoma thickness between groups", 
-        ylab = "Thickness", 
+        main = "Comparison of melanoma thickness between groups",
+        ylab = "Thickness",
         xlab = "Survival status-ulcer",
-        ylim = c(0, 1500),  
+        ylim = c(0, 1500),
         las = 2,
         outcol = "red",
         border = 'red',
@@ -196,66 +196,66 @@ boxplot(thick ~ group,
 )`
 
 const code0908 = `data("airmiles")
-plot(airmiles, 
+plot(airmiles,
      type = "s",
      lwd = 2,
-     col = "#0000FF",  
+     col = "#0000FF",
      main = "Changes in US passenger revenue, 1937-1960",
-     cex.main = 1.2, 
-     xlab = "Year", 
+     cex.main = 1.2,
+     xlab = "Year",
      ylab = "Flight distance"
 )
 
 data('trees')
-plot(trees$Girth, trees$Volume, 
+plot(trees$Girth, trees$Volume,
      pch = 21,
-     col = 1:31, 
-     bg = "white", 
-     cex = 2, 
-     lwd = 2, 
+     col = 1:31,
+     bg = "white",
+     cex = 2,
+     lwd = 2,
      main = "Relationship between the volume and girth of black cherry trees",
-     cex.main = 1.8,  
-     xlab = "Diameter", 
-     ylab = "Volume", 
-     cex.lab = 1.5, 
+     cex.main = 1.8,
+     xlab = "Diameter",
+     ylab = "Volume",
+     cex.lab = 1.5,
      cex.axis = 1.2
 )`
 
 const code0909 = `x <- seq(-5, 5, by = 0.05)
-plot(x, dt(x, df = 1), 
+plot(x, dt(x, df = 1),
      type = "l",
-     lwd = 2, 
+     lwd = 2,
      col = "red",
-     xlab = "", 
+     xlab = "",
      ylab = "",
      xaxt = "n",
      yaxt = "n",
      main = ""
 )
 
-par(new = TRUE)  
-plot(x, dt(x, df = 30), 
-     type = "l",  
-     lwd = 2,  
-     col = "blue", 
-     xlab = "", 
-     ylab = "", 
-     xaxt = "n",  
-     yaxt = "n", 
-     main = "" 
+par(new = TRUE)
+plot(x, dt(x, df = 30),
+     type = "l",
+     lwd = 2,
+     col = "blue",
+     xlab = "",
+     ylab = "",
+     xaxt = "n",
+     yaxt = "n",
+     main = ""
 )
 
-par(new = TRUE) 
-plot(x, dnorm(x), 
-     type = "l", 
-     lwd = 2,  
-     col = "black", 
-     xlab = "x", 
+par(new = TRUE)
+plot(x, dnorm(x),
+     type = "l",
+     lwd = 2,
+     col = "black",
+     xlab = "x",
      ylab = "y=f(x)",
-     main = "Density Curves", 
-     cex.main = 1.8, 
+     main = "Density Curves",
+     cex.main = 1.8,
      cex.lab = 1.5,
-     cex.axis = 1.2 
+     cex.axis = 1.2
 )`
 </script>
 
@@ -310,12 +310,19 @@ Create the script file **test0901.R** and draw histograms with the `hist` functi
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/09-question/fig01.png')" alt="Figure 1" loading="lazy" />
-    <figcaption>Figure 1</figcaption>
+    <img :src="withBase('/figures/09-question/fig01.png')" alt="Histogram of the age at first nickel exposure (age on the x-axis, number of people on the y-axis)" loading="lazy" />
+    <figcaption>Figure 1. The histogram Exercise 1, question 1 asks for: the distribution of the age at first
+      nickel exposure (the variable age1st of the nickel.expand data set in ISwR), with age on the x-axis (shown
+      from 10 to 50) and the number of people on the y-axis (shown from 0 to 600). The 20 bars have red borders
+      and blue shading lines, 20 per inch at an angle of -60 degrees. (The axis labels and the title inside the
+      image are in the original Chinese; the English wording of this exercise is above.)</figcaption>
   </figure>
   <figure>
-    <img :src="withBase('/figures/09-question/fig02.png')" alt="Figure 2" loading="lazy" />
-    <figcaption>Figure 2</figcaption>
+    <img :src="withBase('/figures/09-question/fig02.png')" alt="Histogram of 1000 normal random numbers in 10 bins, each bar labelled with its frequency" loading="lazy" />
+    <figcaption>Figure 2. The second histogram of Exercise 1: the 1000 normal random numbers generated with
+      set.seed(10000) and rnorm(1000, 3, 2), cut into 10 equal-width bins, with the quantiles of x on the x-axis
+      and the frequency on the y-axis. Each bar is labelled with its own frequency (the vector lbs), and the ten
+      bars cycle through the palette colours 51 to 60.</figcaption>
   </figure>
 </div>
 
@@ -323,7 +330,7 @@ Create the script file **test0901.R** and draw histograms with the `hist` functi
   title="Exercise 1 · Reference answer"
   description="This exercise needs the ISwR package (install.packages('ISwR'))."
   :code="code0901"
-  :images="['/figures/09-base-graphics/unnamed-chunk-3-1.png', '/figures/09-base-graphics/unnamed-chunk-3-2.png']"
+  :images="['/figures/en/09-base-graphics/unnamed-chunk-3-1.png', '/figures/en/09-base-graphics/unnamed-chunk-3-2.png']"
 />
 
 ::: tip The common hist arguments at a glance
@@ -367,17 +374,23 @@ set `USPersonalExpenditure`.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/09-question/fig03.png')" alt="Figure 3" loading="lazy" />
-    <figcaption>Figure 3</figcaption>
+    <img :src="withBase('/figures/09-question/fig03.png')" alt="Bar chart of USPersonalExpenditure: one stacked bar per year, 1940 to 1960" loading="lazy" />
+    <figcaption>Figure 3. The bar chart Exercise 2, question 1 asks for: the USPersonalExpenditure data drawn
+      straight with barplot, with the five years 1940 to 1960 along the x-axis and the amount in billions of
+      dollars on the y-axis. Each year is one bar, stacked from the five expenditure items, and the bars are drawn
+      with the increasing widths 1 to 5 and in the palette colours 2 to 6.</figcaption>
   </figure>
   <figure>
-    <img :src="withBase('/figures/09-question/fig04.png')" alt="Figure 4" loading="lazy" />
-    <figcaption>Figure 4</figcaption>
+    <img :src="withBase('/figures/09-question/fig04.png')" alt="Grouped bar chart of USPersonalExpenditure by expenditure item, on a log value axis" loading="lazy" />
+    <figcaption>Figure 4. The second bar chart of Exercise 2: the same USPersonalExpenditure data after t(), drawn
+      with barplot(beside = TRUE), so the five expenditure items form the groups along the x-axis and the five
+      years 1940 to 1960 are the five bars inside each group. The value axis is on a logarithmic scale, the bars
+      within a group are 0.2 apart and the groups 3 apart, and the colours are again 2 to 6.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock title="Exercise 2 · Reference answer" :code="code0902"
-  :images="['/figures/09-base-graphics/unnamed-chunk-4-1.png', '/figures/09-base-graphics/unnamed-chunk-4-2.png']"
+  :images="['/figures/en/09-base-graphics/unnamed-chunk-4-1.png', '/figures/en/09-base-graphics/unnamed-chunk-4-2.png']"
 />
 
 ::: tip beside and space: the two switches of a grouped bar chart
@@ -388,9 +401,12 @@ set `USPersonalExpenditure`.
 | `log = "y"` | the y axis is put on a log scale |
 | `cex.names` | the font size **dedicated** to the tick labels of the category (x) axis |
 
-`USPersonalExpenditure` is originally "rows = expenditure item, columns = year", and plotting it
-directly would treat the expenditure items as the bars; so the answer first transposes it with `t()`,
-making the **years** the bars and the **expenditure items** the groups.
+`USPersonalExpenditure` is originally "rows = expenditure item, columns = year", and **`barplot()`
+draws one bar per column** — so plotting it directly makes the **years** the bars (the data really is
+a year-by-year comparison; see the title of `test0902.R`, "consumption data by year"), with the five
+expenditure items stacked inside each bar. The answer first transposes it with `t()`, which turns the
+columns into the expenditure items, so the **expenditure items** become the bars and the **years** the
+groups, drawn side by side with `beside = TRUE`.
 :::
 
 ## Exercise 3: Applying the barplot function
@@ -417,17 +433,24 @@ Create the script file **test0903.R** and draw the plots according to the requir
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/09-question/fig05.png')" alt="Figure 5" loading="lazy" />
-    <figcaption>Figure 5</figcaption>
+    <img :src="withBase('/figures/09-question/fig05.png')" alt="Bar chart of the VADeaths death rates by age group, with a legend for the four groups" loading="lazy" />
+    <figcaption>Figure 5. The bar chart Exercise 3, question 1 asks for: the VADeaths data (death rates per
+      thousand in Virginia in 1940) with the five age groups along the x-axis and the number per thousand on the
+      y-axis. In each age group the four population groups (rural and urban, male and female) stand side by side,
+      each with its own border colour and 20 shading lines per inch at 25, 50, 75 and 100 degrees, and the legend
+      on the right names the four groups.</figcaption>
   </figure>
   <figure>
-    <img :src="withBase('/figures/09-question/fig06.png')" alt="Figure 6" loading="lazy" />
-    <figcaption>Figure 6</figcaption>
+    <img :src="withBase('/figures/09-question/fig06.png')" alt="Grouped bar chart of the male Berkeley admissions, two bars per department" loading="lazy" />
+    <figcaption>Figure 6. The bar chart Exercise 3, question 2 asks for: the male applicants in UCBAdmissions,
+      with the six department codes along the x-axis and the number of people on the y-axis (fixed to 0 to 600).
+      Each department has two bars, admitted in blue and not admitted in green, and the legend in the top right
+      names them.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock title="Exercise 3 · Reference answer" :code="code0903"
-  :images="['/figures/09-base-graphics/unnamed-chunk-5-1.png', '/figures/09-base-graphics/unnamed-chunk-5-2.png']"
+  :images="['/figures/en/09-base-graphics/unnamed-chunk-5-1.png', '/figures/en/09-base-graphics/unnamed-chunk-5-2.png']"
 />
 
 ::: tip The formula style: Freq ~ Admit + Dept
@@ -459,17 +482,23 @@ Open the script file **test0904.R** and draw pie charts according to the require
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/09-question/fig07.png')" alt="Figure 7" loading="lazy" />
-    <figcaption>Figure 7</figcaption>
+    <img :src="withBase('/figures/09-question/fig07.png')" alt="Pie chart of 100 Poisson random numbers, a ring of 100 rainbow-coloured slices" loading="lazy" />
+    <figcaption>Figure 7. The first pie chart of Exercise 4: 100 Poisson random numbers (rpois(100, 5)) drawn
+      with pie(), so the chart is a ring of 100 slices, one per value. The slices cycle through rainbow(n)
+      colours, and both the borders and the slice labels are switched off, so nothing is written around the wheel
+      except its title.</figcaption>
   </figure>
   <figure>
-    <img :src="withBase('/figures/09-question/fig08.png')" alt="Figure 8" loading="lazy" />
-    <figcaption>Figure 8</figcaption>
+    <img :src="withBase('/figures/09-question/fig08.png')" alt="Pie chart of telephone use by continent in 1961, each slice labelled with its percentage" loading="lazy" />
+    <figcaption>Figure 8. The second pie chart of Exercise 4: telephone use by continent in 1961 (WorldPhones),
+      with Africa and Mid.Amer merged into a single slice called “other”. The six slices are drawn in six
+      semi-transparent rainbow colours with black borders, and each one is labelled with its name and its
+      percentage of the 1961 total.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock title="Exercise 4 · Reference answer" :code="code0904"
-  :images="['/figures/09-base-graphics/unnamed-chunk-6-1.png', '/figures/09-base-graphics/unnamed-chunk-6-2.png']"
+  :images="['/figures/en/09-base-graphics/unnamed-chunk-6-1.png', '/figures/en/09-base-graphics/unnamed-chunk-6-2.png']"
 />
 
 ::: tip Two practical tricks for pie charts
@@ -508,13 +537,16 @@ university.
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/09-question/fig09.png')" alt="Figure 9" loading="lazy" />
-    <figcaption>Figure 9</figcaption>
+    <img :src="withBase('/figures/09-question/fig09.png')" alt="Pie chart of the total admissions by department at Berkeley, with percentages" loading="lazy" />
+    <figcaption>Figure 9. The pie chart Exercise 5 asks for: the number of students admitted to each Berkeley
+      department as a percentage of all admissions (UCBAdmissions filtered down to Admit equal to “Admitted” and
+      then summed by Dept). The six departments are the six slices, filled with 50 shading lines per inch and
+      outlined in red, and each slice is labelled with the department and its percentage.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock title="Exercise 5 · Reference answer" :code="code0905"
-  :images="['/figures/09-base-graphics/unnamed-chunk-7-1.png']"
+  :images="['/figures/en/09-base-graphics/unnamed-chunk-7-1.png']"
 />
 
 ::: tip The formula style of aggregate
@@ -551,17 +583,23 @@ Create the script file **test0906.R** and draw boxplots according to the require
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/09-question/fig10.png')" alt="Figure 10" loading="lazy" />
-    <figcaption>Figure 10</figcaption>
+    <img :src="withBase('/figures/09-question/fig10.png')" alt="Boxplot of the 1973 New York temperatures for May to September" loading="lazy" />
+    <figcaption>Figure 10. The first boxplot of Exercise 6: the New York air quality data of 1973 (airquality),
+      showing how the daily temperature is distributed in May, June, July, August and September. The five months
+      are on the x-axis and the temperature on the y-axis, the five boxes are filled with five rainbow colours,
+      and they are drawn with the increasing widths 1 to 5.</figcaption>
   </figure>
   <figure>
-    <img :src="withBase('/figures/09-question/fig11.png')" alt="Figure 11" loading="lazy" />
-    <figcaption>Figure 11</figcaption>
+    <img :src="withBase('/figures/09-question/fig11.png')" alt="Horizontal notched boxplots of the 1973 New York wind speeds by month" loading="lazy" />
+    <figcaption>Figure 11. The second boxplot of Exercise 6: the same 1973 New York data, now the wind speed
+      (Wind) by month, drawn lying on its side with notches (horizontal = TRUE, notch = TRUE). The wind speed is
+      on the x-axis and the five months on the y-axis, the boxes are half the usual width, and they are filled
+      with the palette colours 11 to 15 with red borders.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock title="Exercise 6 · Reference answer" :code="code0906"
-  :images="['/figures/09-base-graphics/unnamed-chunk-8-1.png', '/figures/09-base-graphics/unnamed-chunk-8-2.png']"
+  :images="['/figures/en/09-base-graphics/unnamed-chunk-8-1.png', '/figures/en/09-base-graphics/unnamed-chunk-8-2.png']"
 />
 
 ::: tip How the two data sources differ in style
@@ -611,8 +649,12 @@ boxplot:
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/09-question/fig12.png')" alt="Figure 12" loading="lazy" />
-    <figcaption>Figure 12</figcaption>
+    <img :src="withBase('/figures/09-question/fig12.png')" alt="Boxplot of melanoma thickness for the six survival status and ulceration groups" loading="lazy" />
+    <figcaption>Figure 12. The boxplot Exercise 7 asks for: the thickness of the malignant melanoma (the variable
+      thick of melanom in ISwR) for six groups, formed by crossing survival status (1, 2, 3) with ulceration
+      (“yes” or “no”), so the x-axis runs 1--no, 1--yes, 2--no, 2--yes, 3--no, 3--yes. The thickness is on the
+      y-axis over the range 0 to 1500, the boxes are filled with six semi-transparent rainbow colours, and the
+      outliers are drawn in red.</figcaption>
   </figure>
 </div>
 
@@ -620,7 +662,7 @@ boxplot:
   title="Exercise 7 · Reference answer"
   description="This exercise likewise needs the ISwR package."
   :code="code0907"
-  :images="['/figures/09-base-graphics/unnamed-chunk-9-1.png']"
+  :images="['/figures/en/09-base-graphics/unnamed-chunk-9-1.png']"
 />
 
 ::: tip interaction builds a grouping variable out of pairings
@@ -663,17 +705,21 @@ Create the script file **test0908.R** and draw scatter plots according to the re
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/09-question/fig13.png')" alt="Figure 13" loading="lazy" />
-    <figcaption>Figure 13</figcaption>
+    <img :src="withBase('/figures/09-question/fig13.png')" alt="Step chart of the airmiles time series, 1937 to 1960" loading="lazy" />
+    <figcaption>Figure 13. The first plot of Exercise 8: the airmiles time series (US passenger-mile revenue from
+      1937 to 1960) drawn as a step chart with type = “s”, so the line stays flat for a while and then jumps. The
+      year is on the x-axis and the flight distance on the y-axis.</figcaption>
   </figure>
   <figure>
-    <img :src="withBase('/figures/09-question/fig14.png')" alt="Figure 14" loading="lazy" />
-    <figcaption>Figure 14</figcaption>
+    <img :src="withBase('/figures/09-question/fig14.png')" alt="Scatter plot of black cherry tree girth against volume" loading="lazy" />
+    <figcaption>Figure 14. The second plot of Exercise 8: a scatter plot of the trees data (black cherry trees),
+      with the girth, that is the diameter, of the tree on the x-axis and its volume on the y-axis. The points are
+      large open circles with thick borders, and the 31 points cycle through 31 border colours.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock title="Exercise 8 · Reference answer" :code="code0908"
-  :images="['/figures/09-base-graphics/unnamed-chunk-10-1.png', '/figures/09-base-graphics/unnamed-chunk-10-2.png']"
+  :images="['/figures/en/09-base-graphics/unnamed-chunk-10-1.png', '/figures/en/09-base-graphics/unnamed-chunk-10-2.png']"
 />
 
 ::: tip type decides "what shape is drawn"
@@ -708,15 +754,19 @@ Create the script file **test0909.R** and draw density curves according to the r
 
 <div class="q-figures">
   <figure>
-    <img :src="withBase('/figures/09-question/fig15.png')" alt="Figure 15" loading="lazy" />
-    <figcaption>Figure 15</figcaption>
+    <img :src="withBase('/figures/09-question/fig15.png')" alt="Three overlaid density curves: t with 1 degree of freedom, t with 30, and the standard normal" loading="lazy" />
+    <figcaption>Figure 15. The plot Exercise 9 asks for: three density curves overlaid on one canvas with
+      par(new = TRUE) — the t distribution with 1 degree of freedom (red), the t distribution with 30 degrees of
+      freedom (blue) and the standard normal distribution (black). The x-axis is x, running from -5 to 5, and the
+      y-axis is the density y = f(x); the red curve has much the heavier tails, while the blue one has almost
+      merged with the black one.</figcaption>
   </figure>
 </div>
 
 <AnswerBlock
   title="Exercise 9 · Reference answer"
   :code="code0909"
-  :images="['/figures/09-base-graphics/unnamed-chunk-11-1.png']"
+  :images="['/figures/en/09-base-graphics/unnamed-chunk-11-1.png']"
 />
 
 ::: tip par(new = TRUE) is the key to overlay plotting
@@ -777,5 +827,5 @@ This lecture is a **manual for plotting in base R**; for which data deserve whic
 axes and ticks, and how not to mislead the reader, see the corresponding summary in *Health
 Statistics*.
 
-See **[Chapter 19 of *Health Statistics*, Statistical Tables and Charts](/Health-statistics/19-tables-and-charts)** *(Chinese)*.
+See **[Chapter 19 of *Health Statistics*, Statistical Tables and Charts](/en/Health-statistics/19-tables-and-charts)**.
 :::

@@ -468,7 +468,7 @@ checked them item by item against the answer scripts.
 This lecture runs **R implementations of the chi-square test, kappa, and tests of homogeneity**. The
 relevant principles are summarized on the following pages:
 
-- **[Chapter 10 of *Health Statistics*, Chi-Square Tests](/Health-statistics/10-chi-square)** *(Chinese)* —
+- **[Chapter 10 of *Health Statistics*, Chi-Square Tests](/en/Health-statistics/10-chi-square)** —
   whether a $2\times2$ contingency table should use the dedicated formula or the corrected formula,
   when Fisher's test is mandatory, and the table of criteria for expected frequencies.
 - **[*Health Statistics*, Agreement and Reliability (Kappa and ICC)](/en/Health-statistics/agreement-reliability)** —

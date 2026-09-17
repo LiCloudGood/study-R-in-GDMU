@@ -301,16 +301,35 @@ install.packages(c("arules", "arulesViz"))
 
 - 创建R脚本文件test0401.R，完成下面任务后把该脚本文件保存在e:/test04文件夹下。
   - （1）安装并加载包“arules”与包“arulesViz”，用read.transactions( )函数读入数据文件“breast3.txt”，使用apriori函数挖掘关联规则并可视化。
+    题目给出的数据文件是 `breast31.txt`（题目文字里写作“breast3.txt”，盘上的文件名与答案脚本里都叫 `breast31.txt`）。
+    它是购物篮（basket）格式的事务数据：**一行是一笔交易**，行内用逗号分隔这笔交易所含的 9 个项目，
+    共 277 行、41 个不同的项目。用 `read.transactions()` 按购物篮格式读进来：
 
+```r
+trans = read.transactions('breast31.txt', format = 'basket', sep = ',')
+trans
+```
 
-<img :src="withBase('/figures/mbd/4/q-第04页-image1.png')" alt="第 4 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+文件开头 5 笔交易是：
 
+| 交易 | 项目 |
+| --- | --- |
+| 第 1 笔 | A4, M3, T4, IN1, N1, D3, BQ1, IR0, C1 |
+| 第 2 笔 | A5, M2, T4, IN1, N0, D1, BQ5, IR0, C0 |
+| 第 3 笔 | A5, M2, T8, IN1, N0, D2, BQ2, IR0, C1 |
+| 第 4 笔 | A4, M3, T8, IN1, N1, D3, BQ2, IR1, C1 |
+| 第 5 笔 | A4, M3, T7, IN2, N1, D2, BQ3, IR0, C1 |
 
 - matrix
 - matrix3D
 
+  课件上另外列出的 `matrix`、`matrix3D` 是 arulesViz 的两种图形化方式；本题的答案脚本用 `graph`
+  方式把筛选出来的规则（`crules`，即含 `C0` 且提升度大于 1.2 的那一批）画成图，置信度与提升度
+  分别由参数 `measure`、`shading` 指定：
 
-<img :src="withBase('/figures/mbd/4/q-第05页-image2.png')" alt="第 5 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
+```r
+plot(crules, measure = 'confidence', method = 'graph', shading = 'lift')
+```
 
 
 <AnswerBlock title="实验题 1 · 参考答案"
@@ -325,17 +344,17 @@ install.packages(c("arules", "arulesViz"))
 - 创建R脚本文件test0402.R，完成下面任务后把该脚本文件保存在e:/test04文件夹下。
   - 参照实验1， 用R语言apriori函数挖掘下面事务数据库关联规则并可视化。
 
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="zh-CN" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="Times New Roman" panose="02020603050405020304"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>事务 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="zh-CN" sz="2400" kern="100"><a:effectLst/><a:latin typeface="Times New Roman" panose="02020603050405020304"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>项目 |
+| 事务 | 项目 |
 | --- | --- |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>T001 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="just"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>I1，I2，I5 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>T002 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="just"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>I2，I4 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>T003 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="just"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>I2，I3 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>T004 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="just"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>I1，I2，I4 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>T005 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="just"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>I1，I3 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>T006 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="just"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>I2，I3 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>T007 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="just"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>I1，I3 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>T008 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="just"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>I1，I2，I3，I5 |
-| <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="ctr"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>T009 | <a:txBody><a:bodyPr/><a:lstStyle/><a:p><a:pPr algn="just"><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" sz="2400" kern="100" dirty="0"><a:effectLst/><a:latin typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/><a:ea typeface="宋体" panose="02010600030101010101" pitchFamily="2" charset="-122"/></a:rPr><a:t>I1，I2，I3 |
+| T001 | I1，I2，I5 |
+| T002 | I2，I4 |
+| T003 | I2，I3 |
+| T004 | I1，I2，I4 |
+| T005 | I1，I3 |
+| T006 | I2，I3 |
+| T007 | I1，I3 |
+| T008 | I1，I2，I3，I5 |
+| T009 | I1，I2，I3 |
 
 
 <AnswerBlock title="实验题 2 · 参考答案"
@@ -349,14 +368,14 @@ install.packages(c("arules", "arulesViz"))
 
 - 某医院对癫痫病人开出了药方，从中提取6个病人的取药资料如表7-12所示，参照实验1，创建R脚本文件test0403.R，用Apriori算法进行关联分析，完成后把该脚本文件保存在e:/test04文件夹下。
 
-| <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="zh-CN" altLang="en-US" sz="1200" b="1" spc="120"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>病人编号 | <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="zh-CN" altLang="en-US" sz="1200" b="1" spc="120"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>药品 |
+| 病人编号 | 药品 |
 | --- | --- |
-| <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>11000 | <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="zh-CN" altLang="en-US" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:cs typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>卡马西平片, 丙戊酸钠缓释片 |
-| <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>11001 | <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="zh-CN" altLang="en-US" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:cs typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>奥卡西平片, 茴拉西坦分散片 |
-| <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>11002 | <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="zh-CN" altLang="en-US" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:cs typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>奥卡西平片, 丙戊酸钠口服液 |
-| <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>11003 | <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="zh-CN" altLang="en-US" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:cs typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>丙戊酸钠缓释片, 奥卡西平片, 茴拉西坦分散片 |
-| <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>11004 | <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="zh-CN" altLang="en-US" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:cs typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>丙戊酸钠缓释片, 奥卡西平片 |
-| <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="en-US" altLang="zh-CN" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>11005 | <a:txBody><a:bodyPr/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="0"/></a:spcBef><a:spcAft><a:spcPts val="0"/></a:spcAft></a:pPr><a:r><a:rPr lang="zh-CN" altLang="en-US" sz="1000" b="0" spc="60"><a:latin typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:ea typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/><a:cs typeface="微软雅黑" panose="020B0503020204020204" charset="-122"/></a:rPr><a:t>丙戊酸钠缓释片, 奥卡西平片, 卡马西平片 |
+| 11000 | 卡马西平片, 丙戊酸钠缓释片 |
+| 11001 | 奥卡西平片, 茴拉西坦分散片 |
+| 11002 | 奥卡西平片, 丙戊酸钠口服液 |
+| 11003 | 丙戊酸钠缓释片, 奥卡西平片, 茴拉西坦分散片 |
+| 11004 | 丙戊酸钠缓释片, 奥卡西平片 |
+| 11005 | 丙戊酸钠缓释片, 奥卡西平片, 卡马西平片 |
 
 
 <AnswerBlock title="实验题 3 · 参考答案"

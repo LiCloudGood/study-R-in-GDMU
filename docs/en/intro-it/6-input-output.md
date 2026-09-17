@@ -30,22 +30,22 @@ str <- c("cough", "headache", "low fever")
 num <- 178
 
 # (2)
-save.image("save-all.txt")  
-dir()  
+save.image("save-all.txt")
+dir()
 
 # (3)
-save(mat, str, file = "save-part.txt") 
-dir()  
+save(mat, str, file = "save-part.txt")
+dir()
 
 # (4)
-rm(list = ls())  
+rm(list = ls())
 
 # (5)
-ls()  
-num / 100  
+ls()
+num / 100
 
 # (6)
-load("save-all.txt")  
+load("save-all.txt")
 num / 100  `
 
 const code0602 = `#(1)
@@ -54,7 +54,7 @@ sum(x)
 mean(x)
 
 #(2)
-price <- as.integer(readline(prompt = 'Enter the price:')) 
+price <- as.integer(readline(prompt = 'Enter the price:'))
 num <- as.integer(readline(prompt = "Enter the quantity:"))
 total <- price*num
 current_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")

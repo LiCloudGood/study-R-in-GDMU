@@ -160,11 +160,17 @@ boxplot(Temp~Month,
 
 
 - 创建R脚本文件test0102.R，完成下面任务后把该脚本文件保存在e:/test01文件夹下。
-  - 函数solve()有二个作用：solve(A,b)可用于求解 线性方程组Ax=b，solve(A)可用于求矩阵的逆。设
+  - 函数solve()有二个作用：solve(A,b)可用于求解 线性方程组Ax=b，solve(A)可用于求矩阵的逆。
+    题目给出的系数矩阵 $A$ 与常数项向量 $b$ 是：
+
+```r
+A <- matrix(c(1, 2, 3,
+              4, 5, 6,
+              7, 8, 10), ncol = 3, byrow = TRUE)
+b <- matrix(c(1, 1, 1), ncol = 1)
+```
+
   - 请用二种方法编程求方程组Ax=b的解。
-
-
-<img :src="withBase('/figures/mbd/1/q-第04页-image1.png')" alt="第 4 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
 
 
 <AnswerBlock title="实验题 2 · 参考答案"
@@ -175,13 +181,19 @@ boxplot(Temp~Month,
 
 
 - 创建R脚本文件test0103.R，完成下面任务后把该脚本文件保存在e:/test01文件夹下。
-- 有10名学生的身高与体重数据如下表所示。
+- 有10名学生的身高与体重数据，题目给出的数据框是：
+
+```r
+info = data.frame('序号' = 1:10,
+                  '性别' = c(rep('F',5),rep('M',5)),
+                  '年龄' = c(14,16,15,17,15,14,16,14,15,16),
+                  '身高cm' = c(156,158,161,156,153,162,157,159,163,165),
+                  '体重kg' = c(42.3,45.0,48.5,51.5,44.6,48.8,46.7,49.9,50.2,53.7)
+                  )
+```
 
 
-<img :src="withBase('/figures/mbd/1/q-第05页-image2.png')" alt="第 5 页图" style="max-width:100%;border:1px solid var(--vp-c-border);border-radius:8px;background:#fff" loading="lazy" />
-
-
-- 根据上表，完成以下操作：
+- 根据给出的数据，完成以下操作：
   - 创建名为info的数据框
   - 将该数据框写入一个纯文本的文件中，并用read.table()读取该文件中的数据
   - 将该数据框用write.csv()写成excel能打开的文件，并测试是否成功。

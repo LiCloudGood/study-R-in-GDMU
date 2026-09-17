@@ -424,24 +424,21 @@ reliability second.**
 
 ## How it connects to the other courses
 
-- **[Lecture 14 of *Introduction to Information Technology*, Tests of Homogeneity and Contingency Tables](/intro-it/14-goodness-of-fit-and-contingency)**
-  *(Chinese)* — that lecture works through a **kappa test** (`kappa.test`, `Kappa()`), the first place
+- **[Lecture 14 of *Introduction to Information Technology*, Tests of Homogeneity and Contingency Tables](/en/intro-it/14-goodness-of-fit-and-contingency)** — that lecture works through a **kappa test** (`kappa.test`, `Kappa()`), the first place
   on this site where kappa appears. This topic supplies the reasoning behind it: why chance agreement
   is subtracted, how weighting works, and where the bands come from.
-- **[Week 6 of *Medical Big Data Analysis and Decision Making*, Classification (2)](/Medical-Big-Data-Analysis/6-classification-2)**
-  *(Chinese)* — kappa also comes up when evaluating classification models. **The algorithm is exactly
+- **[Week 6 of *Medical Big Data Analysis and Decision Making*, Classification (2)](/en/Medical-Big-Data-Analysis/6-classification-2)** — kappa also comes up when evaluating classification models. **The algorithm is exactly
   the same**; that course simply replaces "the other rater" with "the model's prediction".
   Sensitivity, specificity, and ROC in the diagnostic setting are covered in
   **[Diagnostic Test Evaluation](/en/Health-statistics/diagnostic-test)** in this section.
-- **[Chapter 12, Bivariate Association](/Health-statistics/12-bivariate-association)** *(Chinese)* —
+- **[Chapter 12, Bivariate Association](/en/Health-statistics/12-bivariate-association)** —
   that chapter covers **correlation** (Pearson, Spearman) and tests of association in contingency
   tables ($\chi^2$, OR, RR). **It is the natural counterpart to this topic**: that chapter asks whether
   two variables are related, this one asks whether two sets of measurements agree. Reading
   "correlation ≠ agreement" here after that chapter makes it especially clear.
-- **[Chapter 5, Describing Qualitative Data](/Health-statistics/05-describing-qualitative-data)**
-  *(Chinese)* — computing rates and proportions, and where "agreement" sits within descriptive
+- **[Chapter 5, Describing Qualitative Data](/en/Health-statistics/05-describing-qualitative-data)** — computing rates and proportions, and where "agreement" sits within descriptive
   statistics.
-- **[Chapter 19, Statistical Tables and Charts](/Health-statistics/19-tables-and-charts)** *(Chinese)* —
+- **[Chapter 19, Statistical Tables and Charts](/en/Health-statistics/19-tables-and-charts)** —
   a Bland–Altman plot is a kind of difference plot, sharing the charting principles of that chapter.
 
 <!-- Back-link suggestions

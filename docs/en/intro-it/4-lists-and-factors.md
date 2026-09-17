@@ -300,5 +300,5 @@ This lecture covers **how factors and contingency tables are built in R**; for t
 rates, proportions, and ratios, and for the standardization of rates, see the corresponding summary in
 *Health Statistics*.
 
-See **[Chapter 5 of *Health Statistics*, Describing Qualitative Data](/Health-statistics/05-describing-qualitative-data)** *(Chinese)*.
+See **[Chapter 5 of *Health Statistics*, Describing Qualitative Data](/en/Health-statistics/05-describing-qualitative-data)**.
 :::
