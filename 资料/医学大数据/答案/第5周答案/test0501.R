@@ -1,0 +1,32 @@
+library(rpart)
+library(rpart.plot)
+
+data = read.table('BreastCancerProcessed.txt',header = T,sep = ',')
+dim = (data)
+print(data[1:20,])
+set.seed(101)
+train = sample(1:nrow(data),0.7*nrow(data))
+tdata  = data[train,]
+vdata = data[-train,]
+
+unprune_tree = rpart(as.factor(tdata$Class)~.,data = tdata,method = 'class',parms = list(split = 'information'))
+printcp(unprune_tree)
+print(unprune_tree)
+pred_unprune_tree = predict(unprune_tree,newdata = vdata,type = 'class')
+confusion_mx_unprune = table(vdata$Class,pred_unprune_tree,dnn = c('真实值','预测值'))
+print(confusion_mx_unprune)
+accuracy_unprune = (sum(diag(confusion_mx_unprune))/sum(confusion_mx_unprune))
+prune_tree = prune(unprune_tree,cp = unprune_tree$cptable[which.min(unprune_tree$cptable[,'xerror']),'CP'])
+
+print(prune_tree)
+pred_unprune_tree = predict(prune_tree,newdata = vdata,type = 'class')
+confusion_mx_unprune=table(vdata$Class,pred_unprune_tree,dnn = c('真实值','预测值'))
+print(confusion_mx_unprune)
+accuracy_prune = (sum(diag(confusion_mx_unprune))/sum(confusion_mx_unprune))
+sprintf('the accuracy of unpruned tree is %.3f,the accuraty of pruned tree is %.3f',accuracy_unprune,accuracy_prune)
+png(file = './未剪枝.png')
+rpart.plot(unprune_tree,branch=1,type = 2,fallen.leaves = T,cex = 0.8,sub = '未剪枝')
+dev.off()
+png(file = './剪枝后.png')
+rpart.plot(prune_tree,branch = 1,type = 4,fallen.leaves = T,cex = 0.8,sub = '剪枝后')
+dev.off()

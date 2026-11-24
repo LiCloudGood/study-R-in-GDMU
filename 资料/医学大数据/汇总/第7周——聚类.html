@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>第7周　聚类 —— 原题、答案与运行结果</title>
+<style>:root{--fg:#1f2328;--muted:#656d76;--line:#d8dee4;--code:#f6f8fa;--accent:#0969da;--warn:#9a6700;--warnbg:#fff8c5}
+*{box-sizing:border-box}
+body{margin:0 auto;padding:32px 24px 72px;max-width:920px;color:var(--fg);background:#fff;
+font:16px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}
+h1{font-size:26px;margin:0 0 6px;padding-bottom:12px;border-bottom:2px solid var(--line)}
+h2{font-size:19px;margin:0 0 10px;padding-left:10px;border-left:4px solid var(--accent);break-after:avoid}
+.meta{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+.note{background:var(--warnbg);border:1px solid #d4a72c;border-radius:8px;padding:12px 16px;font-size:13.5px;margin:0 0 24px}
+ul{margin:8px 0 12px;padding-left:26px}li{margin:4px 0}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:6px;background:#fff;margin:10px 0}
+table{border-collapse:collapse;margin:12px 0;font-size:14px}td,th{border:1px solid var(--line);padding:6px 10px}
+.q{border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:22px 0}
+.sec{margin-top:14px;border-top:1px dashed var(--line);padding-top:4px}
+.sec h3{font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:.04em;margin:12px 0 6px}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;
+font:12.5px/1.6 Consolas,Monaco,"Courier New",monospace;margin:6px 0;white-space:pre}
+.err{background:#ffebe9;border:1px solid #ff818266;border-radius:6px;padding:8px 12px;font-size:13px;
+color:#a40e26;margin:8px 0 0}
+code{font-family:Consolas,Monaco,"Courier New",monospace}
+@media print{body{padding:0;max-width:none}.q{break-inside:avoid}pre{white-space:pre-wrap;word-break:break-word;font-size:10.5px}}
+@page{size:A4;margin:15mm 13mm}</style></head><body>
+<h1>第 7 周　聚类</h1>
+<p class="meta">《医学大数据分析与决策》　原题 + 答案 + 运行结果　｜　题目整理自课件，答案取自 <code>答案/第7周答案/</code>，运行结果由 R 4.6.1 在本机实际执行得到</p>
+<div class="note"><strong>关于运行结果</strong>：下面的答案与运行结果是把该周全部答案脚本<strong>在同一个 R 会话里按顺序执行</strong>得到的（还原「在 RStudio 里一道一道做」的过程），因此同一周后面脚本可以用到前面脚本定义的变量。个别脚本本身有笔误或逻辑问题会中途报错，已在对应位置标出，未做掩盖。</div>
+<p>&gt; 本文件由 `大数据实验7.pptx` 整理而成；</p>
+<p>&gt; 课件本身（.pptx）未收录进本仓库；文中的图片是幻灯片里原有的公式与数据表。</p>
+<div class="q">
+<h2>实验题 1　距离度量的使用</h2>
+<ul>
+<li>创建R脚本文件test0701.R，完成下面任务后把该脚本文件保存在e:/test07文件夹下。</li>
+<li>使用不同距离度量计算数据点之间的距离(参照本题代码完成）</li>
+<li>(1)随机生成28个服从正态分布的随机数，该数组成4行7列的数组，计算4个数据点之间的距离。</li>
+<li>(2)计算4个数据点之间的曼哈顿距离矩阵（包含对角线数值，包含上三角位置的数值）。</li>
+<li>(3)计算4个数据点之间的闵可夫斯基距离矩阵，设置指数p=3（包含对角线数值，不包含上三角位置的数值）。</li>
+</ul>
+<img src="第7周——聚类_files/第04页-image1.png" alt="第 4 页图" loading="lazy">
+<div class="sec"><h3>答案代码　test0701.R</h3>
+<pre class="code">set.seed(1)
+x = matrix(rnorm(28),nrow = 4)
+print(x)
+
+man_dist &lt;- dist(x, method = "manhattan", diag = TRUE, upper = TRUE)
+print(man_dist)
+
+mink_dist &lt;- dist(x, method = "minkowski", p = 3, diag = TRUE, upper = FALSE)
+print(mink_dist)</pre>
+<h3>运行结果</h3>
+<pre>[,1]       [,2]       [,3]        [,4]        [,5]        [,6]        [,7]
+[1,] -0.6264538  0.3295078  0.5757814 -0.62124058 -0.01619026  0.91897737  0.61982575
+[2,]  0.1836433 -0.8204684 -0.3053884 -2.21469989  0.94383621  0.78213630 -0.05612874
+[3,] -0.8356286  0.4874291  1.5117812  1.12493092  0.82122120  0.07456498 -0.15579551
+[4,]  1.5952808  0.7383247  0.3898432 -0.04493361  0.59390132 -1.98935170 -1.47075238
+          1         2         3         4
+1  0.000000  6.207524  5.506712  9.001795
+2  6.207524  0.000000  8.413823 10.371475
+3  5.506712  8.413823  0.000000  8.579801
+4  9.001795 10.371475  8.579801  0.000000
+         1        2        3        4
+1 0.000000                           
+2 1.998232 0.000000                  
+3 1.984322 3.606294 0.000000         
+4 3.562066 3.456987 3.053533 0.000000</pre>
+</div>
+</div>
+<div class="q">
+<h2>实验题 2　k-means(1)</h2>
+<ul>
+<li>创建R脚本文件test0702.R，完成下面任务后把该脚本文件保存在e:/test07文件夹下。</li>
+<li>对鸢尾花数据集进行k-均值聚类(参照本题代码完成）</li>
+<li>(1)对鸢尾花数据集(去掉分类字段Species)，用kmeans函数聚类，设置k=3 。</li>
+</ul>
+<img src="第7周——聚类_files/第06页-image2.png" alt="第 6 页图" loading="lazy">
+<img src="第7周——聚类_files/第07页-image3.png" alt="第 7 页图" loading="lazy">
+<div class="sec"><h3>答案代码　test0702.R</h3>
+<pre class="code">iris &lt;- iris[1:5,]
+iris_cluster = iris[,1:4]
+plot(iris)
+iris.kmeans = kmeans(iris_cluster,3)
+iris.kmeans
+table(iris$Species,iris.kmeans$cluster,dnn = c('真实值','预测值'))
+plot(iris_cluster$Sepal.Length,
+     iris_cluster$Sepal.Width,
+     col=iris.kmeans$cluster,
+     pch= as.integer(iris.kmeans$cluster))
+points(iris.kmeans$centers[,1],
+       iris.kmeans$centers[,2],
+       pch="X",
+       cex=1,
+       col=4)
+plot(iris_cluster$Petal.Length,
+     iris_cluster$Petal.Width,
+     col=iris.kmeans$cluster,
+     pch= as.integer(iris.kmeans$cluster))
+points(iris.kmeans$centers[,3],
+       iris.kmeans$centers[,4],
+       pch="X",
+       cex=1,
+       col=4)</pre>
+<h3>运行结果</h3>
+<pre>K-means clustering with 3 clusters of sizes 1, 2, 2
+
+Cluster means:
+  Sepal.Length Sepal.Width Petal.Length Petal.Width
+1         4.90        3.00          1.4         0.2
+2         5.05        3.55          1.4         0.2
+3         4.65        3.15          1.4         0.2
+
+Clustering vector:
+1 2 3 4 5 
+2 1 3 3 2 
+
+Within cluster sum of squares by cluster:
+[1] 0.00 0.01 0.03
+ (between_SS / total_SS =  91.3 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss" "betweenss"   
+[7] "size"         "iter"         "ifault"      
+            预测值
+真实值    1 2 3
+  setosa     1 2 2
+  versicolor 0 0 0
+  virginica  0 0 0</pre>
+<img src="第7周——聚类_files/第7周-plot-01.png" alt="test0702.R 输出图" loading="lazy">
+<img src="第7周——聚类_files/第7周-plot-02.png" alt="test0702.R 输出图" loading="lazy">
+<img src="第7周——聚类_files/第7周-plot-03.png" alt="test0702.R 输出图" loading="lazy">
+</div>
+</div>
+<div class="q">
+<h2>实验题 3　k-中心点</h2>
+<ul>
+<li>创建R脚本文件test0703.R，完成下面任务后把该脚本文件保存在e:/test07文件夹下。</li>
+<li>对鸢尾花数据集进行k-中心点聚类(参照本题代码完成）</li>
+<li>(1)安装并载入包cluster，对鸢尾花数据集(去掉分类字段Species)，用pam函数聚类，设置k=3 。</li>
+</ul>
+<img src="第7周——聚类_files/第09页-image4.png" alt="第 9 页图" loading="lazy">
+<div class="sec"><h3>答案代码　test0703.R</h3>
+<pre class="code">library(cluster)
+iris_cluster &lt;- iris[, -5]
+iris_cluster.pam = pam(iris_cluster,3)
+print(iris_cluster.pam$clustering)
+iris$cluster &lt;- iris_cluster.pam$clustering
+table(iris$Species,iris_cluster.pam$clustering,dnn = c('真实值','预测值'))</pre>
+<h3>运行结果</h3>
+<pre>1 2 3 4 5 
+1 2 3 3 1 
+            预测值
+真实值    1 2 3
+  setosa     2 1 2
+  versicolor 0 0 0
+  virginica  0 0 0</pre>
+</div>
+</div>
+<div class="q">
+<h2>实验题 4　综合应用</h2>
+<ul>
+<li>创建R脚本文件test0704.R，完成下面任务后把该脚本文件保存在e:/test07文件夹下。</li>
+<li>分别用kmeans与k-中心点算法将8个数据点聚类为3个簇并绘出数据分布图及用“X”绘制簇中心点。数据点分别为：A1(2,10), A2(2,5), A3(8,4), A4(5,8), A5(7,5), A6(6,4), A7(1,2), A8(4,9)。</li>
+</ul>
+<div class="sec"><h3>答案代码　test0704.R</h3>
+<pre class="code">
+if (!requireNamespace("fpc", quietly = TRUE)) {
+  install.packages("fpc")
+}
+library(fpc)
+
+
+data_points &lt;- matrix(c(2, 10, 2, 5, 8, 4, 5, 8, 7, 5, 6, 4, 1, 2, 4, 9), ncol = 2, byrow = TRUE)
+colnames(data_points) &lt;- c("x", "y")
+
+
+set.seed(1) 
+kmeans_result &lt;- kmeans(data_points, centers = 3)
+
+pam_result &lt;- pam(data_points, k = 3)
+
+plot(data_points, col = kmeans_result$cluster, pch = 19, main = "K-means Clustering")
+points(kmeans_result$centers, col = 2:4, pch = 4, cex = 2)
+
+
+plot(data_points, col = pam_result$clustering, pch = 19, main = "K-medoids Clustering")
+points(pam_result$medoids, col = 2:4, pch = 4, cex = 2)</pre>
+<h3>运行结果</h3>
+<p class="meta">（这个脚本没有产生输出）</p>
+<img src="第7周——聚类_files/第7周-plot-03.png" alt="test0704.R 输出图" loading="lazy">
+<img src="第7周——聚类_files/第7周-plot-04.png" alt="test0704.R 输出图" loading="lazy">
+<img src="第7周——聚类_files/第7周-plot-05.png" alt="test0704.R 输出图" loading="lazy">
+</div>
+</div>
+<div class="q">
+<h2>实验题 5　层次聚类</h2>
+<ul>
+<li>创建R脚本文件test0705.R，完成下面任务后把该脚本文件保存在e:/test07文件夹下。</li>
+<li>对iris数据集（删除分类属性列）进行层次聚类，为了清晰地显示聚类结果，我们随机挑选iris数据集中的40条记录进行聚类。</li>
+</ul>
+<img src="第7周——聚类_files/第12页-image5.png" alt="第 12 页图" loading="lazy">
+<img src="第7周——聚类_files/第13页-image6.png" alt="第 13 页图" loading="lazy">
+<div class="sec"><h3>答案代码　test0705.R</h3>
+<pre class="code">idx = sample(1:150,40)
+iris_hcluster = iris[idx,-5]
+d = dist(iris_hcluster)
+hc = hclust(d,method = 'ave')
+plot(hc,hang = -1)
+rect.hclust(hc,k = 3)
+install.packages("factoextra")
+library(factoextra)
+
+fviz_dend(hc, k = 3, 
+          cex = 0.7, 
+          k_colors = c("red", "green", "blue"), 
+          color_labels_by_k = TRUE,
+          rect = TRUE, 
+          rect_lty = 5, 
+          rect_border = "black", 
+          lower_rect = -0.5 
+)</pre>
+<h3>运行结果</h3>
+<p class="meta">（这个脚本没有产生输出）</p>
+<div class="err">脚本在此处中断：NA/NaN/Inf in foreign function call (arg 10)</div>
+</div>
+</div>
+<div class="q">
+<h2>实验题 6　基于密度DBSCAN聚类</h2>
+<ul>
+<li>创建R脚本文件test0706.R，完成下面任务后把该脚本文件保存在e:/test07文件夹下。</li>
+<li>对multishapes数据集（删除分类属性列）分别用k-means方法和dbscan方法进行聚类，比较其聚类效果且说明原因。</li>
+</ul>
+<img src="第7周——聚类_files/第15页-image7.png" alt="第 15 页图" loading="lazy">
+<img src="第7周——聚类_files/第16页-image8.png" alt="第 16 页图" loading="lazy">
+<div class="sec"><h3>答案代码　test0706.R</h3>
+<pre class="code">library(factoextra)
+library(ggplot2)
+data("multishapes")
+df &lt;- multishapes[, 1:2]
+df0 &lt;- multishapes
+df0$shape &lt;- as.factor(df0$shape)
+ggplot(df0, aes(x=x, y=y, colour=shape)) + geom_point()
+
+set.seed(123)
+km_result &lt;- kmeans(df, 5, nstart = 25)
+fviz_cluster(km_result, df, geom = "point", ellipse = FALSE, show.clust.cent = FALSE, palette = "jco", ggtheme = theme_classic())
+
+library("fpc")
+set.seed(123)
+db &lt;- fpc::dbscan(df, eps = 0.15, MinPts = 5)
+fviz_cluster(db, data = df, stand = FALSE, ellipse = FALSE, show.clust.cent = FALSE, geom = "point", palette = "jco", ggtheme = theme_classic())</pre>
+<h3>运行结果</h3>
+<p class="meta">（这个脚本没有产生输出）</p>
+<img src="第7周——聚类_files/第7周-plot-05.png" alt="test0706.R 输出图" loading="lazy">
+<img src="第7周——聚类_files/第7周-plot-06.png" alt="test0706.R 输出图" loading="lazy">
+<img src="第7周——聚类_files/第7周-plot-07.png" alt="test0706.R 输出图" loading="lazy">
+<img src="第7周——聚类_files/第7周-plot-08.png" alt="test0706.R 输出图" loading="lazy">
+</div>
+</div>
+<div class="q">
+<h2>实验题 7　聚类评估</h2>
+<ul>
+<li>创建R脚本文件test0707.R，完成下面任务后把该脚本文件保存在e:/test07文件夹下。</li>
+<li>对某医院三年治疗情况进行聚类分析，并评估聚类质量。其中医院治疗情况数据集treatment包含36条记录，10个属性列，即：年月、门诊人次（单位万）、出院人数、病床利用率、病床周转次数、平均住院天数、治疗好转率、病死率、诊断符合率、抢救成功率。</li>
+</ul>
+<img src="第7周——聚类_files/第18页-image9.png" alt="第 18 页图" loading="lazy">
+<img src="第7周——聚类_files/第19页-image10.png" alt="第 19 页图" loading="lazy">
+<div class="sec"><h3>答案代码　test0707.R</h3>
+<pre class="code">library(factoextra)
+library(fpc)
+
+data &lt;- read.csv("treatment.csv", sep = ",", header = TRUE, na.strings = "?")
+head(data, 5)
+data &lt;- data[, -1]
+data_scale &lt;- scale(data)
+fviz_nbclust(data_scale, kmeans, method = "silhouette")
+set.seed(111)
+
+result_kmeans &lt;- kmeans(data_scale, 2)
+stats_kmean &lt;- cluster.stats(dist(data_scale), result_kmeans$cluster)
+sli_nut_kmeans &lt;- stats_kmean$avg.silwidth
+print(sli_nut_kmeans)
+
+library(cluster)
+result_pam &lt;- pam(data_scale, 2)
+stats_pam &lt;- cluster.stats(dist(data_scale), result_pam$cluster)
+sli_nut_pam &lt;- stats_pam$avg.silwidth
+print(sli_nut_pam)</pre>
+<h3>运行结果</h3>
+<pre>YearMonth OutpatientNumbers DischargeNumbers BedOccupany BedTurmoverFrequency
+1   2018.02              4.20              302       76.00                0.850
+2   2020.01              4.10              306       78.81                0.870
+3   2019.02              4.21              321       79.66                0.810
+4   2018.10              4.43              321       80.00                0.822
+5   2018.04              4.18              377       82.00                0.880
+  AverageHospitalizayionDays. CureImprovementRate Mortality DiagnosyicAccordanceRate
+1                       25.70               94.31      2.69                    97.94
+2                       25.80               94.46      2.62                    95.00
+3                       26.00               94.77      2.78                    97.01
+4                       25.40               94.00      2.81                    97.02
+5                       26.89               93.86      2.73                    98.10
+  SuccessfulRescueRate
+1                89.40
+2                87.10
+3                81.97
+4                79.07
+5                86.23
+[1] 0.4199762
+[1] 0.4270449</pre>
+<img src="第7周——聚类_files/第7周-plot-08.png" alt="test0707.R 输出图" loading="lazy">
+<img src="第7周——聚类_files/第7周-plot-09.png" alt="test0707.R 输出图" loading="lazy">
+</div>
+</div>
+<div class="q">
+<h2>实验题 8　层次聚类应用</h2>
+<ul>
+<li>创建R脚本文件test0708.R，完成下面任务后把该脚本文件保存在e:/test07文件夹下。</li>
+<li>取出数据集iris的第3，4列，即属性Petal.Length与 Petal.Width，用k-means对其进行聚类（根据平均轮廓系数确定簇数），计算聚类对象的相关统计信息，并输出平均轮廓系数，并用fviz_cluster函数输出聚类图。</li>
+<li>用层次聚类算法对数据集iris的第3，4列进行聚类，并输出层次聚类图。</li>
+</ul>
+<div class="sec"><h3>答案代码　test0708.R</h3>
+<pre class="code">library(factoextra)
+library(fpc)
+library(ggplot2)
+
+iris_sub &lt;- iris[, 3:4]
+iris_sub_scaled &lt;- scale(iris_sub)
+fviz_nbclust(iris_sub_scaled, kmeans, method = "silhouette")
+
+km_result &lt;- kmeans(iris_sub_scaled, 2, nstart = 25)
+stats_km &lt;- cluster.stats(dist(iris_sub_scaled), km_result$cluster)
+sli_nut_km &lt;- stats_km$avg.silwidth
+print(sli_nut_km)
+
+fviz_cluster(km_result, iris_sub_scaled, geom = "point", ellipse = FALSE, show.clust.cent = FALSE, palette = "jco", ggtheme = theme_classic())
+
+dist_mat &lt;- dist(iris_sub_scaled)
+hc &lt;- hclust(dist_mat, method = "ward.D2")
+fviz_dend(hc, k = 2, rect = TRUE, rect_border = "black", cex = 0.7, k_colors = c("red", "green"))</pre>
+<h3>运行结果</h3>
+<p class="meta">（这个脚本没有产生输出）</p>
+<div class="err">脚本在此处中断：NA/NaN/Inf in foreign function call (arg 1)</div>
+</div>
+</div>
+<h2>附录</h2>
+<ul>
+<li>这次需安装的依赖包较多（25个包，在目录packages下），不方便一个个安装，提供如下方法：</li>
+<li>方法一：通过循环语句安装</li>
+<li>setwd(“e:/packages”)#设置包安装目录</li>
+<li>d1&amp;lt;-list.files(&amp;quot;e:/packages&amp;quot;)</li>
+<li>for(i in 1:length(d1)) install.packages(d1[i],repos = NULL)</li>
+<li>方法二：联网安装</li>
+<li>打开网址：http://222.16.96.93/stulogin/</li>
+<li>输入学号与初始密码即可联网在线安装</li>
+<li>注意：提交作业时只需提交脚本文件（R文件），</li>
+<li>包太多，不要将包压缩再提交。</li>
+</ul>
+</body></html>

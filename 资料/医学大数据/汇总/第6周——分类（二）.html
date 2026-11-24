@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>第6周　分类（二） —— 原题、答案与运行结果</title>
+<style>:root{--fg:#1f2328;--muted:#656d76;--line:#d8dee4;--code:#f6f8fa;--accent:#0969da;--warn:#9a6700;--warnbg:#fff8c5}
+*{box-sizing:border-box}
+body{margin:0 auto;padding:32px 24px 72px;max-width:920px;color:var(--fg);background:#fff;
+font:16px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}
+h1{font-size:26px;margin:0 0 6px;padding-bottom:12px;border-bottom:2px solid var(--line)}
+h2{font-size:19px;margin:0 0 10px;padding-left:10px;border-left:4px solid var(--accent);break-after:avoid}
+.meta{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+.note{background:var(--warnbg);border:1px solid #d4a72c;border-radius:8px;padding:12px 16px;font-size:13.5px;margin:0 0 24px}
+ul{margin:8px 0 12px;padding-left:26px}li{margin:4px 0}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:6px;background:#fff;margin:10px 0}
+table{border-collapse:collapse;margin:12px 0;font-size:14px}td,th{border:1px solid var(--line);padding:6px 10px}
+.q{border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:22px 0}
+.sec{margin-top:14px;border-top:1px dashed var(--line);padding-top:4px}
+.sec h3{font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:.04em;margin:12px 0 6px}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;
+font:12.5px/1.6 Consolas,Monaco,"Courier New",monospace;margin:6px 0;white-space:pre}
+.err{background:#ffebe9;border:1px solid #ff818266;border-radius:6px;padding:8px 12px;font-size:13px;
+color:#a40e26;margin:8px 0 0}
+code{font-family:Consolas,Monaco,"Courier New",monospace}
+@media print{body{padding:0;max-width:none}.q{break-inside:avoid}pre{white-space:pre-wrap;word-break:break-word;font-size:10.5px}}
+@page{size:A4;margin:15mm 13mm}</style></head><body>
+<h1>第 6 周　分类（二）</h1>
+<p class="meta">《医学大数据分析与决策》　原题 + 答案 + 运行结果　｜　题目整理自课件，答案取自 <code>答案/第6周答案/</code>，运行结果由 R 4.6.1 在本机实际执行得到</p>
+<div class="note"><strong>关于运行结果</strong>：下面的答案与运行结果是把该周全部答案脚本<strong>在同一个 R 会话里按顺序执行</strong>得到的（还原「在 RStudio 里一道一道做」的过程），因此同一周后面脚本可以用到前面脚本定义的变量。个别脚本本身有笔误或逻辑问题会中途报错，已在对应位置标出，未做掩盖。</div>
+<p>&gt; 本文件由 `大数据实验6.pptx` 整理而成；</p>
+<p>&gt; 课件本身（.pptx）未收录进本仓库；文中的图片是幻灯片里原有的公式与数据表。</p>
+<div class="q">
+<h2>实验题 1</h2>
+<ul>
+<li>创建R脚本文件test0601.R，完成下面任务后把该脚本文件保存在e:/test06文件夹下。</li>
+<li>（1）朴素贝叶斯分类算法实例——乳腺癌患病预测。安装并加载包“e1071”，读取源数据集BreastCancerProcessed.txt，将Class作为因变量，其余属性作为自变量构建朴素贝叶斯分类模型，输出混淆矩阵，并计算模型的准确率。</li>
+</ul>
+<img src="第6周——分类（二）_files/第04页-image1.png" alt="第 4 页图" loading="lazy">
+<img src="第6周——分类（二）_files/第05页-image2.png" alt="第 5 页图" loading="lazy">
+<div class="sec"><h3>答案代码　test0601.R</h3>
+<pre class="code">#install.packages('e1701')
+
+library(e1071)
+
+data = read.table('BreastCancerProcessed.txt',header = T,sep = ',')
+
+set.seed(101)
+train = sample(nrow(data),0.7*nrow(data))
+tdata = data[train,]
+vdata = data[-train,]
+
+data_naiveBayes = naiveBayes(as.factor(tdata$Class)~.,data = tdata)
+print(data_naiveBayes)
+data_predict = predict(data_naiveBayes,newdata = vdata)
+
+confusion_mx = table(vdata$Class,data_predict,dnn = c('真实值','预测值'))
+print(confusion_mx)
+accuracy = (sum(diag(confusion_mx))/sum(confusion_mx))
+print(accuracy)</pre>
+<h3>运行结果</h3>
+<pre>Naive Bayes Classifier for Discrete Predictors
+
+Call:
+naiveBayes.default(x = X, y = Y, laplace = laplace)
+
+A-priori probabilities:
+Y
+       C0        C1 
+0.5129534 0.4870466 
+
+Conditional probabilities:
+    Age
+Y            A2         A3         A4         A5         A6         A7
+  C0 0.00000000 0.11111111 0.31313131 0.38383838 0.16161616 0.03030303
+  C1 0.01063830 0.19148936 0.28723404 0.34042553 0.17021277 0.00000000
+
+    Menopause
+Y            M1         M2         M3
+  C0 0.03030303 0.42424242 0.54545455
+  C1 0.00000000 0.43617021 0.56382979
+
+    TumorSize
+Y            T1        T10        T11         T2         T3         T4         T5         T6
+  C0 0.05050505 0.00000000 0.01010101 0.03030303 0.18181818 0.16161616 0.23232323 0.22222222
+  C1 0.01063830 0.02127660 0.04255319 0.00000000 0.01063830 0.04255319 0.09574468 0.14893617
+    TumorSize
+Y            T7         T8         T9
+  C0 0.07070707 0.01010101 0.03030303
+  C1 0.35106383 0.13829787 0.13829787
+
+    InvNodes
+Y           IN1        IN2        IN3        IN4        IN5        IN6        IN7
+  C0 0.87878788 0.09090909 0.01010101 0.00000000 0.01010101 0.01010101 0.00000000
+  C1 0.56382979 0.19148936 0.14893617 0.04255319 0.01063830 0.03191489 0.01063830
+
+    NodeCaps
+Y            N0         N1
+  C0 0.94949495 0.05050505
+  C1 0.67021277 0.32978723
+
+    DegMalig
+Y            D1         D2         D3
+  C0 0.43434343 0.44444444 0.12121212
+  C1 0.05319149 0.48936170 0.45744681
+
+    BreastQuad
+Y           BQ1        BQ2        BQ3        BQ4        BQ5
+  C0 0.29292929 0.39393939 0.09090909 0.12121212 0.10101010
+  C1 0.31914894 0.40425532 0.18085106 0.06382979 0.03191489
+
+    Irradiat
+Y          IR0       IR1
+  C0 0.8686869 0.1313131
+  C1 0.6382979 0.3617021
+
+      预测值
+真实值 C0 C1
+    C0 42  4
+    C1  8 30
+[1] 0.8571429</pre>
+</div>
+</div>
+<div class="q">
+<h2>实验题 2</h2>
+<ul>
+<li>创建R脚本文件test0602.R，完成下面任务后把该脚本文件保存在e:/test06文件夹下。</li>
+<li>（1）安装并加载包“caret”及加载包“e1071 ”，读取源数据集BreastCancerProcessed.txt，将朴素贝叶斯分类算法进行10-折交叉验证，并输出10次模型的准确率。</li>
+</ul>
+<img src="第6周——分类（二）_files/第07页-image3.png" alt="第 7 页图" loading="lazy">
+<img src="第6周——分类（二）_files/第08页-image4.png" alt="第 8 页图" loading="lazy">
+<div class="sec"><h3>答案代码　test0602.R</h3>
+<pre class="code">install.packages('recipes')
+library('caret')
+library(e1071)
+
+data = read.table('BreastCancerProcessed.txt',header = T,sep = ',')
+n = nrow(data)
+
+folds = createFolds(seq(1,n),k=10)
+ay = {}
+for (i in 1:10) {
+  tdata = data[-unlist(folds[i]),]
+  vdata = data[unlist(folds[i]),]
+  data_naiveBayes = naiveBayes(as.factor(tdata$Class)~.,data = tdata)
+  data_predict = predict(data_naiveBayes,newdata = vdata)
+  obs_p_ran = data.frame(prob = data_predict,obs = vdata$Class)
+  confusion_mx = table(vdata$Class,data_predict,dnn = c('真实值','预测值'))
+  accuracy = (sum(diag(confusion_mx))/sum(confusion_mx))
+  ay = c(ay,accuracy)
+}
+print(ay)
+mean(ay)</pre>
+<h3>运行结果</h3>
+<pre>package 'recipes' successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	&lt;本机临时目录&gt;
+ [1] 0.8928571 0.9259259 0.9285714 0.8928571 0.7857143 0.8888889 0.8214286 0.8148148 0.6071429
+[10] 0.7857143
+[1] 0.8343915</pre>
+</div>
+</div>
+<div class="q">
+<h2>实验题 3</h2>
+<ul>
+<li>创建R脚本文件test0603.R，完成下面任务后把该脚本文件保存在e:/test06文件夹下。</li>
+<li>（1）安装并加载包“pROC ”，使用pROC包自带的aSAH数据集来绘制ROC曲线。该数据集包括了113例动脉瘤蛛网膜下腔出血患者的临床和实验室资料，在pROC包中，使用roc()函数来建立ROC对象。默认情况下roc()函数会输出AUC的值。</li>
+</ul>
+<img src="第6周——分类（二）_files/第10页-image5.png" alt="第 10 页图" loading="lazy">
+<img src="第6周——分类（二）_files/第11页-image6.png" alt="第 11 页图" loading="lazy">
+<div class="sec"><h3>答案代码　test0603.R</h3>
+<pre class="code">#install.packages('pROC')
+library('pROC')
+data('aSAH')
+set.seed(103)
+R1 = roc(aSAH$outcome,
+         aSAH$s100b,
+         smooth = T,
+         ci = T,
+         auc = T)
+R2 = roc(aSAH$outcome,
+         rnorm(nrow(aSAH)),
+         smooth =T,
+         ci = T,
+         auc = T)
+plot(R1,col = 'red',
+     print.auc = T,
+     print.auc.x = 0.3,
+     print.auc.y = 0.3,
+     legacy.axes = T)
+plot(R2,col = 'blue',
+     print.auc = T,
+     print.auc.x = 0.5,
+     print.auc.y = 0.5,
+     legacy.axes = T)
+auc(R1)
+auc(R2)</pre>
+<h3>运行结果</h3>
+<pre>Area under the curve: 0.74
+Area under the curve: 0.5788</pre>
+<img src="第6周——分类（二）_files/第6周-plot-01.png" alt="test0603.R 输出图" loading="lazy">
+<img src="第6周——分类（二）_files/第6周-plot-02.png" alt="test0603.R 输出图" loading="lazy">
+</div>
+</div>
+<div class="q">
+<h2>实验题 4</h2>
+<ul>
+<li>创建R脚本文件test0604.R，完成下面任务后把该脚本文件保存在e:/test06文件夹下。</li>
+<li>（1）根据下面的数据(如下图)，参照实验3的代码，绘制ROC图。</li>
+<table><tr><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="zh-CN" altLang="en-US" sz="2100" u="none" strike="noStrike" dirty="0"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;元组编号</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="zh-CN" altLang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;类</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="zh-CN" altLang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;概率</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;TP</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;FP</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;TN</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;FN</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;TPR</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;FPR</td></tr>
+<tr><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;P</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.90</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;5</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.2</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.0</td></tr>
+<tr><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;2</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;P</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.80</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;2</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;5</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;3</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike" dirty="0"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.0</td></tr>
+<tr><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;3</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;N</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.70</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;2</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;3</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.2</td></tr>
+<tr><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;P</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.60</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;3</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;2</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.6</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.2</td></tr>
+<tr><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;5</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;P</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.55</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.8</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.2</td></tr>
+<tr><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;6</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;N</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.54</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;2</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;3</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.8</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.4</td></tr>
+<tr><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;7</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;N</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.53</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;3</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;2</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.8</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.6</td></tr>
+<tr><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;8</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;N</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.51</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.8</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.8</td></tr>
+<tr><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;9</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;P</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.50</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;5</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;4</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1.0</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.8</td></tr>
+<tr><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;10</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;N</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="ctr" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0.40</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;5</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;5</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;0</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1.0</td><td>&lt;a:txBody&gt;&lt;a:bodyPr/&gt;&lt;a:lstStyle/&gt;&lt;a:p&gt;&lt;a:pPr algn="r" fontAlgn="b"/&gt;&lt;a:r&gt;&lt;a:rPr lang="en-US" altLang="zh-CN" sz="2100" u="none" strike="noStrike" dirty="0"&gt;&lt;a:effectLst/&gt;&lt;/a:rPr&gt;&lt;a:t&gt;1.0</td></tr>
+</table>
+</ul>
+<div class="sec"><h3>答案代码　test0604.R</h3>
+<pre class="code">#install.packages('pROC')
+library('pROC')
+tpr &lt;- c(0.2, 0.4, 0.4, 0.6, 0.8, 0.8, 0.8, 0.8, 1.0, 1.0)
+fpr &lt;- c(0.0, 0.0, 0.2, 0.2, 0.2, 0.4, 0.6, 0.8, 0.8, 1.0)
+auc &lt;- function(fpr, tpr) {
+  idx &lt;- order(fpr)
+  fpr &lt;- fpr[idx]; tpr &lt;- tpr[idx]
+  sum(diff(fpr) * (head(tpr, -1) + tail(tpr, -1))) / 2
+}
+roc_auc &lt;- auc(fpr, tpr)
+
+plot(fpr, tpr, type = "s", lwd = 2, col = "red",
+     xlab = "False Positive Rate (FPR)",
+     ylab = "True Positive Rate (TPR)",
+     main = sprintf("ROC curve (AUC = %.3f)", roc_auc))
+grid()
+abline(0, 1, lty = 2, col = "gray")
+text(0.6, 0.2, labels = sprintf("AUC = %.3f", roc_auc), cex = 1.2)</pre>
+<h3>运行结果</h3>
+<p class="meta">（这个脚本没有产生输出）</p>
+<img src="第6周——分类（二）_files/第6周-plot-02.png" alt="test0604.R 输出图" loading="lazy">
+<img src="第6周——分类（二）_files/第6周-plot-03.png" alt="test0604.R 输出图" loading="lazy">
+</div>
+</div>
+</body></html>

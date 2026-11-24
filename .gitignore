@@ -1,0 +1,29 @@
+# 依赖与构建产物
+node_modules/
+.npm-cache/
+
+# VitePress
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+docs/.vitepress/.temp/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 本地临时脚本与产物（核对、修补、生成 PDF 用），统一放 _dev/，不入库
+_dev/
+
+# 整理《流行病学》时的临时产物（PPT 文字提取、截图切片、预览截图、git 垫片）
+_ppt_text/
+_ppt_shot/
+_preview/
+_devbin/
+_*.py
+_*.ps1
+_*.mjs
+
+# R 的默认绘图设备产物（dev.new 在非交互会话下会开 pdf）
+Rplots*.pdf

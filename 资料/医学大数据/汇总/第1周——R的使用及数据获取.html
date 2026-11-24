@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>第1周　R的使用及数据获取 —— 原题、答案与运行结果</title>
+<style>:root{--fg:#1f2328;--muted:#656d76;--line:#d8dee4;--code:#f6f8fa;--accent:#0969da;--warn:#9a6700;--warnbg:#fff8c5}
+*{box-sizing:border-box}
+body{margin:0 auto;padding:32px 24px 72px;max-width:920px;color:var(--fg);background:#fff;
+font:16px/1.8 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}
+h1{font-size:26px;margin:0 0 6px;padding-bottom:12px;border-bottom:2px solid var(--line)}
+h2{font-size:19px;margin:0 0 10px;padding-left:10px;border-left:4px solid var(--accent);break-after:avoid}
+.meta{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+.note{background:var(--warnbg);border:1px solid #d4a72c;border-radius:8px;padding:12px 16px;font-size:13.5px;margin:0 0 24px}
+ul{margin:8px 0 12px;padding-left:26px}li{margin:4px 0}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:6px;background:#fff;margin:10px 0}
+table{border-collapse:collapse;margin:12px 0;font-size:14px}td,th{border:1px solid var(--line);padding:6px 10px}
+.q{border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:22px 0}
+.sec{margin-top:14px;border-top:1px dashed var(--line);padding-top:4px}
+.sec h3{font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:.04em;margin:12px 0 6px}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;
+font:12.5px/1.6 Consolas,Monaco,"Courier New",monospace;margin:6px 0;white-space:pre}
+.err{background:#ffebe9;border:1px solid #ff818266;border-radius:6px;padding:8px 12px;font-size:13px;
+color:#a40e26;margin:8px 0 0}
+code{font-family:Consolas,Monaco,"Courier New",monospace}
+@media print{body{padding:0;max-width:none}.q{break-inside:avoid}pre{white-space:pre-wrap;word-break:break-word;font-size:10.5px}}
+@page{size:A4;margin:15mm 13mm}</style></head><body>
+<h1>第 1 周　R的使用及数据获取</h1>
+<p class="meta">《医学大数据分析与决策》　原题 + 答案 + 运行结果　｜　题目整理自课件，答案取自 <code>答案/第1周答案/</code>，运行结果由 R 4.6.1 在本机实际执行得到</p>
+<div class="note"><strong>关于运行结果</strong>：下面的答案与运行结果是把该周全部答案脚本<strong>在同一个 R 会话里按顺序执行</strong>得到的（还原「在 RStudio 里一道一道做」的过程），因此同一周后面脚本可以用到前面脚本定义的变量。个别脚本本身有笔误或逻辑问题会中途报错，已在对应位置标出，未做掩盖。</div>
+<p>&gt; 本文件由 `大数据实验1.pptx` 整理而成；</p>
+<p>&gt; 课件本身（.pptx）未收录进本仓库；文中的图片是幻灯片里原有的公式与数据表。</p>
+<div class="q">
+<h2>实验题 1</h2>
+<ul>
+<li>创建R脚本文件test0101.R，完成下面任务后把该脚本文件保存在e:/test01文件夹下。</li>
+<li>用函数rep()构造一个向量x，它由3个3，4个2，5个1组成</li>
+<li>由1,2,…16构造二个方阵，其中矩阵A按列输入，矩阵B按行输入，并计算：</li>
+<li>(1)C=A+B;</li>
+<li>(2)D=A.*B;</li>
+<li>(3)E=AB;</li>
+<li>(4)去除A的第3行，B的第3列，重新计算上面的矩阵E</li>
+</ul>
+<div class="sec"><h3>答案代码　test0101.R</h3>
+<pre class="code">x &lt;- rep(c(3, 2, 1), times = c(3, 4, 5))
+A &lt;-matrix(1:16,4)
+B &lt;-matrix(1:16,4,byrow = T) 
+C = A+B
+D = A *B
+E = A%*%B
+E = A[-3,]%*%B[,-3]</pre>
+<h3>运行结果</h3>
+<p class="meta">（这个脚本没有产生输出）</p>
+</div>
+</div>
+<div class="q">
+<h2>实验题 2</h2>
+<ul>
+<li>创建R脚本文件test0102.R，完成下面任务后把该脚本文件保存在e:/test01文件夹下。</li>
+<li>函数solve()有二个作用：solve(A,b)可用于求解 线性方程组Ax=b，solve(A)可用于求矩阵的逆。设</li>
+<li>请用二种方法编程求方程组Ax=b的解。</li>
+</ul>
+<img src="第1周——R的使用及数据获取_files/第04页-image1.png" alt="第 4 页图" loading="lazy">
+<div class="sec"><h3>答案代码　test0102.R</h3>
+<pre class="code">A = matrix(c(1,2,3,4,5,6,7,8,10),ncol = 3,byrow = T)
+b = matrix(c(1,1,1),ncol = 1)
+solve(A)%*%b</pre>
+<h3>运行结果</h3>
+<pre>[,1]
+[1,] -1.000000e+00
+[2,]  1.000000e+00
+[3,]  4.440892e-16</pre>
+</div>
+</div>
+<div class="q">
+<h2>实验题 3</h2>
+<ul>
+<li>创建R脚本文件test0103.R，完成下面任务后把该脚本文件保存在e:/test01文件夹下。</li>
+<li>有10名学生的身高与体重数据如下表所示。</li>
+</ul>
+<img src="第1周——R的使用及数据获取_files/第05页-image2.png" alt="第 5 页图" loading="lazy">
+<ul>
+<li>根据上表，完成以下操作：</li>
+<li>创建名为info的数据框</li>
+<li>将该数据框写入一个纯文本的文件中，并用read.table()读取该文件中的数据</li>
+<li>将该数据框用write.csv()写成excel能打开的文件，并测试是否成功。</li>
+</ul>
+<div class="sec"><h3>答案代码　test0103.R</h3>
+<pre class="code">info = data.frame('序号' = 1:10,
+                  '性别' = c(rep('F',5),rep('M',5)),
+                  '年龄' = c(14,16,15,17,15,14,16,14,15,16),
+                  '身高cm' = c(156,158,161,156,153,162,157,159,163,165),
+                  '体重kg' = c(42.3,45.0,48.5,51.5,44.6,48.8,46.7,49.9,50.2,53.7)
+                  )
+
+print(info)
+
+write.table(info,file = 'info.text')
+read.table('info.text')
+
+write.csv(info,file = 'info.csv')
+read.csv('info.csv')</pre>
+<h3>运行结果</h3>
+<pre>序号 性别 年龄 身高cm 体重kg
+1     1    F   14    156   42.3
+2     2    F   16    158   45.0
+3     3    F   15    161   48.5
+4     4    F   17    156   51.5
+5     5    F   15    153   44.6
+6     6    M   14    162   48.8
+7     7    M   16    157   46.7
+8     8    M   14    159   49.9
+9     9    M   15    163   50.2
+10   10    M   16    165   53.7
+   序号 性别 年龄 身高cm 体重kg
+1     1    F   14    156   42.3
+2     2    F   16    158   45.0
+3     3    F   15    161   48.5
+4     4    F   17    156   51.5
+5     5    F   15    153   44.6
+6     6    M   14    162   48.8
+7     7    M   16    157   46.7
+8     8    M   14    159   49.9
+9     9    M   15    163   50.2
+10   10    M   16    165   53.7
+    X 序号 性别 年龄 身高cm 体重kg
+1   1    1    F   14    156   42.3
+2   2    2    F   16    158   45.0
+3   3    3    F   15    161   48.5
+4   4    4    F   17    156   51.5
+5   5    5    F   15    153   44.6
+6   6    6    M   14    162   48.8
+7   7    7    M   16    157   46.7
+8   8    8    M   14    159   49.9
+9   9    9    M   15    163   50.2
+10 10   10    M   16    165   53.7</pre>
+</div>
+</div>
+<div class="q">
+<h2>实验题 4</h2>
+<ul>
+<li>打开R脚本文件test0104.R，完成以下操作后将该脚本文件保存在e:/test01文件夹下。</li>
+<li>某校测得20名学生的四项指标: 性别、年龄、身高(cm)和体重(kg),数据存储于wh.csv中。</li>
+<li>1) 绘制体重对身高的散点图;</li>
+<li>2) 绘制不同性别下, 体重对身高的散点图;</li>
+<li>3) 绘制不同年龄阶段, 体重对身高的散点图;</li>
+<li>4) 绘制不同性别和不同年龄阶段, 体重对身高的散点图.</li>
+</ul>
+<div class="sec"><h3>答案代码　test0104.r</h3>
+<pre class="code">info = read.csv('wh.csv',header = T, fileEncoding = 'UTF-8')  #（1）读入数据
+print(info)  #（2）显示数据
+
+#(3） 体重对身高散点图
+plot(info$体重~info$身高,main = '体重对身高散点图')
+
+# 绘制不同性别下, 体重对身高的散点图
+coplot(info$体重~info$身高|info$性别)
+
+# （4）绘制不同年龄阶段, 体重对身高的散点图
+coplot(info$体重~info$身高|info$年龄)
+
+# (5)绘制不同性别和不同年龄阶段, 体重对身高的散点图
+coplot(info$体重~info$身高|info$性别+info$年龄)</pre>
+<h3>运行结果</h3>
+<pre>X 序号 性别 年龄 身高 体重
+1   1    1    F   18  166   54
+2   2    2    F   18  165   58
+3   3    3    F   19  154   50
+4   4    4    F   18  160   47
+5   5    5    F   20  162   46
+6   6    6    F   19  153   48
+7   7    7    F   21  156   50
+8   8    8    F   20  152   49
+9   9    9    F   21  170   57
+10 10   10    F   20  156   52
+11 11   11    M   18  168   61
+12 12   12    M   18  166   55
+13 13   13    M   19  172   63
+14 14   14    M   18  178   68
+15 15   15    M   20  169   59
+16 16   16    M   19  180   65
+17 17   17    M   21  177   59
+18 18   18    M   20  168   56
+19 19   19    M   21  182   69
+20 20   20    M   20  170   61</pre>
+<img src="第1周——R的使用及数据获取_files/第1周-plot-01.png" alt="test0104.r 输出图" loading="lazy">
+<img src="第1周——R的使用及数据获取_files/第1周-plot-02.png" alt="test0104.r 输出图" loading="lazy">
+<img src="第1周——R的使用及数据获取_files/第1周-plot-03.png" alt="test0104.r 输出图" loading="lazy">
+<img src="第1周——R的使用及数据获取_files/第1周-plot-04.png" alt="test0104.r 输出图" loading="lazy">
+</div>
+</div>
+<div class="q">
+<h2>实验题 5　（箱线图）</h2>
+<ul>
+<li>创建R脚本文件test0105.R，使用boxplot函数完成下面任务后把该脚本文件保存在e:/test01文件夹下。</li>
+<li>⑴ airquality是1973年纽约空气质量数据，请不要使用函数关系绘制每个月的温度箱线图（即Temp），要求产生删除数据框中的缺失值</li>
+<li>箱子的宽度分别为1,2,3,4,5</li>
+<li>使用rainbow函数产生5个颜色填充，其中rainbow的其他参数s=0.5,alpha = 0.7</li>
+<li>range设置为0.8</li>
+<li>staple线的宽度设置为0.8</li>
+<li>图标题的字体大小设置为1.5</li>
+</ul>
+<div class="sec"><h3>答案代码　test0105.R</h3>
+<pre class="code">data(airquality)
+aq = na.omit(airquality)
+boxplot(Temp~Month,
+        data = aq,
+        width = c(1:5),
+        col = rainbow(5,s = 0.5,alpha = 0.7),
+        range =0.8,
+        staplelwd = 0.8,
+        cex.main = 1.5)</pre>
+<h3>运行结果</h3>
+<p class="meta">（这个脚本没有产生输出）</p>
+<img src="第1周——R的使用及数据获取_files/第1周-plot-04.png" alt="test0105.R 输出图" loading="lazy">
+<img src="第1周——R的使用及数据获取_files/第1周-plot-05.png" alt="test0105.R 输出图" loading="lazy">
+</div>
+</div>
+<div class="q">
+<h2>实验题 6</h2>
+<ul>
+<li>下载TCGA数据库中的结肠癌临床数据，并整理成表格形式(参考TCGA下载文档)</li>
+<li>下载PIC儿童重症监护数据库（可选）</li>
+<li>下载MIMIC-IV重症监护数据库（可选）</li>
+</ul>
+<div class="sec"><h3>运行记录</h3><p class="meta">（原始资料里没有收录这一题的脚本）</p></div>
+</div>
+</body></html>

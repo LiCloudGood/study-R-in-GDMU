@@ -1,0 +1,290 @@
+/**
+ * Customize default theme styling by overriding CSS variables:
+ * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
+ */
+
+/**
+ * Colors
+ *
+ * Each colors have exact same color scale system with 3 levels of solid
+ * colors with different brightness, and 1 soft color.
+ *
+ * - `XXX-1`: The most solid color used mainly for colored text. It must
+ *   satisfy the contrast ratio against when used on top of `XXX-soft`.
+ *
+ * - `XXX-2`: The color used mainly for hover state of the button.
+ *
+ * - `XXX-3`: The color for solid background, such as bg color of the button.
+ *   It must satisfy the contrast ratio with pure white (#ffffff) text on
+ *   top of it.
+ *
+ * - `XXX-soft`: The color used for subtle background such as custom container
+ *   or badges. It must satisfy the contrast ratio when putting `XXX-1` colors
+ *   on top of it.
+ *
+ *   The soft color must be semi transparent alpha channel. This is crucial
+ *   because it allows adding multiple "soft" colors on top of each other
+ *   to create a accent, such as when having inline code block inside
+ *   custom containers.
+ *
+ * - `default`: The color used purely for subtle indication without any
+ *   special meanings attached to it such as bg color for menu hover state.
+ *
+ * - `brand`: Used for primary brand colors, such as link text, button with
+ *   brand theme, etc.
+ *
+ * - `tip`: Used to indicate useful information. The default theme uses the
+ *   brand color for this by default.
+ *
+ * - `warning`: Used to indicate warning to the users. Used in custom
+ *   container, badges, etc.
+ *
+ * - `danger`: Used to show error, or dangerous message to the users. Used
+ *   in custom container, badges, etc.
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-c-default-1: var(--vp-c-gray-1);
+  --vp-c-default-2: var(--vp-c-gray-2);
+  --vp-c-default-3: var(--vp-c-gray-3);
+  --vp-c-default-soft: var(--vp-c-gray-soft);
+
+  --vp-c-brand-1: var(--vp-c-indigo-1);
+  --vp-c-brand-2: var(--vp-c-indigo-2);
+  --vp-c-brand-3: var(--vp-c-indigo-3);
+  --vp-c-brand-soft: var(--vp-c-indigo-soft);
+
+  --vp-c-tip-1: var(--vp-c-brand-1);
+  --vp-c-tip-2: var(--vp-c-brand-2);
+  --vp-c-tip-3: var(--vp-c-brand-3);
+  --vp-c-tip-soft: var(--vp-c-brand-soft);
+
+  --vp-c-warning-1: var(--vp-c-yellow-1);
+  --vp-c-warning-2: var(--vp-c-yellow-2);
+  --vp-c-warning-3: var(--vp-c-yellow-3);
+  --vp-c-warning-soft: var(--vp-c-yellow-soft);
+
+  --vp-c-danger-1: var(--vp-c-red-1);
+  --vp-c-danger-2: var(--vp-c-red-2);
+  --vp-c-danger-3: var(--vp-c-red-3);
+  --vp-c-danger-soft: var(--vp-c-red-soft);
+}
+
+/**
+ * Component: Button
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-text: var(--vp-c-white);
+  --vp-button-brand-bg: var(--vp-c-brand-3);
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-hover-text: var(--vp-c-white);
+  --vp-button-brand-hover-bg: var(--vp-c-brand-2);
+  --vp-button-brand-active-border: transparent;
+  --vp-button-brand-active-text: var(--vp-c-white);
+  --vp-button-brand-active-bg: var(--vp-c-brand-1);
+}
+
+/**
+ * Component: Home
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    #bd34fe 30%,
+    #41d1ff
+  );
+
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #bd34fe 50%,
+    #47caff 50%
+  );
+  --vp-home-hero-image-filter: blur(44px);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --vp-home-hero-image-filter: blur(56px);
+  }
+}
+
+@media (min-width: 960px) {
+  :root {
+    --vp-home-hero-image-filter: blur(68px);
+  }
+}
+
+/**
+ * Component: Custom Block
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --vp-custom-block-tip-border: transparent;
+  --vp-custom-block-tip-text: var(--vp-c-text-1);
+  --vp-custom-block-tip-bg: var(--vp-c-brand-soft);
+  --vp-custom-block-tip-code-bg: var(--vp-c-brand-soft);
+}
+
+/**
+ * Component: Algolia
+ * -------------------------------------------------------------------------- */
+
+.DocSearch {
+  --docsearch-primary-color: var(--vp-c-brand-1) !important;
+}
+
+/**
+ * Component: 卡片导航（各讲目录页使用）
+ * -------------------------------------------------------------------------- */
+
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.grid-cards .card {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 12px;
+  transition: all 0.25s;
+  color: inherit;
+  text-decoration: none;
+}
+
+.grid-cards .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--vp-c-brand-rgb), 0.12);
+}
+
+.grid-cards .card-icon {
+  font-size: 32px;
+  margin-right: 1rem;
+}
+
+.grid-cards .card-text h3 {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+}
+
+.grid-cards .card-text p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--vp-c-text-2);
+}
+
+/**
+ * Component: 首页四大板块（2×2）
+ *
+ * VitePress 的 features 是 flex 布局，并按条目数自动套 `grid-N` 决定宽度
+ * （3 条时每行 3 个）。本站首页固定 4 个板块，要求排成 **2×2**，
+ * 所以这里直接用 grid 重排，不再依赖它那套 `grid-N` 宽度规则。
+ * -------------------------------------------------------------------------- */
+
+.VPHomeFeatures .items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+}
+
+/* 覆盖 grid-N 给的固定百分比宽度，交给 grid 分配 */
+.VPHomeFeatures .items > .item {
+  width: 100%;
+  padding: 0;
+}
+
+@media (max-width: 640px) {
+  .VPHomeFeatures .items {
+    /* 用 minmax(0, 1fr) 而不是 1fr：后者的最小宽度是 min-content，
+       遇到长串内容会把整列顶宽，在窄屏上容易出现横向溢出 */
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+}
+
+/* 卡片里的文字允许在任意位置换行，避免长串把卡片撑破 */
+.VPHomeFeatures .item .title,
+.VPHomeFeatures .item .details {
+  overflow-wrap: anywhere;
+}
+
+/**
+ * Component: ClickAnswer
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --ans-btn-hover-bg: var(--vp-c-brand);
+  --ans-btn-hover-text: #fff;
+}
+
+/**
+ * Component: AnswerBlock
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --ra-primary: #42b883;
+  --ra-primary-dark: #359e6f;
+  --ra-secondary: #35495e;
+  --ra-text: #2c3e50;
+  --ra-text-light: #ffffff;
+  --ra-bg: #ffffff;
+  --ra-bg-panel: #f8f9fa;
+  --ra-border: #eaecef;
+  --ra-error: #e53e3e;
+  --ra-error-bg: #fff5f5;
+  --ra-overlay: rgba(0, 0, 0, 0.5);
+}
+
+.dark {
+  --ra-primary: #52c41a;
+  --ra-primary-dark: #45a817;
+  --ra-secondary: #e0e0e0;
+  --ra-text: #e0e0e0;
+  --ra-bg: #1e1e1e;
+  --ra-bg-panel: #2d2d2d;
+  --ra-border: #383838;
+  --ra-error: #ff6b6b;
+  --ra-error-bg: #4a1a1a;
+  --ra-overlay: rgba(0, 0, 0, 0.7);
+}
+
+
+/* ── 题面配图（原题正文里引用的「图 N」）───────────────────── */
+.q-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 18px 0 6px;
+}
+
+.q-figures figure {
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--ra-border);
+  border-radius: 10px;
+  background: var(--ra-bg-panel);
+}
+
+.q-figures img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.q-figures figcaption {
+  margin-top: 8px;
+  font-size: 12px;
+  text-align: center;
+  color: var(--ra-text);
+  opacity: 0.72;
+}

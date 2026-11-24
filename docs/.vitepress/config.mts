@@ -1,0 +1,398 @@
+import { defineConfig } from 'vitepress'
+
+/**
+ * 《信息技术基础》的课程目录。
+ * link 为空表示该讲尚未整理，先只占位（VitePress 会渲染成不可点击的标题）。
+ * 顺序与「汇总」文件夹里各周资料的顺序一致。
+ */
+const lectures: { text: string; link?: string }[] = [
+  { text: '1-软件及其软件包安装和脚本编写', link: '/intro-it/1-software-install' },
+  { text: '2-向量与矩阵', link: '/intro-it/2-vectors-and-matrices' },
+  { text: '3-数组与数据框', link: '/intro-it/3-arrays-and-data-frames' },
+  { text: '4-列表与因子', link: '/intro-it/4-lists-and-factors' },
+  { text: '5-日期、字符与特殊值处理', link: '/intro-it/5-dates-strings-and-special-values' },
+  { text: '6-输入、输出', link: '/intro-it/6-input-output' },
+  { text: '7-分支与循环', link: '/intro-it/7-branches-and-loops' },
+  { text: '8-自定义函数', link: '/intro-it/8-custom-functions' },
+  { text: '9-高级绘图', link: '/intro-it/9-base-graphics' },
+  { text: '10-初级绘图函数', link: '/intro-it/10-plot-functions' },
+  { text: '11-ggplot2包', link: '/intro-it/11-ggplot2' },
+  { text: '12-参数估计', link: '/intro-it/12-parameter-estimation' },
+  { text: '13-参数假设检验', link: '/intro-it/13-hypothesis-testing' },
+  { text: '14-同分布检验与列联表检验', link: '/intro-it/14-goodness-of-fit-and-contingency' }
+]
+
+/** 《医学大数据分析与决策》的课程目录（32 学时，8 周实验）。 */
+const mbdLectures: { text: string; link?: string }[] = [
+  { text: '1-R的使用及数据获取', link: '/Medical-Big-Data-Analysis/1-r-basics-and-data' },
+  { text: '2-数据预处理', link: '/Medical-Big-Data-Analysis/2-data-preprocessing' },
+  { text: '3-回归分析', link: '/Medical-Big-Data-Analysis/3-regression' },
+  { text: '4-关联规则', link: '/Medical-Big-Data-Analysis/4-association-rules' },
+  { text: '5-分类（一）', link: '/Medical-Big-Data-Analysis/5-classification-1' },
+  { text: '6-分类（二）', link: '/Medical-Big-Data-Analysis/6-classification-2' },
+  { text: '7-聚类', link: '/Medical-Big-Data-Analysis/7-clustering' },
+  { text: '8-神经网络', link: '/Medical-Big-Data-Analysis/8-neural-networks' }
+]
+
+/** 《卫生统计学》的课程目录（按章）。 */
+const healthLectures: { text: string; link?: string }[] = [
+  { text: '1-绪论', link: '/Health-statistics/01-introduction' },
+  { text: '3-实验设计与调查设计', link: '/Health-statistics/03-study-design' },
+  { text: '4-定量资料的统计描述', link: '/Health-statistics/04-describing-quantitative-data' },
+  { text: '5-定性资料的统计描述', link: '/Health-statistics/05-describing-qualitative-data' },
+  { text: '6-总体均数与总体率的估计', link: '/Health-statistics/06-estimation' },
+  { text: '7-假设检验', link: '/Health-statistics/07-hypothesis-testing' },
+  { text: '8-t 检验', link: '/Health-statistics/08-t-test' },
+  { text: '9-方差分析', link: '/Health-statistics/09-anova' },
+  { text: '10-卡方检验', link: '/Health-statistics/10-chi-square' },
+  { text: '11-非参数检验与秩和检验', link: '/Health-statistics/11-nonparametric' },
+  { text: '12-双变量关联性分析', link: '/Health-statistics/12-bivariate-association' },
+  { text: '13-直线回归', link: '/Health-statistics/13-linear-regression' },
+  { text: '14-生存分析', link: '/Health-statistics/14-survival-analysis' },
+  { text: '16-Meta 分析', link: '/Health-statistics/16-meta-analysis' },
+  { text: '17-样本含量估计', link: '/Health-statistics/17-sample-size' },
+  { text: '18-生命统计的常用指标', link: '/Health-statistics/18-vital-statistics' },
+  { text: '19-常用统计图表', link: '/Health-statistics/19-tables-and-charts' }
+]
+
+/**
+ * 《流行病学》的课程目录（按章）。
+ *
+ * 章节顺序对应课程 PPT：概论 → 描述 → 分析（队列 / 病例对照）→ 偏倚与病因推断 → 实验。
+ * 「筛检与诊断试验」不单列，内容并入卫生统计学的「诊断试验评价」专题页。
+ *
+ * 规矩同英文版：**页面写好了才给 link**，没写的只留标题（渲染成不可点的一行），
+ * 这样翻译/整理进度一目了然，也不会点出 404。
+ */
+const epiLectures: { text: string; link?: string }[] = [
+  { text: '1-流行病学概论', link: '/Epidemiology/01-introduction' },
+  { text: '2-描述流行病学', link: '/Epidemiology/02-descriptive' },
+  { text: '3-队列研究', link: '/Epidemiology/03-cohort' },
+  { text: '4-病例对照研究', link: '/Epidemiology/04-case-control' },
+  { text: '5-偏倚及其控制', link: '/Epidemiology/05-bias' },
+  { text: '6-病因与因果推断', link: '/Epidemiology/06-causal-inference' },
+  { text: '7-实验流行病学', link: '/Epidemiology/07-experimental' }
+]
+
+/** 三个板块共用的「入口」分组，方便在各板块之间跳转。 */
+const entryGroup = {
+  text: '入口',
+  collapsed: false,
+  items: [
+    { text: '介绍', link: '/' },
+    { text: '信息技术基础', link: '/intro-it/' },
+    { text: '医学大数据分析与决策', link: '/Medical-Big-Data-Analysis/' },
+    { text: '卫生统计学', link: '/Health-statistics/' },
+    { text: '流行病学', link: '/Epidemiology/' },
+    { text: 'R 下载', link: 'https://www.r-project.org/' },
+    { text: 'RStudio 下载', link: 'https://posit.co/download/rstudio-desktop/' }
+  ]
+}
+
+/* ------------------------------------------------------------------ */
+/* 英文版（/en/）                                                       */
+/* ------------------------------------------------------------------ */
+
+/**
+ * 英文版目录：**只给已经翻好的页加 link**，没翻的只写标题、不给链接。
+ * VitePress 会把没有 link 的条目渲染成不可点击的一行 —— 正好当翻译进度表，
+ * 而且绝不会产生 404。翻好一页就把 link 补上。
+ *
+ * 所有页面标题的中英对照见 `scripts/术语对照表.md` 最后一节。
+ */
+const enHealthLectures: { text: string; link?: string }[] = [
+  { text: '1 Introduction', link: '/en/Health-statistics/01-introduction' },
+  { text: '3 Experimental and Survey Design', link: '/en/Health-statistics/03-study-design' },
+  { text: '4 Describing Quantitative Data', link: '/en/Health-statistics/04-describing-quantitative-data' },
+  { text: '5 Describing Qualitative Data', link: '/en/Health-statistics/05-describing-qualitative-data' },
+  { text: '6 Estimating Population Means and Rates', link: '/en/Health-statistics/06-estimation' },
+  { text: '7 Hypothesis Testing', link: '/en/Health-statistics/07-hypothesis-testing' },
+  { text: '8 t Tests', link: '/en/Health-statistics/08-t-test' },
+  { text: '9 Analysis of Variance', link: '/en/Health-statistics/09-anova' },
+  { text: '10 Chi-Square Tests', link: '/en/Health-statistics/10-chi-square' },
+  { text: '11 Nonparametric and Rank-Based Tests', link: '/en/Health-statistics/11-nonparametric' },
+  { text: '12 Bivariate Association', link: '/en/Health-statistics/12-bivariate-association' },
+  { text: '13 Simple Linear Regression', link: '/en/Health-statistics/13-linear-regression' },
+  { text: '14 Survival Analysis', link: '/en/Health-statistics/14-survival-analysis' },
+  { text: '16 Meta-Analysis', link: '/en/Health-statistics/16-meta-analysis' },
+  { text: '17 Sample Size Estimation', link: '/en/Health-statistics/17-sample-size' },
+  { text: '18 Vital Statistics', link: '/en/Health-statistics/18-vital-statistics' },
+  { text: '19 Statistical Tables and Charts', link: '/en/Health-statistics/19-tables-and-charts' }
+]
+
+/**
+ * 《流行病学》英文版目录。
+ * 规则同上：翻好一页才给 link，没翻的只留标题。
+ */
+const enEpiLectures: { text: string; link?: string }[] = [
+  { text: '1 Introduction to Epidemiology', link: '/en/Epidemiology/01-introduction' },
+  { text: '2 Descriptive Epidemiology', link: '/en/Epidemiology/02-descriptive' },
+  { text: '3 Cohort Study', link: '/en/Epidemiology/03-cohort' },
+  { text: '4 Case-Control Study', link: '/en/Epidemiology/04-case-control' },
+  { text: '5 Bias and Its Control', link: '/en/Epidemiology/05-bias' },
+  { text: '6 Causation and Causal Inference', link: '/en/Epidemiology/06-causal-inference' },
+  { text: '7 Experimental Epidemiology', link: '/en/Epidemiology/07-experimental' }
+]
+
+/** 《信息技术基础》14 讲，规则同 enHealthLectures：没翻的只写标题、不给链接。 */
+const enLectures: { text: string; link?: string }[] = [
+  { text: '1 Installing R and RStudio, Writing Scripts', link: '/en/intro-it/1-software-install' },
+  { text: '2 Vectors and Matrices', link: '/en/intro-it/2-vectors-and-matrices' },
+  { text: '3 Arrays and Data Frames', link: '/en/intro-it/3-arrays-and-data-frames' },
+  { text: '4 Lists and Factors', link: '/en/intro-it/4-lists-and-factors' },
+  { text: '5 Dates, Strings, and Special Values', link: '/en/intro-it/5-dates-strings-and-special-values' },
+  { text: '6 Input and Output', link: '/en/intro-it/6-input-output' },
+  { text: '7 Branches and Loops', link: '/en/intro-it/7-branches-and-loops' },
+  { text: '8 User-Defined Functions', link: '/en/intro-it/8-custom-functions' },
+  { text: '9 Base Graphics', link: '/en/intro-it/9-base-graphics' },
+  { text: '10 Low-Level Plotting Functions', link: '/en/intro-it/10-plot-functions' },
+  { text: '11 The ggplot2 Package', link: '/en/intro-it/11-ggplot2' },
+  { text: '12 Parameter Estimation', link: '/en/intro-it/12-parameter-estimation' },
+  { text: '13 Parametric Hypothesis Testing', link: '/en/intro-it/13-hypothesis-testing' },
+  { text: '14 Tests of Homogeneity and Contingency Tables', link: '/en/intro-it/14-goodness-of-fit-and-contingency' }
+]
+
+/** 《医学大数据分析与决策》8 周，规则同上。 */
+const enMbdLectures: { text: string; link?: string }[] = [
+  { text: '1 Using R and Getting Data', link: '/en/Medical-Big-Data-Analysis/1-r-basics-and-data' },
+  { text: '2 Data Preprocessing', link: '/en/Medical-Big-Data-Analysis/2-data-preprocessing' },
+  { text: '3 Regression Analysis', link: '/en/Medical-Big-Data-Analysis/3-regression' },
+  { text: '4 Association Rules', link: '/en/Medical-Big-Data-Analysis/4-association-rules' },
+  { text: '5 Classification (Part 1)', link: '/en/Medical-Big-Data-Analysis/5-classification-1' },
+  { text: '6 Classification (Part 2)', link: '/en/Medical-Big-Data-Analysis/6-classification-2' },
+  { text: '7 Clustering', link: '/en/Medical-Big-Data-Analysis/7-clustering' },
+  { text: '8 Neural Networks', link: '/en/Medical-Big-Data-Analysis/8-neural-networks' }
+]
+
+const enEntryGroup = {
+  text: 'Start here',
+  collapsed: false,
+  items: [
+    { text: 'Home', link: '/en/' },
+    { text: 'Information Technology', link: '/en/intro-it/' },
+    { text: 'Medical Big Data Analysis', link: '/en/Medical-Big-Data-Analysis/' },
+    { text: 'Health Statistics', link: '/en/Health-statistics/' },
+    { text: 'Epidemiology', link: '/en/Epidemiology/' },
+    { text: 'Download R', link: 'https://www.r-project.org/' },
+    { text: 'Download RStudio', link: 'https://posit.co/download/rstudio-desktop/' }
+  ]
+}
+
+/**
+ * 修「中文标点紧挨加粗标记时 `**` 原样印在页面上」。
+ *
+ * CommonMark 的 flanking 规则要求：闭合分隔符前面不能是标点，除非它后面是空白或标点。
+ * 中文的书写习惯偏偏是「**实验研究（experimental study）**的……」——
+ * 闭合 `**` 前面是「）」（标点）、后面紧跟「的」（汉字），于是被判定为「不能闭合」，
+ * `**` 就字面印出来了。开始分隔符同理：「以及**「绝对一致」……」」也不行，因为
+ * 开头 `**` 后面是「「」（标点）、前面是「及」（汉字）。
+ *
+ * markdown-it 已经把所有**正常**的加粗处理完了，剩下这些"漏网"的 `**…**` 会留在
+ * text token 的文本里。所以这里加一条 core 规则（在 inline 解析之后运行），
+ * 把 text token 里成对的 `**…**` 直接拆成 strong_open / strong_close 两个标记：
+ *
+ *   - 页面上的**文字一个字都不变**，只是真的加粗了；
+ *   - 不用去改几十处文案，以后新写的内容也不会再犯这个毛病；
+ *   - 成对的 `**` 会**跨越行内代码**（`**注意它默认 \`k.min = 10\`：…**`），
+ *     这时 inline 解析出来是「text + code_inline + text」三段，`**` 分落在首尾两个 text 里，
+ *     所以不能只看单个 token —— 下面按"整段 inline 里 `**` 出现的位置"成对处理。
+ *
+ * 构建产物里的效果可以用 `node scripts/check-site.mjs` 复查。
+ */
+function cjkStrongPlugin(md: any) {
+  md.core.ruler.push('cjk_strong', (state: any) => {
+    for (const token of state.tokens) {
+      if (token.type !== 'inline' || !Array.isArray(token.children)) continue
+
+      // 收集所有还留在 text token 里的 `**`（markdown-it 已经处理掉的那些不在其中）
+      const marks: { i: number; at: number }[] = []
+      token.children.forEach((c: any, i: number) => {
+        if (c.type !== 'text' || !c.content.includes('**')) return
+        for (const m of c.content.matchAll(/\*\*/g)) marks.push({ i, at: m.index! })
+      })
+      // 成对才处理；落单的（作者真的想打两个星号）原样留着，宁缺勿滥
+      if (marks.length === 0 || marks.length % 2 !== 0) continue
+
+      const Token = token.constructor
+      const mkText = (s: string) => {
+        const t = new Token('text', '', 0)
+        t.content = s
+        return t
+      }
+      const out: any[] = []
+      const open = () => out.push(new Token('strong_open', 'strong', 1))
+      const close = () => out.push(new Token('strong_close', 'strong', -1))
+
+      let isOpen = false
+      token.children.forEach((c: any, i: number) => {
+        if (c.type !== 'text') {
+          out.push(c)
+          return
+        }
+        const here = marks.filter((m) => m.i === i)
+        if (here.length === 0) {
+          out.push(c)
+          return
+        }
+        let last = 0
+        for (const m of here) {
+          const before = c.content.slice(last, m.at)
+          if (before) out.push(mkText(before))
+          isOpen ? close() : open()
+          isOpen = !isOpen
+          last = m.at + 2
+        }
+        const rest = c.content.slice(last)
+        if (rest) out.push(mkText(rest))
+      })
+
+      // 走到这里 isOpen 一定是 false（成对处理），否则说明有 `**` 落在非 text token 里
+      if (!isOpen) token.children = out
+    }
+  })
+}
+
+export default defineConfig({
+  base: '/study-R-in-GDMU/',
+
+  lastUpdated: true,
+
+  // 站点源码全在 docs/ 下（srcDir = docs），仓库说明、工具与原始资料都在 docs/ 之外。
+  //
+  markdown: {
+    // 公式交给 VitePress 内置的 math（markdown-it-mathjax3）处理
+    math: true,
+    // R 代码块显示行号，方便课堂上按行讲解
+    lineNumbers: true,
+
+    // 见 cjkStrongPlugin 的说明：修「中文标点紧挨加粗标记导致 ** 原文印出来」
+    config: (md) => md.use(cjkStrongPlugin)
+  },
+
+  /**
+   * 中英双语：中文是 root（内容在 docs/ 下），英文在 docs/en/。
+   * 用 locales 而不是复制一份站点，是为了：
+   *   - 自动获得右上角的语言切换器；
+   *   - 英文页可以只翻一部分，没翻的在侧栏留标题不给链接，不会 404；
+   *   - 两份内容各自独立，中文永远是原文（source of truth）。
+   */
+  locales: {
+    root: {
+      label: '简体中文',
+      lang: 'zh-CN',
+      title: 'study R in GDMU',
+      description: 'gdmu R 语言课程学习站点：原题、答案与知识点汇总',
+
+      themeConfig: {
+        nav: [
+          { text: '首页', link: '/' },
+          { text: '信息技术基础', link: '/intro-it/' },
+          { text: '医学大数据分析与决策', link: '/Medical-Big-Data-Analysis/' },
+          { text: '卫生统计学', link: '/Health-statistics/' },
+          { text: '流行病学', link: '/Epidemiology/' }
+        ],
+
+        sidebar: {
+          '/': [],
+          '/intro-it/': [entryGroup, { text: '信息技术基础', items: lectures }],
+          '/Medical-Big-Data-Analysis/': [
+            entryGroup,
+            { text: '医学大数据分析与决策', items: mbdLectures }
+          ],
+          '/Health-statistics/': [
+            entryGroup,
+            // 原来这里是个分组「先选方法」，里面只放一条「统计方法选择器」，
+            // 两层名字几乎重复、还多一次折叠。改成平铺的一条，点名字直接进。
+            { text: '方法选择器', link: '/Health-statistics/choice' },
+            { text: '卫生统计学', items: healthLectures },
+            // 课本 19 章里没有、但临床上常用的两块，本站补成专题
+            {
+              text: '补充专题',
+              collapsed: false,
+              items: [
+                { text: '筛检与诊断试验评价', link: '/Health-statistics/diagnostic-test' },
+                { text: '一致性信度（Kappa 与 ICC）', link: '/Health-statistics/agreement-reliability' }
+              ]
+            }
+          ],
+          '/Epidemiology/': [
+            entryGroup,
+            { text: '流行病学', items: epiLectures }
+          ]
+        },
+
+        outline: { level: [2, 3], label: '本页目录' },
+        search: { provider: 'local' },
+        lastUpdated: { text: '最后更新' },
+        docFooter: { prev: '上一讲', next: '下一讲' },
+
+        socialLinks: [{ icon: 'github', link: 'https://github.com/LiCloudGood' }],
+
+        footer: {
+          message: '内容来源于学校课程练习，仅供学习交流使用',
+          copyright: 'Licensed under CC BY-NC-SA 4.0'
+        }
+      }
+    },
+
+    en: {
+      label: 'English',
+      lang: 'en-US',
+      title: 'study R in GDMU',
+      description:
+        'R and medical statistics course notes from GDMU: exercises, answers, and worked knowledge summaries',
+
+      themeConfig: {
+        nav: [
+          { text: 'Home', link: '/en/' },
+          { text: 'Information Technology', link: '/en/intro-it/' },
+          { text: 'Medical Big Data Analysis', link: '/en/Medical-Big-Data-Analysis/' },
+          { text: 'Health Statistics', link: '/en/Health-statistics/' },
+          { text: 'Epidemiology', link: '/en/Epidemiology/' }
+        ],
+
+        sidebar: {
+          '/en/': [],
+          '/en/intro-it/': [
+            enEntryGroup,
+            { text: 'Introduction to Information Technology', items: enLectures }
+          ],
+          '/en/Medical-Big-Data-Analysis/': [
+            enEntryGroup,
+            { text: 'Medical Big Data Analysis and Decision Making', items: enMbdLectures }
+          ],
+          '/en/Health-statistics/': [
+            enEntryGroup,
+            // 英文版选择器的规则表已双语化（scripts/generate-selector.mjs），页面由生成脚本产出
+            { text: 'Method Selector', link: '/en/Health-statistics/choice' },
+            { text: 'Health Statistics', items: enHealthLectures },
+            {
+              text: 'Supplementary topics',
+              collapsed: false,
+              items: [
+                { text: 'Diagnostic Test Evaluation (ROC and AUC)', link: '/en/Health-statistics/diagnostic-test' },
+                { text: 'Agreement and Reliability (Kappa and ICC)', link: '/en/Health-statistics/agreement-reliability' }
+              ]
+            }
+          ],
+          '/en/Epidemiology/': [
+            enEntryGroup,
+            { text: 'Epidemiology', items: enEpiLectures }
+          ]
+        },
+
+        outline: { level: [2, 3], label: 'On this page' },
+        search: { provider: 'local' },
+        lastUpdated: { text: 'Last updated' },
+        docFooter: { prev: 'Previous', next: 'Next' },
+
+        socialLinks: [{ icon: 'github', link: 'https://github.com/LiCloudGood' }],
+
+        footer: {
+          message: 'Course exercises and notes, shared for study purposes only',
+          copyright: 'Licensed under CC BY-NC-SA 4.0'
+        }
+      }
+    }
+  }
+})

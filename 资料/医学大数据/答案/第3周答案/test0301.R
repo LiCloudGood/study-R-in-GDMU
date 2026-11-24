@@ -1,0 +1,7 @@
+load('L5-1UCR.rdata')
+library(epiDisplay)
+des(UCR)
+summary(UCR)
+plot(ucr~age,data = UCR,xlab = 'x(年龄)',ylab = 'y(尿肌酐含量mmol')
+mod = lm(ucr~age,data = UCR)
+summary(mod)

@@ -1,0 +1,11 @@
+install.packages('infotheo')
+library(infotheo)
+data = c(1,2,3,4,6,8,10,15,20,25,30,40)
+dis_ew = discretize(data,'equalwidth',4)
+print(dis_ew)
+data_dis_ex = t(rbind(data,dis_ew$X))
+dim(dis_ew)
+colnames(data_dis_ex) = c('data','index')
+print(data_dis_ex)
+
+discretize(data,'equalfreq',4)

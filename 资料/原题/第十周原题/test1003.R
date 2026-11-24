@@ -1,0 +1,1 @@
+x <- read.csv("alkfos.csv")
