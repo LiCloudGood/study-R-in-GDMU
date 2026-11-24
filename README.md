@@ -13,6 +13,7 @@ GDMU 课程的在线讲义，四门课 + 一个统计方法选择器：
 > 所以**并入了后者**（补上了联合试验、似然比、可靠性、样本量），没有重复开页。
 
 **中文版**：**<https://licloudgood.github.io/study-R-in-GDMU/>**
+
 **英文版**：**<https://licloudgood.github.io/study-R-in-GDMU/en/>**
 
 英文版的 **58 个页面已全部译完**，右上角有语言切换器可以随时对照。
